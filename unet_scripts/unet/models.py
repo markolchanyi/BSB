@@ -324,6 +324,11 @@ def conv_dec(nb_features,
         if use_skip_connections:
             conv_name = '%s_conv_downarm_%d_%d' % (prefix, nb_levels - 2 - level, nb_conv_per_level - 1)
             cat_tensor = input_model.get_layer(conv_name).output
+
+            # Add attention gate at the highest resolution level
+            if level == 0:
+                cat_tensor = attention_gate_3d(cat_tensor, up_tensor, n_intermediate_filters=nb_lvl_feats)
+
             name = '%s_merge_%d' % (prefix, nb_levels + level)
             last_tensor = KL.concatenate([cat_tensor, last_tensor], axis=ndims + 1, name=name)
 
@@ -418,3 +423,26 @@ def _softmax(x, axis=-1, alpha=1):
         return e / s
     else:
         raise ValueError('Cannot apply softmax to a tensor that is 1D')
+
+
+def attention_gate_3d(x, g, n_intermediate_filters=24):
+    """
+    x: feat map from the encoder output
+    g: feat map from the decoder output
+    n_intermediate_filters: number of intermediate filters
+    """
+    # Linear transformation on both inp and g using 3D convolutions
+    Wg = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(g)
+    Wx = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(x)
+
+    # Add the transformed tensors and pass through a ReLU activation
+    psi = KL.add([Wg, Wx])
+    psi = KL.Activation(activation='relu')(psi)
+
+    # Pass the result through a 1x1x1 convolution to generate the attention coefficients (alpha)
+    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='sigmoid')(psi)
+
+    # Multiply the encoder tensor by the attention coefficients to generate the output
+    out = KL.multiply([x, alpha])
+
+    return out
