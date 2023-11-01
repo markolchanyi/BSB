@@ -11,230 +11,6 @@ import dtiutils
 import utils
 
 
-# This is the first generator I tried, deforming the FA linearly and the direction with nearest neighbors
-# TODO: right now it takes 3.5 seconds on my machine... not great, not terrible
-def image_seg_generator(training_dir,
-                        path_label_list,
-                        batchsize=1,
-                        scaling_bounds=0.15,
-                        rotation_bounds=15,
-                        max_noise_std=0.1,
-                        max_noise_std_fa=0.03,
-                        gamma_std=0.1,
-                        contrast_std=0.1,
-                        brightness_std=0.1,
-                        crop_size=None,
-                        randomize_resolution=False,
-                        diffusion_resolution=None):
-
-    # Read directory to get list of training cases
-    lowb_list = glob.glob(training_dir + '/dmri/lowb.nii.gz')
-    n_training = len(lowb_list)
-    print('Found %d cases for training' % n_training)
-
-    # Get size from first volume
-    aux, aff, _ = utils.load_volume(lowb_list[0], im_only=False)
-    t1_resolution = np.sum(aff,axis=0)[:-1]
-    nx, ny, nz = aux.shape
-    if crop_size is None:
-        crop_size = aux.shape
-    if type(crop_size) == int:
-        crop_size = [crop_size] *3
-
-    # Create meshgrid (we will reuse a lot)
-    xx, yy, zz = np.meshgrid(range(nx), range(ny), range(nz), sparse=False, indexing='ij')
-    cx, cy, cz = (np.array(aux.shape) - 1) / 2
-    xc = xx - cx
-    yc = yy - cy
-    zc = zz - cz
-
-    # Some useful precomputations for one-hot encoding
-    label_list = np.sort(np.load(path_label_list)).astype(int)
-    mapping = np.zeros(1 + label_list[-1], dtype='int')
-    mapping[label_list] = np.arange(len(label_list))
-
-    xxcrop, yycrop, zzcrop = np.meshgrid(range(crop_size[0]), range(crop_size[1]), range(crop_size[2]), sparse=False, indexing='ij')
-    xxcrop = xxcrop.flatten()
-    yycrop = yycrop.flatten()
-    zzcrop = zzcrop.flatten()
-
-
-
-    # Generate!
-    while True:
-
-        # randomly pick as many images as batchsize
-        indices = np.random.randint(n_training, size=batchsize)
-
-        # initialise input lists
-        list_images = []
-        list_label_maps = []
-
-        for index in indices:
-
-            # read images
-            t1_file = lowb_list[index]
-            prefix = lowb_list[index][:-12]
-            high_prefix = lowb_list[index][:-16]
-            fa_file = prefix + 'FA.nii.gz'
-            v1_file = prefix + 'tracks.nii.gz'
-            seg_file = high_prefix + 'seg.nii.gz'
-
-            t1, aff, _ = utils.load_volume(t1_file, im_only=False)
-            fa = utils.load_volume(fa_file)
-            v1 = utils.load_volume(v1_file)
-            seg = utils.load_volume(seg_file)
-
-            # Sample augmentation parameters
-            rotations = (2 * rotation_bounds * np.random.rand(3) - rotation_bounds) / 180.0 * np.pi
-            s = 1 + (2 * scaling_bounds * np.random.rand(1) - scaling_bounds)
-            cropx = np.random.randint(0, nx - crop_size[0] + 1, 1)[0]
-            cropy = np.random.randint(0, ny - crop_size[1] + 1, 1)[0]
-            cropz = np.random.randint(0, nz - crop_size[2] + 1, 1)[0]
-
-            # Create random rotation matrix and scaling, and apply to coordinates,
-            R = utils.make_rotation_matrix(rotations)
-            Rinv = np.linalg.inv(R)
-
-            xx2 = cx + s * (R[0, 0] * xc + R[0, 1] * yc + R[0, 2] * zc)
-            yy2 = cy + s * (R[1, 0] * xc + R[1, 1] * yc + R[1, 2] * zc)
-            zz2 = cz + s * (R[2, 0] * xc + R[2, 1] * yc + R[2, 2] * zc)
-
-            # Interpolate!  There is no need to interpolate everywhere; only in the area we will (randomly) crop
-            # Essentially, we crop and interpolate at the same time
-            xx2 = xx2[cropx:cropx+crop_size[0], cropy:cropy+crop_size[1], cropz:cropz+crop_size[2]]
-            yy2 = yy2[cropx:cropx + crop_size[0], cropy:cropy + crop_size[1], cropz:cropz + crop_size[2]]
-            zz2 = zz2[cropx:cropx + crop_size[0], cropy:cropy + crop_size[1], cropz:cropz + crop_size[2]]
-
-            # We do FA and T1 in one shot with complex numbers :-)
-            combo = np.array(t1, dtype=complex)
-            combo.imag = fa
-            combo_interpolator = rgi((range(nx), range(ny), range(nz)), combo, method='linear', bounds_error=False, fill_value=0.0)
-            combo_def = combo_interpolator((xx2, yy2, zz2))
-            t1_def = np.real(combo_def)
-            fa_def = np.imag(combo_def)
-
-            # We do the nearest neighbor interpolation ourselves
-            idx, ok = utils.nn_interpolator_indices(xx2, yy2, zz2, nx, ny, nz)
-            v1_def = np.zeros((*crop_size, 3))
-            # TODO: the -1 in the first coordinate (left-right) -1 is crucial
-            # I wonder if (/hope!) it's the same for every FreeSurfer processed dataset
-            v1_def[:, :, :, 0][ok] = - v1[:, :, :, 0].flatten(order='F')[idx]
-            v1_def[:, :, :, 1][ok] = v1[:, :, :, 1].flatten(order='F')[idx]
-            v1_def[:, :, :, 2][ok] = v1[:, :, :, 2].flatten(order='F')[idx]
-            seg_def = np.zeros(crop_size)
-            seg_def[ok] = seg.flatten(order='F')[idx]
-
-            # We also need to rotate v1
-            v1_def_rot = np.zeros_like(v1_def)
-            for row in range(3):
-                for col in range(3):
-                    v1_def_rot[:, :, :, row] = v1_def_rot[:, :, :, row] + Rinv[row, col] * v1_def[:, :, :, col]
-
-            # Randomization of resolution increases running time by 0.5 seconds, which is not terrible...
-            if randomize_resolution:
-                # Random resolution for diffusion: between ~ 1 and 3 mm in each axis (but not too far from each other)
-                aux = 1 + 2 * np.random.rand(1)
-                batch_resolution_diffusion = aux + 0.2 * np.random.randn(3)
-                batch_resolution_diffusion[batch_resolution_diffusion < 1] = 1 # let's be realistic :-)
-
-                # Random resolution for t1: between 0.7 and 1.3 mm in each axis (but not too far from each other)
-                aux = 0.7 + 0.6 * np.random.rand(1)
-                batch_resolution_t1 = aux + 0.05 * np.random.randn(3)
-                batch_resolution_t1[batch_resolution_diffusion < 0.6] = 0.6 # let's be realistic :-)
-
-                # The theoretical blurring sigma to blur the resolution depends on the fraction by which we want to
-                # divide the power at the cutoff frequency. I use [3, 20] which translates into multiplying the ratio
-                # of resolutions by [0.35,0.95]
-                fraction = 0.35 + 0.6 * np.random.rand(1)
-
-                ratio_t1 = batch_resolution_t1 / t1_resolution
-                ratio_t1[ratio_t1 < 1] = 1
-                sigmas_t1 = fraction * ratio_t1
-                sigmas_t1[ratio_t1 == 1] = 0 # Don't blur if we're not really going down in resolution
-
-                ratio_diffusion = batch_resolution_diffusion / diffusion_resolution
-                ratio_diffusion[ratio_diffusion < 1] = 1
-                sigmas_diffusion = fraction * ratio_diffusion
-                sigmas_diffusion[ratio_diffusion == 1] = 0 # Don't blur if we're not really going down in resolution
-
-                # Low-pass filtering to blur data! Here we just blur the FA
-                t1_def = gauss_filt(t1_def, sigmas_t1, truncate=3.0)
-                fa_def = gauss_filt(fa_def, sigmas_diffusion, truncate=3.0)
-
-                # Subsample: will require resampling / interpolating (sigh)
-                t1_def = utils.subsample(t1_def, ratio_t1, crop_size, method='linear')
-                fa_def, xig, yig, zig = utils.subsample(fa_def, ratio_diffusion, crop_size, method='linear', return_locations=True)
-                # Nearest neighbor part for v1: we know all indices wil be inbounds
-                idx = utils.nn_interpolator_indices_nocheck(xig, yig, zig, v1_def_rot.shape[0], v1_def_rot.shape[1], v1_def_rot.shape[2])
-                v1_def_rot_downsampled = np.zeros([*fa_def.shape, 3])
-                for c in range(3):
-                    v1_def_rot_downsampled[:,:,:,c] = v1_def_rot[:, :, :, c].flatten(order='F')[idx]
-                v1_def_rot = v1_def_rot_downsampled
-
-            # Augment intensities t1 and fa, and compute  DTI (RGB) volume with new FA
-            # Note that if you are downsampling, augmentation happens here at low resolution (as will happen at test time)
-            fa_def = utils.augment_fa(fa_def, gamma_std, max_noise_std_fa)
-            dti_def = np.abs(v1_def_rot * fa_def[..., np.newaxis])
-            t1_def = utils.augment_t1(t1_def, gamma_std, contrast_std, brightness_std, max_noise_std)
-
-
-            # Bring back to original resolution if needed
-            if randomize_resolution:
-                # TODO: it's crucial to upsample the same way as we do when predicting...
-
-                # First the T1
-                t1_def = utils.upsample(t1_def, ratio_t1, crop_size)
-                # Now the diffusion
-                fa_def, xig, yig, zig = utils.upsample(fa_def, ratio_diffusion, crop_size, return_locations=True)
-                # again, careful with the eigenvectors...
-                idx = utils.nn_interpolator_indices_nocheck(xig, yig, zig, v1_def_rot.shape[0], v1_def_rot.shape[1], v1_def_rot.shape[2])
-                v1_def_rot_upsampled = np.zeros([*fa_def.shape, 3])
-                for c in range(3):
-                    v1_def_rot_upsampled[:,:,:,c] = v1_def_rot[:, :, :, c].flatten(order='F')[idx]
-                v1_def_rot = v1_def_rot_upsampled
-
-                dti_def = np.abs(v1_def_rot * fa_def[..., np.newaxis])
-
-
-            # TODO: possible improvement: introduce left right flipping. You need to a) flip all the volumes, b) swap
-            # left and right labels in the flipped segmentation, c) change the sign of the flipped v1_def_rot[:, :, :, 0]
-
-
-            # Efficiently turn label map into one hot encoded array
-            seg_def = mapping[seg_def.astype(int)]
-            aux = np.zeros(t1_def.size * len(label_list))
-            idx = xxcrop + yycrop * t1_def.shape[0] + zzcrop * t1_def.shape[0] * t1_def.shape[1] \
-                  + seg_def.flatten() * t1_def.size # This is essentially a Matlab sub2ind
-            aux[idx] = 1.0
-            onehot = aux.reshape((*t1_def.shape, len(label_list)), order='F')
-
-            # If you want to save to disk and open with Freeview during debugging
-            # from joint_diffusion_structural_seg.utils import save_volume
-            # utils.save_volume(t1, aff, None, '/tmp/t1.mgz')
-            # utils.save_volume(t1_def, aff, None, '/tmp/t1_def.mgz')
-            # utils.save_volume(fa, aff, None, '/tmp/fa.mgz')
-            # utils.save_volume(fa_def, aff, None, '/tmp/fa_def.mgz')
-            # utils.save_volume(seg, aff, None, '/tmp/seg.mgz')
-            # utils.save_volume(seg_def, aff, None, '/tmp/seg_def.mgz')
-            # utils.save_volume(v1, aff, None, '/tmp/v1.mgz')
-            # utils.save_volume(v1_def_rot, aff, None, '/tmp/v1_def.mgz')
-            # dti = np.abs(v1 * fa[..., np.newaxis])
-            # utils.save_volume(dti * 255, aff, None, '/tmp/dti.mgz')
-            # utils.save_volume(dti_def * 255, aff, None, '/tmp/dti_def.mgz')
-            # utils.save_volume(onehot, aff, None, '/tmp/onehot_def.mgz')
-
-            list_images.append(np.concatenate((t1_def[..., np.newaxis], fa_def[..., np.newaxis], dti_def), axis=-1)[np.newaxis,...])
-            list_label_maps.append(onehot[np.newaxis,...])
-
-        # build list of inputs of augmentation model
-        list_inputs = [list_images, list_label_maps]
-        if batchsize > 1:  # concatenate each input type if batchsize > 1
-            list_inputs = [np.concatenate(item, 0) for item in list_inputs]
-        else:
-            list_inputs = [item[0] for item in list_inputs]
-
-        yield tuple(list_inputs)
 
 
 
@@ -259,7 +35,8 @@ def image_seg_generator_rgb(training_dir,
                             randomize_flip=True,
                             seg_selection='grouped',
                             flag_deformation=True,
-                            deformation_max = 5.0):
+                            deformation_max = 5.0,
+                            ablate_dti=False):
 
     # check type of one-hot encoding
     assert (seg_selection == 'single') or (seg_selection == 'combined') \
@@ -316,11 +93,7 @@ def image_seg_generator_rgb(training_dir,
     mapping = torch.tensor(mapping, device='cpu').long()
 
 
-
-    # indices =0
-
     # Generate!
-    # count = 0
     while True:
 
         # randomly pick as many images as batchsize
@@ -485,16 +258,7 @@ def image_seg_generator_rgb(training_dir,
             # Note that if you are downsampling, augmentation happens here at low resolution (as will happen at test time)
             lowb_def = utils.augment_t1(lowb_def, gamma_std, contrast_std, brightness_std, max_noise_std)
             fa_def = utils.augment_t1(fa_def, gamma_std, contrast_std, brightness_std, max_noise_std)
-            #for c in range(3):
-            #        dti_def[:,:,:,c] = utils.augment_t1(dti_def[:,:,:,c], gamma_std, contrast_std, brightness_std, max_noise_std)
             dti_def = augment_tract_channel_intensities(dti_def)
-            #dti_def = utils.augment_t1(dti_def, gamma_std, contrast_std, brightness_std, max_noise_std)
-            #if randomize_speckle:
-            #    dti_def, fa_def = speckle_dti_and_fa(dti_def, gamma_std, max_noise_std_fa,
-            #                                         speckle_frac_selected)
-            #else:
-            #    dti_def, fa_def = augment_dti_and_fa(dti_def, gamma_std, max_noise_std_fa)
-
             # Bring back to original resolution if needed
             if randomize_resolution:
                 # TODO: it's crucial to upsample the same way as we do when predicting...
@@ -530,29 +294,14 @@ def image_seg_generator_rgb(training_dir,
 
                     onehot = torch.flip(onehot[..., flip_idx], [0])
 
+            # append the RGB dti volume to the generator yield if ablate flag is false. Otherwise just yield lowb and FA
+            if not ablate_dti:
+                list_images.append((torch.concat((lowb_def[..., None], fa_def[..., None], dti_def), axis=-1)[None, ...]).detach().numpy())
+                list_label_maps.append((onehot[None, ...]).detach().numpy())
+            else:
+                list_images.append((torch.concat((lowb_def[..., None], fa_def[..., None]), axis=-1)[None, ...]).detach().numpy())
+                list_label_maps.append((onehot[None, ...]).detach().numpy())
 
-
-            # If you want to save to disk and open with Freeview during debugging
-            #from utils import save_volume
-            #utils.save_volume(lowb, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/lowb.nii.gz')
-            #utils.save_volume(lowb_def, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/lowb_def.nii.gz')
-            #utils.save_volume(fa, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/fa.nii.gz')
-            #utils.save_volume(fa_def, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/fa_def.nii.gz')
-            #utils.save_volume(seg, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/seg.nii.gz')
-            #utils.save_volume(seg_def, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/seg_def.nii.gz')
-            #utils.save_volume(v1, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/v1.mgz')
-            #dti = np.abs(v1 * fa[..., np.newaxis])
-            #utils.save_volume(v1, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/tracts.nii.gz')
-            #utils.save_volume(dti_def, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/tracts_def.nii.gz')
-            #utils.save_volume(dti_def / (fa_def[..., None] + 1e-6), aff, None, '/tmp/v1_def.mgz')
-            #utils.save_volume(onehot, aff, None, '/autofs/space/nicc_003/users/olchanyi/CRSEG_dev/unet_scripts/scripts/tmp/onehot_def.mgz')
-
-            list_images.append((torch.concat((lowb_def[..., None], fa_def[..., None], dti_def), axis=-1)[None, ...]).detach().numpy())
-            list_label_maps.append((onehot[None, ...]).detach().numpy())
-
-            # count += 1
-            # if count == len(number of examples in validation set):
-            #     count = 0
 
         # build list of inputs of augmentation model
         list_inputs = [list_images, list_label_maps]
@@ -562,6 +311,8 @@ def image_seg_generator_rgb(training_dir,
             list_inputs = [item[0] for item in list_inputs]
 
         yield tuple(list_inputs)
+
+
 
 
 
@@ -898,6 +649,8 @@ def augment_tract_channel_intensities(dti):
         dti[dti > 1] = 1
     return dti
 
+
+
 def augment_4d_histogram(volume,bins=256):
     # Flatten the volume and compute its histogram
     hist = torch.histc(volume, bins=bins, min=0, max=1)
@@ -917,8 +670,11 @@ def augment_4d_histogram(volume,bins=256):
     #adjusted_volume = torch.clamp(adjusted_volume, 0, 1)
     return adjusted_volume
 
+
 def linear_interpolation(x, x0, x1, y0, y1):
     return y0 + (x - x0) * (y1 - y0) / (x1 - x0)
+
+
 
 def interpolate_values(volume, x_values, y_values):
     # Use linear_interpolation to interpolate values for the given volume
@@ -967,9 +723,9 @@ def encode_onehot(mapping, seg_def, label_list, seg_selection, grp_mat):
         onehot /= torch.sum(onehot, dim=-1, keepdim=True)
         # y = tf.transpose(tf.math.unsorted_segment_sum(tf.transpose(y), self.group_seg, num_segments=self.n_groups ))
 
-
-
     return onehot
+
+
 
 def gen_non_linear_rotations(seed_size, crop_size, rotation_sd, Rinv=None, device='cpu'):
 
@@ -1013,11 +769,15 @@ def gen_non_linear_rotations(seed_size, crop_size, rotation_sd, Rinv=None, devic
 
     return R_nonLin
 
+
+
 def rotate_vector(Rinv, nx, ny, nz, rotation_bounds, v1):
     Rinv = gen_non_linear_rotations([5] * 3, [nx, ny, nz], (rotation_bounds / 360) * np.pi, Rinv=Rinv)
     v1_rot = torch.matmul(Rinv, v1[..., None])[:, :, :, :, 0]
     v1_rot /= (torch.sqrt(torch.sum(v1_rot * v1_rot, dim=-1, keepdim=True)) + 1e-6)
     return v1_rot
+
+
 
 def interp_onehot(label_list, onehot_in, thal_mask, xx2, yy2, zz2, cx, cy, cz):
 

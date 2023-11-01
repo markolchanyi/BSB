@@ -41,6 +41,7 @@ def train(training_dir,
              feat_multiplier=2,
              dropout=0,
              attention_gating=False,
+             ablate_dti=False,
              activation='elu',
              lr=1e-4,
              lr_decay=0,
@@ -100,21 +101,10 @@ def train(training_dir,
                                 speckle_frac_selected=speckle_frac_selected,
                                 seg_selection=seg_selection,
                                 flag_deformation=flag_deformation,
-                                deformation_max=deformation_max)
+                                deformation_max=deformation_max,
+                                ablate_dti=ablate_dti)
     else:
-        generator = image_seg_generator(training_dir,
-                                path_label_list,
-                                batchsize=batchsize,
-                                scaling_bounds=scaling_bounds,
-                                rotation_bounds=rotation_bounds,
-                                max_noise_std=max_noise_std,
-                                max_noise_std_fa=max_noise_std_fa,
-                                gamma_std=gamma_std,
-                                contrast_std=contrast_std,
-                                brightness_std=brightness_std,
-                                crop_size=crop_size,
-                                randomize_resolution=randomize_resolution,
-                                diffusion_resolution=diffusion_resolution)
+        print("only an RGB generator is inlcuded in this training script. Sorry!")
 
     label_list = np.sort(np.load(path_label_list)).astype(int)
     n_labels = np.size(label_list)
