@@ -61,21 +61,28 @@ for val in ${StringArray[@]}; do
         bvalpath=$BASEPATH/bvals
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
-        OUTPUTPATH=$BASEPATH/bsb_outputs
+        OUTPUTPATH=$BASEPATH/bsb_outputs_attention
 
-
-
+        ## check for existance of raw dwi path
+        if [ -e $datapath ]
+        then
+                echo data path $datapath found
+        else
+                echo no data file found
+                let ER_COUNTER=ER_COUNTER+1
+        fi
         # ----------- mrtrix BSB preprocessing script ----------- #
         if [ -e $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm_new.nii.gz ]
         then
                 echo "Trackgen outputs already exist...skipping"
         else
-                python ../CRSEG/trackgen_dev.py \
+                python ../scripts/trackgen_dev.py \
                         --datapath $datapath \
                         --bvalpath $bvalpath \
                         --bvecpath $bvecpath \
                         --cropsize 64 \
                         --output $OUTPUTPATH \
+                        --num_threads 50 \
                         --use_fine_labels False
         fi
 
@@ -83,18 +90,26 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $BASEPATH/crseg_outputs_new_medulla/unet_predictions/unet_results/wmunet.seg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions/unet_results/wmunet.crfseg.mgz ]
         then
                 echo "Unet segmentation outputs already exist...skipping"
         else
-                python ../CRSEG/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/9ROI_wmb_model_shelled_v1/dice_345.h5 \
+                python ../scripts/unet_wm_predict.py \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v1/dice_510.h5 \
                         --output_path $OUTPUTPATH/unet_predictions \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \
                         --tract_file $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm.nii.gz \
                         --label_list_path /autofs/space/nicc_003/users/olchanyi/data/CRSEG_unet_training_data/SHELLED_9ROI_training_dataset/brainstem_wm_label_list.npy
         fi
+        let CASE_COUNTER=CASE_COUNTER+1
+
+        echo -------- NUMBER OF CASES DONE ----------
+        echo            $CASE_COUNTER
+        echo ----------------------------------------
 
 
 done
+echo DONE WITH EVERYTHING...
+echo NUMBER OF ERRORS...$ER_COUNTER
+

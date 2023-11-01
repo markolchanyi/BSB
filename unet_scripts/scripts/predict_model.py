@@ -8,7 +8,7 @@ from predict import predict
 
 # keep in list form since you can iterate over multiple sunjects explicitely...implicit will be added soon
 #subject_list = ['subject_101107','subject_103111','subject_103414','subject_103818','subject_105115','subject_111716','subject_114419','subject_115320','subject_116524','subject_122620','subject_123925','subject_127630','subject_EXC007','subject_EXC012','subject_EXC030']
-subject_list = ['subject_EXC030','subject_EXC012','subject_101915','subject_103111','subject_116524']
+subject_list = ['subject_101107','subject_103414','subject_105115','subject_111312','subject_113619','subject_116524','subject_124422','subject_127933','subject_EXC007','subject_EXC012','subject_EXC030']
 fs_subject_dir = '/autofs/space/nicc_003/users/olchanyi/data/CRSEG_unet_training_data/SHELLED_9ROI_training_dataset/validate'
 # for now...must be
 dataset = 'template'

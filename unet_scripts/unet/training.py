@@ -40,6 +40,7 @@ def train(training_dir,
              unet_feat_count=24,
              feat_multiplier=2,
              dropout=0,
+             attention_gating=False,
              activation='elu',
              lr=1e-4,
              lr_decay=0,
@@ -161,6 +162,7 @@ def train(training_dir,
                                  conv_dropout=dropout,
                                  batch_norm=-1,
                                  activation=activation,
+                                 attention_gating=attention_gating,
                                  input_model=None)
 
     # pre-training with weighted L2, input is fit to the softmax rather than the probabilities

@@ -11,7 +11,7 @@ top_level_model_dir = '/autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_m
 
 ## Run specific parameters that will change for ablations
 # Name of the model - link to ablation spreadsheet
-model_name = '9ROI_wmb_model_shelled_v2'
+model_name = 'model_shelled_ablation_NOATTENTION_v1'
 # Fraction of DTI voxels to randomised. Between 0 and 1. Set to 0 to turn off speckle. 1 in 10k sounds right
 speckle_frac_selected=1e-4
 # Flag whether we'll individually rotate the DTI vectors
@@ -80,6 +80,9 @@ unet_feat_count = 24
 feat_multiplier = 2
 # Dropout probability (between 0 and 1, we normally disable it by setting it to 0)
 dropout = 0
+
+# apply high resolution attetion gating
+attention_gating = False
 # Type of activation / nonlinearity (elu is good)
 activation = 'elu'
 # Learning rate: 1e-3 is too much, 1e-5 is generally too little, so 1e-4 is good
@@ -126,6 +129,7 @@ train(training_dir,
              unet_feat_count=unet_feat_count,
              feat_multiplier=feat_multiplier,
              dropout=dropout,
+             attention_gating=attention_gating,
              activation=activation,
              lr=lr,
              lr_decay=lr_decay,

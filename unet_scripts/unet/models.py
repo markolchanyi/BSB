@@ -26,6 +26,7 @@ def unet(nb_features,
          layer_nb_feats=None,
          conv_dropout=0,
          batch_norm=None,
+         attention_gating=False,
          input_model=None):
     """
     unet-style keras model with an overdose of parametrization.
@@ -112,6 +113,7 @@ def unet(nb_features,
                          padding=padding,
                          dilation_rate_mult=dilation_rate_mult,
                          activation=activation,
+                         attention_gating=attention_gating,
                          use_residuals=use_residuals,
                          final_pred_activation='linear' if add_prior_layer else final_pred_activation,
                          nb_conv_per_level=nb_conv_per_level,
@@ -259,6 +261,7 @@ def conv_dec(nb_features,
              dilation_rate_mult=1,
              activation='elu',
              use_residuals=False,
+             attention_gating=True,
              final_pred_activation='softmax',
              nb_conv_per_level=2,
              layer_nb_feats=None,
@@ -326,8 +329,9 @@ def conv_dec(nb_features,
             cat_tensor = input_model.get_layer(conv_name).output
 
             # Add attention gate at the highest resolution level
-            if level == 0:
-                cat_tensor = attention_gate_3d(cat_tensor, up_tensor, n_intermediate_filters=nb_lvl_feats)
+            if attention_gating:
+                if level == 0:
+                    cat_tensor = attention_gate_3d(cat_tensor, up_tensor, n_intermediate_filters=nb_lvl_feats)
 
             name = '%s_merge_%d' % (prefix, nb_levels + level)
             last_tensor = KL.concatenate([cat_tensor, last_tensor], axis=ndims + 1, name=name)

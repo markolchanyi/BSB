@@ -444,7 +444,7 @@ try:
 
     #### delete scratch directory
     print_no_newline("deleting scratch directory... ")
-    shutil.rmtree(scratch_dir)
+    #shutil.rmtree(scratch_dir)
     print("done")
     print("finished case mrtrix and fsl preprocessing \n\n")
 
@@ -452,6 +452,6 @@ except:
     traceback.print_exc()
     print("some exception has occured!!!!")
     print_no_newline("deleting scratch directory...")
-    if os.path.exists(scratch_dir):
-        shutil.rmtree(scratch_dir)
+    #if os.path.exists(scratch_dir):
+    #    shutil.rmtree(scratch_dir)
     print("exiting")
