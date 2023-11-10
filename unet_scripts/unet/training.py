@@ -8,8 +8,7 @@ from keras import models as KM
 from keras.optimizers import Adam
 import metrics
 import models
-from generators import image_seg_generator, image_seg_generator_rgb, \
-    image_seg_generator_rgb_validation
+from generators import image_seg_generator_rgb, image_seg_generator_rgb_validation
 
 
 def train(training_dir,
@@ -40,7 +39,7 @@ def train(training_dir,
              unet_feat_count=24,
              feat_multiplier=2,
              dropout=0,
-             attention_gating=False,
+             attention_gating=True,
              ablate_dti=False,
              activation='elu',
              lr=1e-4,
@@ -140,7 +139,11 @@ def train(training_dir,
     if type(crop_size) == int:
         crop_size = [crop_size] * 3
 
-    unet_input_shape = [*crop_size, 5]
+    # only for the ablation step where if true, training occurs for lowB and FA only!
+    if not ablate_dti:
+        unet_input_shape = [*crop_size, 5]
+    else:
+        unet_input_shape = [*crop_size, 2]
 
     unet_model = models.unet(nb_features=unet_feat_count,
                                  input_shape=unet_input_shape,

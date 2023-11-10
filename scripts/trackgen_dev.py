@@ -93,9 +93,9 @@ try:
         if not os.path.exists(os.path.join(scratch_dir,"data.nii.gz")):
             os.system("cp -v " + args.datapath + " " + os.path.join(scratch_dir,"data.nii.gz"))
         if not os.path.exists(os.path.join(scratch_dir,"dwi.bval")):
-            os.system("rsync -av " + bval_path + " " + os.path.join(scratch_dir,"dwi.bval"))
+            os.system("rsync -av " + bval_path + " " + os.path.join(scratch_dir,"dwi_uncorrected.bval"))
         if not os.path.exists(os.path.join(scratch_dir,"dwi.bvec")):
-            os.system("rsync -av " + bvec_path + " " + os.path.join(scratch_dir,"dwi.bvec"))
+            os.system("rsync -av " + bvec_path + " " + os.path.join(scratch_dir,"dwi_uncorrected.bvec"))
 
 
 
@@ -106,15 +106,19 @@ try:
         #assert dcm_json_header_path != None, 'No DICOM header json file provided. This is required for FSL preprocessing!'
         if dcm_json_header_path != None:
             print("---------- STARTING FSL PREPROCESSING (Eddy + Motion Correction) -----------")
-            os.system("dwifslpreproc " + os.path.join(scratch_dir,"data.nii.gz") + " " + os.path.join(scratch_dir,"dwi.mif") + " -json_import " + dcm_json_header_path + " -rpe_header -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval"))
+            os.system("dwifslpreproc " + os.path.join(scratch_dir,"data.nii.gz") + " " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " -json_import " + dcm_json_header_path + " -rpe_header -fslgrad " + os.path.join(scratch_dir,"dwi_uncorrected.bvec") + " " + os.path.join(scratch_dir,"dwi_uncorrected.bval"))
         else:
             print("no header provided, performing nieve preprocessing (not recommended)...")
         print("Finished FSL preprocessing!")
 
     ## convert dwi to MIF format
     if not os.path.exists(os.path.join(scratch_dir,"dwi.mif")) and not fsl_preprocess:
-        os.system("mrconvert " + os.path.join(scratch_dir,"data.nii.gz") + " " + os.path.join(scratch_dir,"dwi.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
+        os.system("mrconvert " + os.path.join(scratch_dir,"data.nii.gz") + " " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi_uncorrected.bvec") + " " + os.path.join(scratch_dir,"dwi_uncorrected.bval") + " -nthreads " + str(num_threads) + " -force")
 
+    ## check gradient table and fix it, A-P grad direction mismatches happen often!
+        print("checking and fixing gradient table...")
+        os.system("dwigradcheck " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " -export_grad_fsl " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
+        os.system("mrconvert " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " " + os.path.join(scratch_dir,"dwi.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
 
     # extract header voxel resolution and match it to HCP data (1.25mm iso) and
     # find out if single-shell or not to degermine which FOD algorithm to use.
@@ -191,9 +195,9 @@ try:
     os.system("mri_binarize --noverbose --i " + os.path.join(samseg_path,"seg.mgz ") + " --o " + os.path.join(scratch_dir,"thal.nii") + " --match " + str(thal_labels[0]) + " " + str(thal_labels[1]))
     os.system("mri_binarize --noverbose --i " + os.path.join(samseg_path,"seg.mgz ") + " --o " + os.path.join(scratch_dir,"CB.nii") + " --match " + str(CB_labels[0]) + " " + str(CB_labels[1]))
     os.system("mri_binarize --noverbose --i " + os.path.join(samseg_path,"seg.mgz ") + " --o " + os.path.join(scratch_dir,"brainstem.nii") + " --match " + str(brainstem_label))
-    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"midbrain.nii") + " --match " + str(midbrain_label))
-    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"pons.nii") + " --match " + str(pons_label))
-    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"medulla.nii") + " --match " + str(medulla_label))
+    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"midbrain_unsliced.nii") + " --match " + str(midbrain_label))
+    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"pons_unsliced.nii") + " --match " + str(pons_label))
+    os.system("mri_binarize --noverbose --i " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " --o " + os.path.join(scratch_dir,"medulla_unsliced.nii") + " --match " + str(medulla_label))
     print("done")
 
 
@@ -201,8 +205,13 @@ try:
     os.system("mri_binarize --noverbose --i " + os.path.join(samseg_path,"seg.mgz") + " --o " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " --match " + str(brainstem_label) + " " + str(thal_labels[0]) + " " + str(thal_labels[1]))
     os.system("mri_binarize --noverbose --i " + os.path.join(samseg_path,"seg.mgz ") + " --o " + os.path.join(scratch_dir,"all_labels.nii") + " --match " + str(thal_labels[0]) + " " + str(thal_labels[1]) + " " + str(DC_labels[0]) + " " + str(DC_labels[1]) + " " + str(CB_labels[0]) + " " + str(CB_labels[1]) + " " + str(brainstem_label))
     #os.system("mrcentroid -voxelspace " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " > " + os.path.join(scratch_dir,"thal_brainstem_cntr_coords.txt"))
+    ## normalize and find center point of pons to crop the ROI ##
+    os.system("mri_convert " + os.path.join(scratch_dir,'pons_unsliced.nii') + " " + os.path.join(scratch_dir,'pons.nii') + " -rl " + os.path.join(output_dir,'lowb_1mm.nii.gz') + " -rt nearest -odt float")
+    os.system("mri_convert " + os.path.join(scratch_dir,'midbrain_unsliced.nii') + " " + os.path.join(scratch_dir,'midbrain.nii') + " -rl " + os.path.join(output_dir,'lowb_1mm.nii.gz') + " -rt nearest -odt float")
+    os.system("mri_convert " + os.path.join(scratch_dir,'medulla_unsliced.nii') + " " + os.path.join(scratch_dir,'medulla.nii') + " -rl " + os.path.join(output_dir,'lowb_1mm.nii.gz') + " -rt nearest -odt float")
+
     os.system("mrcentroid -voxelspace " + os.path.join(scratch_dir,'pons.nii') + " > " + os.path.join(scratch_dir,"thal_brainstem_cntr_coords.txt"))
-    os.system("mri_info --vox2ras " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " > " + os.path.join(scratch_dir,"thal_brainstem_vox2ras.txt"))
+    os.system("mri_info --vox2ras " + os.path.join(scratch_dir,"pons.nii") + " > " + os.path.join(scratch_dir,"thal_brainstem_vox2ras.txt"))
 
     brainstem_cntr_arr = np.loadtxt(os.path.join(scratch_dir,"thal_brainstem_cntr_coords.txt"))
     brainstem_cntr_arr_hom = np.append(brainstem_cntr_arr,1.0) ## make homogenous array

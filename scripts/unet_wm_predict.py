@@ -47,6 +47,7 @@ def unet_predict(output_path,
                              conv_dropout=0,
                              batch_norm=-1,
                              activation=activation,
+                             attention_gating=True,
                              input_model=None)
 
     unet_model.load_weights(model_file, by_name=True)

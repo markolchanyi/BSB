@@ -84,7 +84,7 @@ dropout = 0
 # apply high resolution attetion gating
 attention_gating = True
 #train only on lowB and FA
-ablate_dti=False
+ablate_dti=True
 # Type of activation / nonlinearity (elu is good)
 activation = 'elu'
 # Learning rate: 1e-3 is too much, 1e-5 is generally too little, so 1e-4 is good

@@ -26,7 +26,7 @@ def unet(nb_features,
          layer_nb_feats=None,
          conv_dropout=0,
          batch_norm=None,
-         attention_gating=False,
+         attention_gating=True,
          input_model=None):
     """
     unet-style keras model with an overdose of parametrization.
