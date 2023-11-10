@@ -3,6 +3,8 @@ import argparse
 import json
 import numpy as np
 from dipy.io.image import load_nifti, save_nifti
+from scipy import ndimage
+
 
 def print_no_newline(string):
     sys.stdout.write(string)
@@ -111,6 +113,28 @@ def tractography_mask(template_vol_path,output_path):
 
     mask_vol[min_point[0]:max_point[0],min_point[1]:max_point[1],min_point[2]:max_point[2]] = 1
     save_nifti(output_path,mask_vol,aff)
+
+
+def crop_around_centroid(vol,mask_vol,crop_size=64):
+    ## COM
+    COM = ndimage.measurements.center_of_mass(mask_vol)
+    COM = np.round(COM).astype(int)
+
+    # Define the cube dimensions
+    cube_size = crop_size
+    half_size = cube_size // 2
+    # Calculate the bounds for cropping
+    start = np.maximum(center_of_mass - half_size, 0)
+    end = start + cube_size
+    end = np.minimum(end, volume.shape)
+    start = end - cube_size
+
+    if vol.ndims == 3:
+        cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2],:]
+    else:
+        cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2]]
+    return cropped_vol
+
 
 
 

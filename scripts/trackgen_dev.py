@@ -10,7 +10,7 @@ import multiprocessing as mp
 import nibabel as nib
 from dipy.io.streamline import load_tractogram, save_tractogram
 from dipy.io.stateful_tractogram import is_header_compatible
-from utils import print_no_newline, parse_args_mrtrix, count_shells, get_header_resolution, tractography_mask, rescale_intensities
+from utils import print_no_newline, parse_args_mrtrix, count_shells, get_header_resolution, tractography_mask, rescale_intensities, crop_around_centroid
 
 
 
@@ -218,11 +218,33 @@ try:
     #vox2ras_mat = np.loadtxt(os.path.join(scratch_dir,"thal_brainstem_vox2ras.txt"))
     #ras_cntr = np.matmul(vox2ras_mat,brainstem_cntr_arr_hom.T) ## RAS coordinate transform through nultiplying by transform matrix
 
-    ## crop all invariant volumes to U-Net cropsize
+
+    ### crop volumes around pons center!
+    vol_pons = nib.load(os.path.join(scratch_dir,'pons.nii'))
+    vol_pons_np = vol_pons.get_fdata()
+
+    ##### lowb and fa cropping ####
     print_no_newline("cropping invariant volumes to comply with unet dimensions... ")
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,'fa_1mm.nii.gz') + " " + os.path.join(output_dir,'fa_1mm_cropped.nii.gz'))
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,'lowb_1mm.nii.gz') + " " + os.path.join(output_dir,'lowb_1mm_cropped.nii.gz'))
+    vol_lowb = nib.load(os.path.join(os.path.join(output_dir,'lowb_1mm.nii.gz'))
+    vol_lowb_np = vol_lowb.get_fdata()
+    vol_lowb_cropped = crop_around_centroid(vol_lowb_np,vol_pons_np,crop_size=crop_size)
+    output_img_lowb_cropped = nib.Nifti1Image(vol_lowb_cropped, vol_lowb.affine, vol_lowb.header)
+    nib.save(output_img_lowb_cropped, os.path.join(output_dir,'lowb_1mm_cropped.nii.gz'))
+
+    vol_fa = nib.load(os.path.join(os.path.join(output_dir,'fa_1mm.nii.gz'))
+    vol_fa_np = vol_fa.get_fdata()
+    vol_fa_cropped = crop_around_centroid(vol_fa_np,vol_pons_np,crop_size=crop_size)
+    output_img_fa_cropped = nib.Nifti1Image(vol_fa_cropped, vol_fa.affine, vol_fa.header)
+    nib.save(output_img_fa_cropped, os.path.join(output_dir,'fa_1mm_cropped.nii.gz'))
     print("done")
+
+
+
+    ## crop all invariant volumes to U-Net cropsize
+    #print_no_newline("cropping invariant volumes to comply with unet dimensions... ")
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,'fa_1mm.nii.gz') + " " + os.path.join(output_dir,'fa_1mm_cropped.nii.gz'))
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,'lowb_1mm.nii.gz') + " " + os.path.join(output_dir,'lowb_1mm_cropped.nii.gz'))
+    #print("done")
 
     print_no_newline("creating tractography mask from thal and brainstem labels...")
     track_mask = tractography_mask(os.path.join(scratch_dir,"all_labels.nii"),os.path.join(scratch_dir,'tractography_mask.nii.gz'))
@@ -356,7 +378,7 @@ try:
     if not os.path.exists(os.path.join(scratch_dir,"tracts_CB.mif")):
         os.system("tckmap " + os.path.join(scratch_dir,"tracts_CB.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_CB.mif") + " -force")
 
-    
+
     ##### converting tracts into scalar tract densities
     #if not os.path.exists(os.path.join(scratch_dir,"tracts_thal_rev.mif")):
     #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_thal_rev.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_thal_rev.mif") + " -force")
