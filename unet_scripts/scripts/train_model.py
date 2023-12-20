@@ -11,7 +11,7 @@ top_level_model_dir = '/autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_m
 
 ## Run specific parameters that will change for ablations
 # Name of the model - link to ablation spreadsheet
-model_name = 'model_shelled_ablation_NORGBSTREAMLINES_v1'
+model_name = 'model_shelled_ablation_COLORFA_v1'
 # Fraction of DTI voxels to randomised. Between 0 and 1. Set to 0 to turn off speckle. 1 in 10k sounds right
 speckle_frac_selected=1e-4
 # Flag whether we'll individually rotate the DTI vectors
@@ -84,7 +84,7 @@ dropout = 0
 # apply high resolution attetion gating
 attention_gating = True
 #train only on lowB and FA
-ablate_dti=True
+ablate_dti=False
 # Type of activation / nonlinearity (elu is good)
 activation = 'elu'
 # Learning rate: 1e-3 is too much, 1e-5 is generally too little, so 1e-4 is good

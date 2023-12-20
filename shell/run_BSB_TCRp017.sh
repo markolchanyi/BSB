@@ -17,7 +17,7 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 
 
 # Declare an array of string with type
-declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/EX_VIVO/EXC007")
+declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp015_ses-early")
 
 
 for val in ${StringArray[@]}; do
@@ -25,11 +25,11 @@ for val in ${StringArray[@]}; do
         echo basepath provided is: $BASEPATH
 
         ## extract brain mask
-        datapath=$BASEPATH/data_preprocessed.nii.gz
+        datapath=$BASEPATH/data.nii.gz
         bvalpath=$BASEPATH/bvals
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
-        OUTPUTPATH=$BASEPATH/bsb_outputs_attention_nativeres
+        OUTPUTPATH=$BASEPATH/bsb_outputs_attention_test
 
         ## check for existance of raw dwi path
         if [ -e $datapath ]
@@ -40,7 +40,7 @@ for val in ${StringArray[@]}; do
                 let ER_COUNTER=ER_COUNTER+1
         fi
         # ----------- mrtrix BSB preprocessing script ----------- #
-        if [ -e $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm_new_new.nii.gz ]
+        if [ -e $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm_new.nii.gz ]
         then
                 echo "Trackgen outputs already exist...skipping"
         else
@@ -50,7 +50,7 @@ for val in ${StringArray[@]}; do
                         --bvecpath $bvecpath \
                         --cropsize 64 \
                         --output $OUTPUTPATH \
-                        --num_threads 60 \
+                        --num_threads 50 \
                         --use_fine_labels False
         fi
 
@@ -58,7 +58,7 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $OUTPUTPATH/unet_predictions/unet_results_new/wmunet.crfseg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions/unet_results/wmunet.crfseg.mgz ]
         then
                 echo "Unet segmentation outputs already exist...skipping"
         else

@@ -135,6 +135,8 @@ try:
         os.system("rm " + os.path.join(scratch_dir,"dwi.mif"))
         os.system("mv " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " " + os.path.join(scratch_dir,"dwi.mif"))
         print("done")
+    else:
+        print("running BSB on native resolution...")
 
     ## extract mean b0 volume
     print_no_newline("extracting temporary b0...")
@@ -161,20 +163,26 @@ try:
     ## ----------- run Bayesian brainstem subfield segmentation: this requires making the directory look like ----------- ##
     os.makedirs(os.path.join(scratch_dir,"fs_subj_dir","mri"))
     os.system("mri_convert " + os.path.join(scratch_dir,"mean_b0_synthsr.nii.gz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz"))
+    #os.system("mrgrid " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " regrid -vox 1.0 " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " -force")
     shutil.copy(os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz"), os.path.join(scratch_dir,"fs_subj_dir","mri","norm.mgz"))
     shutil.copy(os.path.join(samseg_path,"seg.mgz"), os.path.join(scratch_dir,"fs_subj_dir","mri","aseg.mgz"))
-    os.system("mri_convert " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -odt float")
-    os.system("mri_convert " + os.path.join(scratch_dir,"fs_subj_dir","mri","norm.mgz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","norm.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -odt float")
+    #os.system("mri_convert " + os.path.join(samseg_path,"seg.mgz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","aseg.mgz") + " -rl " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " -rt nearest -odt float")
+    #os.system("mrgrid " + os.path.join(scratch_dir,"fs_subj_dir","mri","aseg.mgz") + " regrid -interp nearest -vox 1.0 " + os.path.join(scratch_dir,"fs_subj_dir","mri","aseg.mgz") + " -force")
+    #os.system("mri_convert " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","T1.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -odt float")
+    #os.system("mri_convert " + os.path.join(scratch_dir,"fs_subj_dir","mri","norm.mgz") + " " + os.path.join(scratch_dir,"fs_subj_dir","mri","norm.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -odt float")
     os.makedirs(os.path.join(scratch_dir,"brainstem_subfields"))
     os.system("segment_subregions brainstem --out-dir=" + os.path.join(scratch_dir,"brainstem_subfields") + " --cross " + os.path.join(scratch_dir,"fs_subj_dir") + " --threads 80")
-    os.system("mri_convert " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + "-rt nearest -odt float")
-
+    #os.system("mri_convert " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + "-rt nearest -odt float")
+    #os.system("mrinfo " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz"))
+    #os.system("mrinfo " + os.path.join(output_dir,"lowb_1mm.nii.gz"))
     ## ----------- segment the hypothalamus from the synthSR MPRage -------------- ##
     #os.makedirs(os.path.join(scratch_dir,"hypothalamic_seg"))
     #os.system("mri_segment_hypothalamic_subunits --i " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " --o " + os.path.join(output_dir,"hypothalamic_seg") + " --threads 10 --cpu")
     #os.system("sh /autofs/space/nicc_003/users/olchanyi/CRSEG_dev/CRSEG/shell/hypothal_seg.sh " + os.path.join(scratch_dir,"mean_b0_synthsr.nii.gz") + " " +  os.path.join(scratch_dir,"hypothalamic_seg"))
     #shutil.copy(os.path.join(scratch_dir,"hypothalamic_seg","mean_b0_synthsr_hypo_seg.nii.gz"),os.path.join(output_dir,"lowb_synthsr_hypo_seg.nii.gz"))
 
+    ## resample brainstem subfield volumes ##
+    #os.system("mri_convert " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -odt float")
 
     ###########################
     thal_labels = [10,49]
@@ -225,17 +233,23 @@ try:
 
     ##### lowb and fa cropping ####
     print_no_newline("cropping invariant volumes to comply with unet dimensions... ")
-    vol_lowb = nib.load(os.path.join(os.path.join(output_dir,'lowb_1mm.nii.gz'))
+    vol_lowb = nib.load(os.path.join(output_dir,'lowb_1mm.nii.gz'))
     vol_lowb_np = vol_lowb.get_fdata()
     vol_lowb_cropped = crop_around_centroid(vol_lowb_np,vol_pons_np,crop_size=crop_size)
     output_img_lowb_cropped = nib.Nifti1Image(vol_lowb_cropped, vol_lowb.affine, vol_lowb.header)
     nib.save(output_img_lowb_cropped, os.path.join(output_dir,'lowb_1mm_cropped.nii.gz'))
 
-    vol_fa = nib.load(os.path.join(os.path.join(output_dir,'fa_1mm.nii.gz'))
+    vol_fa = nib.load(os.path.join(output_dir,'fa_1mm.nii.gz'))
     vol_fa_np = vol_fa.get_fdata()
     vol_fa_cropped = crop_around_centroid(vol_fa_np,vol_pons_np,crop_size=crop_size)
     output_img_fa_cropped = nib.Nifti1Image(vol_fa_cropped, vol_fa.affine, vol_fa.header)
     nib.save(output_img_fa_cropped, os.path.join(output_dir,'fa_1mm_cropped.nii.gz'))
+
+    vol_v1 = nib.load(os.path.join(output_dir,"v1_1mm.nii.gz"))
+    vol_v1_np = vol_v1.get_fdata()
+    vol_v1_cropped = crop_around_centroid(vol_v1_np,vol_pons_np,crop_size=crop_size)
+    output_img_v1_cropped = nib.Nifti1Image(vol_v1_cropped, vol_v1.affine, vol_v1.header)
+    nib.save(output_img_v1_cropped, os.path.join(output_dir,"v1_1mm_cropped_norm.nii.gz"))
     print("done")
 
 
@@ -433,10 +447,15 @@ try:
     ### move relevent files back to static directory
     os.system("mv " + os.path.join(scratch_dir,"tracts_concatenated.mif") + " " + output_dir)
     os.system("mrgrid " + os.path.join(output_dir,"tracts_concatenated.mif") + " regrid -voxel 1.0 " + os.path.join(output_dir,"tracts_concatenated_1mm.mif" + " -force"))
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " " + os.path.join(scratch_dir,'thal_brainstem_union_cropped.mgz'))
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " " + os.path.join(scratch_dir,'thal_brainstem_union_cropped.mgz'))
     os.system("mrconvert " + os.path.join(output_dir,"tracts_concatenated_1mm.mif") + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " -datatype float32 -force")
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " " + os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " " + os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
 
+    vol_tracts = nib.load(os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz"))
+    vol_tracts_np = vol_tracts.get_fdata()
+    vol_tracts_cropped = crop_around_centroid(vol_tracts_np,vol_pons_np,crop_size=crop_size)
+    output_img_tracts_cropped = nib.Nifti1Image(vol_tracts_cropped, vol_tracts.affine, vol_tracts.header)
+    nib.save(output_img_tracts_cropped, os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
 
     ### move relevent files back to static directory
     #os.system("mv " + os.path.join(scratch_dir,"tracts_concatenated_new.mif") + " " + output_dir)

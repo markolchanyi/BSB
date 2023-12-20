@@ -22,7 +22,11 @@ def predict(subject_list,
                 activation='elu',
                 bounding_box_width=64,
                 aff_ref=np.eye(4),
-                shell_flag=None):
+                shell_flag=None,
+                attention=True,
+                ablate_rgb=False,
+                use_v1=False,
+                outputpath="results"):
 
 
     
@@ -35,7 +39,10 @@ def predict(subject_list,
     label_list = np.load(path_label_list)
 
     # Build Unet
-    unet_input_shape = [bounding_box_width, bounding_box_width, bounding_box_width, 5]
+    if ablate_rgb:
+        unet_input_shape = [bounding_box_width, bounding_box_width, bounding_box_width, 2]
+    else:
+        unet_input_shape = [bounding_box_width, bounding_box_width, bounding_box_width, 5]
     n_labels = len(label_list)
 
     unet_model = models.unet(nb_features=unet_feat_count,
@@ -48,22 +55,23 @@ def predict(subject_list,
                              conv_dropout=0,
                              batch_norm=-1,
                              activation=activation,
-                             attention_gating=True,
+                             attention_gating=False,
                              input_model=None)
 
     unet_model.load_weights(model_file, by_name=True)
 
 
+    results_base_dir = outputpath
     ### iteratre over subjects
     for subject in subject_list:
 
-        if not os.path.exists(os.path.join(fs_subject_dir, subject, 'results')):
-            os.mkdir(os.path.join(fs_subject_dir, subject, 'results'))
-        output_seg_file = os.path.join(fs_subject_dir, subject, 'results', 'bsNet.seg.mgz')
-        output_crf_file = os.path.join(fs_subject_dir, subject, 'results', 'bsNet.crfposterior.mgz')
-        output_crf_seg_file = os.path.join(fs_subject_dir, subject, 'results', 'bsNet.crfseg.mgz')
-        output_posteriors_file = os.path.join(fs_subject_dir, subject, 'results', 'bsNet.posteriors.mgz')
-        output_vol_file = os.path.join(fs_subject_dir, subject, 'results', 'bsNet.vol.npy')
+        if not os.path.exists(os.path.join(fs_subject_dir, subject, results_base_dir)):
+            os.mkdir(os.path.join(fs_subject_dir, subject, results_base_dir))
+        output_seg_file = os.path.join(fs_subject_dir, subject, results_base_dir, 'bsNet.seg.mgz')
+        output_crf_file = os.path.join(fs_subject_dir, subject, results_base_dir, 'bsNet.crfposterior.mgz')
+        output_crf_seg_file = os.path.join(fs_subject_dir, subject, results_base_dir, 'bsNet.crfseg.mgz')
+        output_posteriors_file = os.path.join(fs_subject_dir, subject, results_base_dir, 'bsNet.posteriors.mgz')
+        output_vol_file = os.path.join(fs_subject_dir, subject, results_base_dir, 'bsNet.vol.npy')
 
         # File names
         if dataset=='HCP':
@@ -76,7 +84,10 @@ def predict(subject_list,
         if dataset == 'template':
             t1_file = os.path.join(fs_subject_dir, subject, 'dmri', 'lowb.nii.gz')
             fa_file = os.path.join(fs_subject_dir, subject, 'dmri', 'FA.nii.gz')
-            v1_file = os.path.join(fs_subject_dir, subject, 'dmri', 'tracts.nii.gz')
+            if use_v1:
+                v1_file = os.path.join(fs_subject_dir, subject, 'dmri', 'v1.nii.gz')
+            else:
+                v1_file = os.path.join(fs_subject_dir, subject, 'dmri', 'tracts.nii.gz')
 
 
         # Read in and reorient T1
@@ -131,7 +142,11 @@ def predict(subject_list,
             #dti = v1
 
         # Predict with left-right flipping augmentation
-        input = np.concatenate((t1[..., np.newaxis], fa[..., np.newaxis], dti), axis=-1)[np.newaxis,...]
+        if ablate_rgb:
+            input = np.concatenate((t1[..., np.newaxis], fa[..., np.newaxis]), axis=-1)[np.newaxis,...]
+        else:
+            input = np.concatenate((t1[..., np.newaxis], fa[..., np.newaxis], dti), axis=-1)[np.newaxis,...]
+
         posteriors = np.squeeze(unet_model.predict(input))
         posteriors_flipped = np.squeeze(unet_model.predict(input[:,::-1,:,:,:]))
         print("shape of posteriors is: ", posteriors.shape)
@@ -144,30 +159,7 @@ def predict(subject_list,
         posteriors[:,:,:,nlab+1:] = 0.5 * posteriors[:,:,:,nlab+1:] + 0.5 *  posteriors_flipped[::-1,:,:,1:nlab+1]
         #posteriors[:,:,:,1:7] = 0.5 * posteriors[:,:,:,1:7] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
         #posteriors[:,:,:,1:nlab+1] = 0.5 * posteriors[:,:,:,1:nlab+1] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
-        # Fill holes
-        #thal_mask = posteriors[..., 0] < 0.5
-        #thal_mask = ndimage.binary_fill_holes(thal_mask)
 
-
-        # remove stray voxels with conn comps
-        #thal_mask_copy = thal_mask.copy()
-        # min_size: size of largest objects to remove
-        # connectivity: for connected components, 1 is 6-connected, 2 is
-        # 18-connected, and 3 is 26-connected   
-        #min_size = 10
-        #connectivity = 3
-        #thal_mask = morphology.remove_small_objects(thal_mask_copy, min_size=min_size, connectivity=connectivity)
-            
-        ### OR just remove largest connected component
-        #cc_labels = label(thal_mask_copy,connectivity=connectivity)
-        #thal_mask = cc_labels == np.argmax(np.bincount(cc_labels.flat, weights=thal_mask_copy.flat))
-
-
-
-        #posteriors[thal_mask, 0] = 0
-        #posteriors /= np.sum(posteriors, axis=-1)[..., np.newaxis]
-
-        #components, n_components = ndimage.label(thal_mask)
 
         # TODO: it'd be good to do some postprocessing here. I would do something like:
         # 1. Create a mask for the whole left thalamus, as the largest connected component of the union of left labels

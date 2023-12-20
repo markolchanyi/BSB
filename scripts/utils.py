@@ -120,19 +120,24 @@ def crop_around_centroid(vol,mask_vol,crop_size=64):
     COM = ndimage.measurements.center_of_mass(mask_vol)
     COM = np.round(COM).astype(int)
 
+    print("COM is: ", COM)
     # Define the cube dimensions
-    cube_size = crop_size
-    half_size = cube_size // 2
+    cube_size = int(crop_size)
+    half_size = int(cube_size/2)
+    half_size = (np.ones_like(COM)*half_size).astype(int)
+
+    print("crop size is: ", cube_size)
+    print("half size is: ", half_size)
     # Calculate the bounds for cropping
-    start = np.maximum(center_of_mass - half_size, 0)
-    end = start + cube_size
-    end = np.minimum(end, volume.shape)
+    start = np.maximum(COM - half_size, np.zeros(3, dtype=int))
+    end = np.minimum(start + cube_size, np.array(mask_vol.shape, dtype=int))
+
     start = end - cube_size
 
-    if vol.ndims == 3:
-        cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2],:]
-    else:
+    if vol.ndim == 3:
         cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2]]
+    else:
+        cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2],:]
     return cropped_vol
 
 
