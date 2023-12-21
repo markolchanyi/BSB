@@ -115,7 +115,7 @@ def tractography_mask(template_vol_path,output_path):
     save_nifti(output_path,mask_vol,aff)
 
 
-def crop_around_centroid(vol,mask_vol,crop_size=64):
+def crop_around_centroid(vol,mask_vol,affine,crop_size=64):
     ## COM
     COM = ndimage.measurements.center_of_mass(mask_vol)
     COM = np.round(COM).astype(int)
@@ -138,7 +138,12 @@ def crop_around_centroid(vol,mask_vol,crop_size=64):
         cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2]]
     else:
         cropped_vol = vol[start[0]:end[0],start[1]:end[1],start[2]:end[2],:]
-    return cropped_vol
+
+    # Adjust the affine matrix to retain same RAS coordinates
+    new_affine = affine.copy()
+    new_affine[:3, 3] += np.dot(affine[:3, :3], start)
+
+    return cropped_vol, new_affine
 
 
 

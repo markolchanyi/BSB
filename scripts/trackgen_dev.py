@@ -169,11 +169,6 @@ try:
     os.system("segment_subregions brainstem --out-dir=" + os.path.join(scratch_dir,"brainstem_subfields") + " --cross " + os.path.join(scratch_dir,"fs_subj_dir") + " --threads 80")
     os.system("mri_convert " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " " + os.path.join(scratch_dir,"brainstem_subfields","brainstemSsLabels.FSvoxelSpace.mgz") + " -rl " + os.path.join(scratch_dir,"mean_b0.nii.gz") + "-rt nearest -odt float")
 
-    ## ----------- segment the hypothalamus from the synthSR MPRage -------------- ##
-    #os.makedirs(os.path.join(scratch_dir,"hypothalamic_seg"))
-    #os.system("mri_segment_hypothalamic_subunits --i " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " --o " + os.path.join(output_dir,"hypothalamic_seg") + " --threads 10 --cpu")
-    #os.system("sh /autofs/space/nicc_003/users/olchanyi/CRSEG_dev/CRSEG/shell/hypothal_seg.sh " + os.path.join(scratch_dir,"mean_b0_synthsr.nii.gz") + " " +  os.path.join(scratch_dir,"hypothalamic_seg"))
-    #shutil.copy(os.path.join(scratch_dir,"hypothalamic_seg","mean_b0_synthsr_hypo_seg.nii.gz"),os.path.join(output_dir,"lowb_synthsr_hypo_seg.nii.gz"))
 
 
     ###########################
@@ -223,19 +218,27 @@ try:
     vol_pons = nib.load(os.path.join(scratch_dir,'pons.nii'))
     vol_pons_np = vol_pons.get_fdata()
 
+
     ##### lowb and fa cropping ####
+    ## keep only the first new cropped affine from the lowb ##
     print_no_newline("cropping invariant volumes to comply with unet dimensions... ")
-    vol_lowb = nib.load(os.path.join(os.path.join(output_dir,'lowb_1mm.nii.gz'))
+    vol_lowb = nib.load(os.path.join(output_dir,'lowb_1mm.nii.gz'))
     vol_lowb_np = vol_lowb.get_fdata()
-    vol_lowb_cropped = crop_around_centroid(vol_lowb_np,vol_pons_np,crop_size=crop_size)
-    output_img_lowb_cropped = nib.Nifti1Image(vol_lowb_cropped, vol_lowb.affine, vol_lowb.header)
+    vol_lowb_cropped, new_cropped_affine = crop_around_centroid(vol_lowb_np,vol_pons_np,vol_lowb.affine,crop_size=crop_size)
+    output_img_lowb_cropped = nib.Nifti1Image(vol_lowb_cropped, new_cropped_affine, vol_lowb.header)
     nib.save(output_img_lowb_cropped, os.path.join(output_dir,'lowb_1mm_cropped.nii.gz'))
 
-    vol_fa = nib.load(os.path.join(os.path.join(output_dir,'fa_1mm.nii.gz'))
+    vol_fa = nib.load(os.path.join(output_dir,'fa_1mm.nii.gz'))
     vol_fa_np = vol_fa.get_fdata()
-    vol_fa_cropped = crop_around_centroid(vol_fa_np,vol_pons_np,crop_size=crop_size)
-    output_img_fa_cropped = nib.Nifti1Image(vol_fa_cropped, vol_fa.affine, vol_fa.header)
+    vol_fa_cropped, _ = crop_around_centroid(vol_fa_np,vol_pons_np,vol_fa.affine,crop_size=crop_size)
+    output_img_fa_cropped = nib.Nifti1Image(vol_fa_cropped, new_cropped_affine, vol_fa.header)
     nib.save(output_img_fa_cropped, os.path.join(output_dir,'fa_1mm_cropped.nii.gz'))
+
+    vol_v1 = nib.load(os.path.join(output_dir,"v1_1mm.nii.gz"))
+    vol_v1_np = vol_v1.get_fdata()
+    vol_v1_cropped, _ = crop_around_centroid(vol_v1_np,vol_pons_np,vol_v1.affine,crop_size=crop_size)
+    output_img_v1_cropped = nib.Nifti1Image(vol_v1_cropped, new_cropped_affine, vol_v1.header)
+    nib.save(output_img_v1_cropped, os.path.join(output_dir,"v1_1mm_cropped_norm.nii.gz"))
     print("done")
 
 
@@ -313,19 +316,6 @@ try:
 
 
 
-    ## ------------- probabilistic tract generation for new volumes volumes ------------- ##
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_thal.tck")):
-    #    print("starting tracking on thal.mif")
-    #    os.system("tckgen -algorithm iFOD2 -angle 50 -select 50000 -seed_image " + os.path.join(scratch_dir,"DC.mif") + " -include " + os.path.join(scratch_dir,"pons.mif") + " -include " + os.path.join(scratch_dir,"medulla.mif") + " -exclude " + os.path.join(scratch_dir,"CB.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_hypothal.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask_medulla_hypothal.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -force -nthreads 20")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_DC.tck")):
-    #    print("starting tracking on DC.mif")
-    #    os.system("tckgen -algorithm iFOD2 -angle 50 -select 50000 -seed_image " + os.path.join(scratch_dir,"thal.mif") + " -include " + os.path.join(scratch_dir,"pons.mif") + " -include " + os.path.join(scratch_dir,"medulla.mif") + " -exclude " + os.path.join(scratch_dir,"CB.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_pons.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask_medulla_hypothal.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -force -nthreads 20")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_CB.tck")):
-    #    print("starting tracking on CB.mif")
-    #    os.system("tckgen -algorithm iFOD2 -angle 50 -select 50000 -seed_image " + os.path.join(scratch_dir,"DC.mif") + " -exclude " + os.path.join(scratch_dir,"medulla.mif") + " -include " + os.path.join(scratch_dir,"midbrain.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_midbrain.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask_medulla_hypothal.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -force -nthreads 20")
-
-
-
 
     ## ------------- probabilistic tract generation for original volumes ------------- ##
     if not os.path.exists(os.path.join(scratch_dir,"tracts_thal.tck")):
@@ -338,17 +328,6 @@ try:
         print("starting tracking on CB.mif")
         os.system("tckgen -algorithm iFOD2 -angle 50 -select 100000 -seed_image " + os.path.join(scratch_dir,"DC.mif") + " -include " + os.path.join(scratch_dir,"CB.mif") + " -exclude " + os.path.join(scratch_dir,"pons.mif") + " -exclude " + os.path.join(scratch_dir,"medulla.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_CB.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -cutoff 0.1 -maxlength 200 -step 0.5 -force -nthreads " + str(num_threads))
 
-
-
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_thal_rev.tck")):
-     #   print("starting rev tracking on thal.mif")
-        #os.system("tckgen -algorithm iFOD2 -angle 50 -select 100000 -seed_image " + os.path.join(scratch_dir,"pons.mif") + " -include " + os.path.join(scratch_dir,"thal.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_thal_rev.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -cutoff 0.1 -maxlength 200 -step 0.5  -force -nthreads 80")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_DC_rev.tck")):
-     #   print("starting rev tracking on DC.mif")
-        #os.system("tckgen -algorithm iFOD2 -angle 50 -select 100000 -seed_image " + os.path.join(scratch_dir,"pons.mif") + " -include " + os.path.join(scratch_dir,"pons.mif") + " -include " + os.path.join(scratch_dir,"DC.mif") + " -exclude " + os.path.join(scratch_dir,"CB.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_DC_rev.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -cutoff 0.1 -maxlength 200 -step 0.5 -force -nthreads 80")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_CB_rev.tck")):
-     #   print("starting rev tracking on CB.mif")
-        #os.system("tckgen -algorithm iFOD2 -angle 50 -select 50000 -seed_image " + os.path.join(scratch_dir,"DC.mif") + " -include " + os.path.join(scratch_dir,"DC.mif") +  " -exclude " + os.path.join(scratch_dir,"medulla.mif") + " " + os.path.join(scratch_dir,"wmfod_norm.mif") + " " + os.path.join(scratch_dir,"tracts_CB_rev.tck") + " -mask " + os.path.join(scratch_dir,'tractography_mask.nii.gz') + " -max_attempts_per_seed 750 -trials 750 -cutoff 0.1 -maxlength 200 -step 0.5 -force -nthreads 80")
 
 
 
@@ -379,22 +358,6 @@ try:
         os.system("tckmap " + os.path.join(scratch_dir,"tracts_CB.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_CB.mif") + " -force")
 
 
-    ##### converting tracts into scalar tract densities
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_thal_rev.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_thal_rev.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_thal_rev.mif") + " -force")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_DC_rev.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_DC_rev.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_DC_rev.mif") + " -force")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_CB_rev.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_CB_rev.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_CB_rev.mif") + " -force")
-
-    ##### converting tracts into scalar tract densities
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_hypothal.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_hypothal.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_hypothal.mif") + " -force")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_pons.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_pons.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_pons.mif") + " -force")
-    #if not os.path.exists(os.path.join(scratch_dir,"tracts_midbrain.mif")):
-    #    os.system("tckmap " + os.path.join(scratch_dir,"tracts_midbrain.tck") + " -template " + os.path.join(scratch_dir,"mean_b0.mif") + " -contrast tdi " + os.path.join(scratch_dir,"tracts_midbrain.mif") + " -force")
-
     ### perform tract-wise histrogram normalization. matched with the CB tract map. Syntax is | type | input | target | output
     os.system("mrhistmatch linear " + os.path.join(scratch_dir,"tracts_CB.mif") + " " + os.path.join(scratch_dir,"tracts_thal.mif") + " " + os.path.join(scratch_dir,"tracts_CB_matched.mif") + " -force")
     os.system("mrhistmatch linear " + os.path.join(scratch_dir,"tracts_DC.mif") + " " + os.path.join(scratch_dir,"tracts_thal.mif") + " " + os.path.join(scratch_dir,"tracts_DC_matched.mif") + " -force")
@@ -407,11 +370,6 @@ try:
 
     #os.system("mrcalc " + os.path.join(scratch_dir,"tracts_CB_rev_matched.mif") + " 3 -mult " + os.path.join(scratch_dir,"tracts_CB_rev_matched.mif") + " -force")
     #os.system("mrcalc " + os.path.join(scratch_dir,"tracts_DC_rev_matched.mif") + " 4 -mult " + os.path.join(scratch_dir,"tracts_DC_rev_matched.mif") + " -force")
-
-    ### perform tract-wise histrogram normalization. matched with the CB tract map. Syntax is | type | input | target | output
-    #os.system("mrhistmatch linear " + os.path.join(scratch_dir,"tracts_pons.mif") + " " + os.path.join(scratch_dir,"tracts_hypothal.mif") + " " + os.path.join(scratch_dir,"tracts_pons_matched.mif") + " -force")
-    #os.system("mrhistmatch linear " + os.path.join(scratch_dir,"tracts_midbrain.mif") + " " + os.path.join(scratch_dir,"tracts_hypothal.mif") + " " + os.path.join(scratch_dir,"tracts_midbrain_matched.mif") + " -force")
-
 
 
     ### turn into color map
@@ -458,24 +416,30 @@ try:
     vol_fa = nib.load(os.path.join(output_dir,"fa_1mm_cropped.nii.gz"))
     vol_fa_np = vol_fa.get_fdata()
 
+    vol_header = nib.load(os.path.join(output_dir,"lowb_1mm_cropped.nii.gz"))
+    vol_header_np = vol_header.get_fdata()
+
     ### rescaling
     vol_tracts_np_normalized = rescale_intensities(vol_tracts_np,factor=20)
     vol_lowb_np_normalized = rescale_intensities(vol_lowb_np,factor=5)
     vol_fa_np_normalized = rescale_intensities(vol_fa_np,factor=5)
 
-    output_img_tracts = nib.Nifti1Image(vol_tracts_np_normalized, vol_tracts.affine, vol_tracts.header)
+    output_img_tracts = nib.Nifti1Image(vol_tracts_np_normalized, new_cropped_affine, vol_header.header)
     nib.save(output_img_tracts, os.path.join(output_dir,"tracts_concatenated_1mm_cropped_norm.nii.gz"))
 
-    output_img_lowb = nib.Nifti1Image(vol_lowb_np_normalized, vol_lowb.affine, vol_lowb.header)
+    output_img_lowb = nib.Nifti1Image(vol_lowb_np_normalized, new_cropped_affine, vol_header.header)
     nib.save(output_img_lowb, os.path.join(output_dir,"lowb_1mm_cropped_norm.nii.gz"))
 
-    output_img_fa = nib.Nifti1Image(vol_fa_np_normalized, vol_tracts.affine, vol_tracts.header)
+    output_img_fa = nib.Nifti1Image(vol_fa_np_normalized, new_cropped_affine, vol_header.header)
     nib.save(output_img_fa, os.path.join(output_dir,"fa_1mm_cropped_norm.nii.gz"))
     print("done")
 
-    #### delete scratch directory
+    #### delete scratch directory and any other peripherals (include here!)
     print_no_newline("deleting scratch directory... ")
-    #shutil.rmtree(scratch_dir)
+    shutil.rmtree(scratch_dir)
+    os.remove(os.path.join(output_dir,"tracts_thal.trk"))
+    os.remove(os.path.join(output_dir,"tracts_CB.trk"))
+    os.remove(os.path.join(output_dir,"tracts_DC.trk"))
     print("done")
     print("finished case mrtrix and fsl preprocessing \n\n")
 
@@ -483,6 +447,6 @@ except:
     traceback.print_exc()
     print("some exception has occured!!!!")
     print_no_newline("deleting scratch directory...")
-    #if os.path.exists(scratch_dir):
-    #    shutil.rmtree(scratch_dir)
+    if os.path.exists(scratch_dir):
+        shutil.rmtree(scratch_dir)
     print("exiting")
