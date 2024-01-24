@@ -3,7 +3,7 @@ import keras.backend as K
 import keras.layers as KL
 import numpy as np
 from keras.models import Model
-
+import nibabel as nib
 
 def unet(nb_features,
          input_shape,
@@ -330,7 +330,7 @@ def conv_dec(nb_features,
 
             # Add attention gate at the highest resolution level
             if attention_gating:
-                if level == 0:
+                if level == nb_levels - 2:
                     cat_tensor = attention_gate_3d(cat_tensor, up_tensor, n_intermediate_filters=nb_lvl_feats)
 
             name = '%s_merge_%d' % (prefix, nb_levels + level)
@@ -429,7 +429,7 @@ def _softmax(x, axis=-1, alpha=1):
         raise ValueError('Cannot apply softmax to a tensor that is 1D')
 
 
-def attention_gate_3d(x, g, n_intermediate_filters=24):
+def attention_gate_3d(x, g, n_intermediate_filters=24,save_attention_layer=True):
     """
     x: feat map from the encoder output
     g: feat map from the decoder output
@@ -441,10 +441,11 @@ def attention_gate_3d(x, g, n_intermediate_filters=24):
 
     # Add the transformed tensors and pass through a ReLU activation
     psi = KL.add([Wg, Wx])
-    psi = KL.Activation(activation='relu')(psi)
+    psi = KL.Activation(activation='elu')(psi)
 
     # Pass the result through a 1x1x1 convolution to generate the attention coefficients (alpha)
-    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='sigmoid')(psi)
+    name = 'attn_coeffs'
+    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='sigmoid', name=name)(psi)
 
     # Multiply the encoder tensor by the attention coefficients to generate the output
     out = KL.multiply([x, alpha])

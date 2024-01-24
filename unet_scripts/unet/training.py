@@ -8,7 +8,37 @@ from keras import models as KM
 from keras.optimizers import Adam
 import metrics
 import models
+import nibabel as nib
 from generators import image_seg_generator_rgb, image_seg_generator_rgb_validation
+from tensorflow.keras.callbacks import Callback as tf_callback
+
+
+class SaveAttentionLayerOutput(tf_callback):
+    def __init__(self, model, layer_name, save_path):
+        super().__init__()
+        self.model = model
+        self.layer_name = layer_name
+        self.save_path = save_path
+        self.attention_layer = model.get_layer(layer_name).output
+        # Create a function to fetch the output of the attention layer
+        self.get_attention_output = tf.keras.backend.function([model.input], [self.attention_layer])
+
+    def on_epoch_end(self, epoch, logs=None):
+        # Generate some input data or use validation data here
+        # input_data = ...
+
+        # Get the output of the attention layer
+        attention_output = self.get_attention_output([input_data])[0]
+
+        # Convert the output to a Numpy array
+        attention_output_np = np.array(attention_output)
+
+        # Save the numpy array as a NIfTI file
+        affine = np.eye(4)  # Replace with the correct affine matrix for your data
+        attention_nifti = nib.Nifti1Image(attention_output_np, affine)
+        nib.save(attention_nifti, f'{self.save_path}/attention_output_epoch_{epoch}.nii.gz')
+        print(f'Attention layer output saved for epoch {epoch}')
+
 
 
 def train(training_dir,
@@ -203,6 +233,9 @@ def train_model(model,
     # TensorBoard callback
     if metric_type == 'dice':
         callbacks.append(KC.TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=True, write_images=False))
+
+    # Attention gating weight saving callback
+    save_attention_output_callback = SaveAttentionLayerOutput(model, 'attn_coeffs', '/autofs/space/nicc_003/users/olchanyi/BSB/unet_scripts/scripts')
 
     compile_model = True
     init_epoch = 0

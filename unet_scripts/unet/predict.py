@@ -3,9 +3,11 @@ import os
 import numpy as np
 from scipy import ndimage
 
+import tensorflow as tf
 import utils as utils
 import models
 from dcrf_gradient import dense_crf_inference 
+import nibabel as nib
 
 def predict(subject_list,
                 fs_subject_dir,
@@ -55,11 +57,11 @@ def predict(subject_list,
                              conv_dropout=0,
                              batch_norm=-1,
                              activation=activation,
-                             attention_gating=False,
+                             attention_gating=True,
                              input_model=None)
 
     unet_model.load_weights(model_file, by_name=True)
-
+    print("loaded: ",model_file)
 
     results_base_dir = outputpath
     ### iteratre over subjects
@@ -157,17 +159,18 @@ def predict(subject_list,
         #posteriors[:,:,:,8] = 0.5 * posteriors[:,:,:,8] + 0.5 *  posteriors_flipped[::-1,:,:,8] #MLF
         posteriors[:,:,:,1:nlab+1] = 0.5 * posteriors[:,:,:,1:nlab+1] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
         posteriors[:,:,:,nlab+1:] = 0.5 * posteriors[:,:,:,nlab+1:] + 0.5 *  posteriors_flipped[::-1,:,:,1:nlab+1]
-        #posteriors[:,:,:,1:7] = 0.5 * posteriors[:,:,:,1:7] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
-        #posteriors[:,:,:,1:nlab+1] = 0.5 * posteriors[:,:,:,1:nlab+1] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
 
+        # extract attention layer output
+        print(unet_model.summary())
 
-        # TODO: it'd be good to do some postprocessing here. I would do something like:
-        # 1. Create a mask for the whole left thalamus, as the largest connected component of the union of left labels
-        # 2. Dilate the mask eg by 3 voxels.
-        # 3. Set to zero the probability of all left thalamic nuclei in the voxels outside the mask
-        # 4. Repeat 1-3 with the right thalamus
-        # 5. Renormalize posteriors by dividing by their sum (plus epsilon)
+        attention_layer_output = unet_model.get_layer('attn_coeffs').output
+        print("found: ",attention_layer_output)
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
 
+        attention_nifti = nib.Nifti1Image(attention_output, aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_coeffs.nii.gz"))
+        ##########
         # Compute volumes (skip background)
         voxel_vol_mm3 = np.linalg.det(aff2)
         vols_in_mm3 = np.sum(posteriors, axis=(0,1,2))[1:] * voxel_vol_mm3

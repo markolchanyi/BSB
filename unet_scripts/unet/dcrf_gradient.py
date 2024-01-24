@@ -78,4 +78,3 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.03, entropy_weight
 
     #return np.argmax(Q, axis=-1)
     return Q
-

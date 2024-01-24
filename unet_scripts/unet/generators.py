@@ -137,7 +137,7 @@ def image_seg_generator_rgb(training_dir,
             #fa_file = fa_list[fa_index]
             fa_file = fa_list[0]
             prefix = fa_file[:-10]
-            v1_file = glob.glob(subject_path + '/dmri/v1.nii.gz')[0]
+            v1_file = glob.glob(subject_path + '/dmri/tracts.nii.gz')[0]
 
             lowb, aff, _ = utils.load_volume(lowb_file, im_only=False)
             fa = utils.load_volume(fa_file)

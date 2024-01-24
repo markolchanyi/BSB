@@ -144,7 +144,7 @@ try:
         os.system("mrconvert " + os.path.join(scratch_dir,"mean_b0.mif") + " " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -datatype float32 -force")
         ## calculate all scalar volumes from tensor fit and move to output
         os.system("dwi2tensor " + os.path.join(scratch_dir,"dwi.mif") + " " + os.path.join(scratch_dir,"dwi_dt.mif") + " -nthreads " + str(num_threads) + " -force")
-        os.system("tensor2metric " + os.path.join(scratch_dir,"dwi_dt.mif") + " -fa " + os.path.join(output_dir,"fa_1mm.nii.gz") + " -ad " + os.path.join(output_dir,"ad_1mm.nii.gz") + "  -rd " + os.path.join(output_dir,"rd_1mm.nii.gz") + " -vector " + os.path.join(output_dir,"v1_1mm.nii.gz") + " -value " + os.path.join(output_dir,"l1_1mm.nii.gz") + " -force")
+        os.system("tensor2metric " + os.path.join(scratch_dir,"dwi_dt.mif") + " -adc " + os.path.join(output_dir,"md_1mm.nii.gz") +  " -fa " + os.path.join(output_dir,"fa_1mm.nii.gz") + " -ad " + os.path.join(output_dir,"ad_1mm.nii.gz") + "  -rd " + os.path.join(output_dir,"rd_1mm.nii.gz") + " -vector " + os.path.join(output_dir,"v1_1mm.nii.gz") + " -value " + os.path.join(output_dir,"l1_1mm.nii.gz") + " -force")
         #os.system("tensor2metric -dkt " + os.path.join(scratch_dir,"dkt.mif") + " -mk " + os.path.join(output_dir,"mk_1mm.nii.gz") + " -rk " + os.path.join(output_dir,"rk_1mm.nii.gz") + " -ak " + os.path.join(output_dir,"ak_1mm.nii.gz") + " -force")
     print("done")
 

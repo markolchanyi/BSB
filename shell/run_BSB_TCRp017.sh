@@ -17,8 +17,7 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 
 
 # Declare an array of string with type
-declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp017_ses-late"
-                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp017_ses-late/acute_test")
+declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp001_ses-early")
 
 
 for val in ${StringArray[@]}; do
@@ -30,7 +29,7 @@ for val in ${StringArray[@]}; do
         bvalpath=$BASEPATH/bvals
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
-        OUTPUTPATH=$BASEPATH/bsb_outputs_attention_test
+        OUTPUTPATH=$BASEPATH/bsb_outputs_attention
 
         ## check for existance of raw dwi path
         if [ -e $datapath ]
