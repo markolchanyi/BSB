@@ -85,12 +85,12 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $OUTPUTPATH/unet_predictions_newattention/unet_results/wmunet.crfseg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions_newattention/unet_results_TESTTEST/wmunet.crfseg.mgz ]
         then
             	echo "Unet segmentation outputs already exist...skipping"
         else
             	python ../scripts/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v2/dice_510.h5 \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_465.h5 \
                         --output_path $OUTPUTPATH/unet_predictions_newattention \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \

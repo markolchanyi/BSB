@@ -235,7 +235,7 @@ def train_model(model,
         callbacks.append(KC.TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=True, write_images=False))
 
     # Attention gating weight saving callback
-    save_attention_output_callback = SaveAttentionLayerOutput(model, 'attn_coeffs', '/autofs/space/nicc_003/users/olchanyi/BSB/unet_scripts/scripts')
+    #save_attention_output_callback = SaveAttentionLayerOutput(model, 'attn_coeffs', '/autofs/space/nicc_003/users/olchanyi/BSB/unet_scripts/scripts')
 
     compile_model = True
     init_epoch = 0

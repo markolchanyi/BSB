@@ -1,12 +1,13 @@
 import os
-
+import math
 import numpy as np
 from scipy import ndimage
 
 import tensorflow as tf
 import utils as utils
 import models
-from dcrf_gradient import dense_crf_inference 
+from dcrf_gradient import dense_crf_inference
+from scipy.ndimage import gaussian_filter 
 import nibabel as nib
 
 def predict(subject_list,
@@ -28,10 +29,11 @@ def predict(subject_list,
                 attention=True,
                 ablate_rgb=False,
                 use_v1=False,
-                outputpath="results"):
+                outputpath="results",
+                ds_factor=None):
 
 
-    
+
     assert (generator_mode == 'fa_v1') | (generator_mode == 'rgb'), \
         'generator mode must be fa_v1 or rgb'
 
@@ -102,25 +104,6 @@ def predict(subject_list,
             print('Warning: t1 does not have the resolution that the CNN expects; we need to resample')
             t1, aff2 = utils.rescale_voxel_size(t1, aff2, [resolution_model_file, resolution_model_file, resolution_model_file])
 
-        # Normalize the T1
-        #wm_mask = (aseg == 2) | (aseg == 41)
-        #wm_t1_median = np.median(t1[wm_mask])
-        #t1 = t1 / wm_t1_median * 0.75
-        #t1[t1 < 0] = 0
-        #t1[t1 > 1] = 1
-
-        # Find the center of the thalamus and crop a volumes around it
-        #th_mask = (aseg == 10) | (aseg == 49)
-        #idx = np.where(th_mask)
-        #i1 = (np.mean(idx[0]) - np.round(0.5 * bounding_box_width)).astype(int)
-        #j1 = (np.mean(idx[1]) - np.round(0.5 * bounding_box_width)).astype(int)
-        #k1 = (np.mean(idx[2]) - np.round(0.5 * bounding_box_width)).astype(int)
-        #i2 = i1 + bounding_box_width
-        #j2 = j1 + bounding_box_width
-        #k2 = k1 + bounding_box_width
-
-        #t1 = t1[i1:i2, j1:j2, k1:k2]
-        #aff2[:-1, -1] = aff2[:-1, -1] + np.matmul(aff2[:-1, :-1], np.array([i1, j1, k1])) # preserve the RAS coordinates
 
         # Now the diffusion data
         # We only resample in the cropped region
@@ -143,6 +126,18 @@ def predict(subject_list,
             dti = utils.resample_like(t1, aff2, v1, aff)
             #dti = v1
 
+        if ds_factor is not None:
+            gauss_sigma = ds_factor/math.sqrt(12)
+            print("Downsampling sith sigma = ",str(gauss_sigma))
+            t1 = gaussian_filter(t1, sigma=gauss_sigma)
+            fa = gaussian_filter(fa, sigma=gauss_sigma)
+
+            # for SIM volume
+            print("filtering SIM across ", str(dti.shape[3]), " channels")
+            for channel in range(dti.shape[3]):
+                # Apply Gaussian filter to each channel in-place
+                dti[:,:,:,channel] = gaussian_filter(dti[:,:,:,channel], sigma=gauss_sigma)
+
         # Predict with left-right flipping augmentation
         if ablate_rgb:
             input = np.concatenate((t1[..., np.newaxis], fa[..., np.newaxis]), axis=-1)[np.newaxis,...]
@@ -156,21 +151,92 @@ def predict(subject_list,
         nlab = int(( len(label_list) - 1 ) / 2)
         print("number of labels: ", nlab)
         posteriors[:,:,:,0] = 0.5 * posteriors[:,:,:,0] + 0.5 *  posteriors_flipped[::-1,:,:,0] #Background
-        #posteriors[:,:,:,8] = 0.5 * posteriors[:,:,:,8] + 0.5 *  posteriors_flipped[::-1,:,:,8] #MLF
         posteriors[:,:,:,1:nlab+1] = 0.5 * posteriors[:,:,:,1:nlab+1] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
         posteriors[:,:,:,nlab+1:] = 0.5 * posteriors[:,:,:,nlab+1:] + 0.5 *  posteriors_flipped[::-1,:,:,1:nlab+1]
 
         # extract attention layer output
-        print(unet_model.summary())
+        #print(unet_model.summary())
 
+
+        ###########
         attention_layer_output = unet_model.get_layer('attn_coeffs').output
-        print("found: ",attention_layer_output)
         get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
         attention_output = get_attention_output([input])[0]
 
-        attention_nifti = nib.Nifti1Image(attention_output, aff2)
+        attention_nifti = nib.Nifti1Image(attention_output[0,:,:,:,0], aff2)
         nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_coeffs.nii.gz"))
         ##########
+
+
+        ###########
+        attention_layer_output = unet_model.get_layer('attn_wx').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_wx.nii.gz"))
+        ##########
+
+
+        ###########
+        attention_layer_output = unet_model.get_layer('attn_add').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_add.nii.gz"))
+        ##########
+
+        ###########
+        attention_layer_output = unet_model.get_layer('attn_out').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_out.nii.gz"))
+        ##########
+
+
+        ###########
+        attention_layer_output = unet_model.get_layer('unet_conv_downarm_0_1').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"unet_conv_downarm_0_1.nii.gz"))
+        ##########
+
+        ###########
+        attention_layer_output = unet_model.get_layer('attn_g_0').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_g_0.nii.gz"))
+        ##########
+
+
+        ###########
+        attention_layer_output = unet_model.get_layer('attn_g_1').output
+        get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        attention_output = get_attention_output([input])[0]
+
+        attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_g_1.nii.gz"))
+        ##########
+
+
+
+        ###########
+        #attention_layer_output = unet_model.get_layer('attn_g_2').output
+        #get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
+        #attention_output = get_attention_output([input])[0]
+
+        #attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
+        #nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_g_2.nii.gz"))
+        ##########
+
+
         # Compute volumes (skip background)
         voxel_vol_mm3 = np.linalg.det(aff2)
         vols_in_mm3 = np.sum(posteriors, axis=(0,1,2))[1:] * voxel_vol_mm3

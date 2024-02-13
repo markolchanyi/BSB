@@ -17,12 +17,23 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 
 
 # Declare an array of string with type
-declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/003_S_6264"
-			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/003_S_6833"
-			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/016_S_6708"
-			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/033_S_6976"
-			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/036_S_4430"
-			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/168_S_6142")
+declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/033_S_7079"
+			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/168_S_6180"
+			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/037_S_6141"
+			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/137_S_6903"
+			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/003_S_6954"
+			"/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/137_S_6883"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/036_S_6134"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/003_S_6479"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/016_S_6800"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/168_S_6908"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/016_S_7039"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/033_S_6697"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/941_S_6052"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/003_S_1122"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/037_S_0150"
+                        "/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii/016_S_7002")
+
 
 
 for val in ${StringArray[@]}; do
@@ -41,7 +52,7 @@ for val in ${StringArray[@]}; do
         bvalpath=$BASEPATH/bvals
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
-        OUTPUTPATH=$BASEPATH/bsb_outputs
+        OUTPUTPATH=$BASEPATH/bsb_outputs_attention
 
 
 
@@ -69,7 +80,7 @@ for val in ${StringArray[@]}; do
                 echo "Unet segmentation outputs already exist...skipping"
         else
                 python ../CRSEG/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/9ROI_wmb_model_shelled_v2/dice_405.h5 \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/9ROI_wmb_model_shelled_v10/dice_405.h5 \
                         --output_path $OUTPUTPATH/unet_predictions \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \

@@ -312,6 +312,9 @@ def conv_dec(nb_features,
     # up arm:
     # nb_levels - 1 layers of Deconvolution3D
     #    (approx via up + conv + ReLu) + merge + conv + ReLu + conv + ReLu
+
+    up_tensor_query_list = []
+
     lfidx = 0
     for level in range(nb_levels - 1):
         nb_lvl_feats = np.round(nb_features * feat_mult ** (nb_levels - 2 - level)).astype(int)
@@ -319,9 +322,15 @@ def conv_dec(nb_features,
 
         # upsample matching the max pooling layers size
         name = '%s_up_%d' % (prefix, nb_levels + level)
+        query_name = '%s_query_up_%d' % (prefix, nb_levels + level)
+
+        # query list is for attention gating
+        attn_upsample_pool_size = tuple([x ** (nb_levels - level - 1) for x in pool_size])
+        if level >=2:
+            #print("appending size: ",last_tensor.shape)
+            up_tensor_query_list.append(upsample(size=attn_upsample_pool_size, name=query_name)(last_tensor))
         last_tensor = upsample(size=pool_size, name=name)(last_tensor)
         up_tensor = last_tensor
-
         # merge layers combining previous layer
         # TODO: add Cropping3D or Cropping2D if 'valid' padding
         if use_skip_connections:
@@ -331,7 +340,8 @@ def conv_dec(nb_features,
             # Add attention gate at the highest resolution level
             if attention_gating:
                 if level == nb_levels - 2:
-                    cat_tensor = attention_gate_3d(cat_tensor, up_tensor, n_intermediate_filters=nb_lvl_feats)
+                    ## upsample everything in the concatenated query list of feat outputs...dirty
+                    cat_tensor = attention_gate_3d(cat_tensor, up_tensor_query_list, n_intermediate_filters=nb_lvl_feats)
 
             name = '%s_merge_%d' % (prefix, nb_levels + level)
             last_tensor = KL.concatenate([cat_tensor, last_tensor], axis=ndims + 1, name=name)
@@ -435,19 +445,31 @@ def attention_gate_3d(x, g, n_intermediate_filters=24,save_attention_layer=True)
     g: feat map from the decoder output
     n_intermediate_filters: number of intermediate filters
     """
+    g_conv_list = []
     # Linear transformation on both inp and g using 3D convolutions
-    Wg = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(g)
-    Wx = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(x)
-
+    for count,g_tensor in enumerate(g):
+        name = 'attn_g_%d' % count
+        g_conv = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='GlorotNormal', activation='tanh', name=name)(g_tensor)
+        #g_conv_sigmoid = KL.Activation('sigmoid')(g_conv)
+        g_conv_list.append(g_conv)
+        #g_conv_list.append(KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(g_tensor))
+    #Wg = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal')(g)
+    name = 'attn_wx'
+    Wx = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='GlorotNormal', activation='tanh', name=name)(x)
+    #Wx_sigmoid = KL.Activation('sigmoid')(Wx)
     # Add the transformed tensors and pass through a ReLU activation
-    psi = KL.add([Wg, Wx])
-    psi = KL.Activation(activation='elu')(psi)
+    #psi = KL.add([Wg, Wx])
+    name = 'attn_add'
+    psi = KL.add([Wx] + g_conv_list)
+    psi = KL.Activation(activation='elu', name=name)(psi)
 
+    #psi_neg = -psi
     # Pass the result through a 1x1x1 convolution to generate the attention coefficients (alpha)
     name = 'attn_coeffs'
-    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='sigmoid', name=name)(psi)
+    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='GlorotNormal', activation='sigmoid', name=name)(psi)
 
     # Multiply the encoder tensor by the attention coefficients to generate the output
-    out = KL.multiply([x, alpha])
+    name = "attn_out"
+    out = KL.multiply([x, alpha], name=name)
 
     return out
