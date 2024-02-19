@@ -63,7 +63,7 @@ def predict(subject_list,
                              input_model=None)
 
     unet_model.load_weights(model_file, by_name=True)
-    print("loaded: ",model_file)
+    print("loaded: ", model_file)
 
     results_base_dir = outputpath
     ### iteratre over subjects
@@ -96,7 +96,6 @@ def predict(subject_list,
 
         # Read in and reorient T1
         t1, aff, _ = utils.load_volume(t1_file, im_only=False)
-        print("SIZE OF T1 IS: ", t1.shape)
         t1, aff2 = utils.align_volume_to_ref(t1, aff, aff_ref=aff_ref, return_aff=True, n_dims=3)
 
         # If the resolution is not the one the model expected, we need to upsample!
@@ -128,12 +127,11 @@ def predict(subject_list,
 
         if ds_factor is not None:
             gauss_sigma = ds_factor/math.sqrt(12)
-            print("Downsampling sith sigma = ",str(gauss_sigma))
+            print("Downsampling with sigma = ",str(gauss_sigma))
             t1 = gaussian_filter(t1, sigma=gauss_sigma)
             fa = gaussian_filter(fa, sigma=gauss_sigma)
 
             # for SIM volume
-            print("filtering SIM across ", str(dti.shape[3]), " channels")
             for channel in range(dti.shape[3]):
                 # Apply Gaussian filter to each channel in-place
                 dti[:,:,:,channel] = gaussian_filter(dti[:,:,:,channel], sigma=gauss_sigma)
@@ -146,10 +144,9 @@ def predict(subject_list,
 
         posteriors = np.squeeze(unet_model.predict(input))
         posteriors_flipped = np.squeeze(unet_model.predict(input[:,::-1,:,:,:]))
-        print("shape of posteriors is: ", posteriors.shape)
-        print("shape of flipped posteriors is: ", posteriors_flipped.shape)
+        #print("shape of posteriors is: ", posteriors.shape)
+        #print("shape of flipped posteriors is: ", posteriors_flipped.shape)
         nlab = int(( len(label_list) - 1 ) / 2)
-        print("number of labels: ", nlab)
         posteriors[:,:,:,0] = 0.5 * posteriors[:,:,:,0] + 0.5 *  posteriors_flipped[::-1,:,:,0] #Background
         posteriors[:,:,:,1:nlab+1] = 0.5 * posteriors[:,:,:,1:nlab+1] + 0.5 *  posteriors_flipped[::-1,:,:,nlab+1:]
         posteriors[:,:,:,nlab+1:] = 0.5 * posteriors[:,:,:,nlab+1:] + 0.5 *  posteriors_flipped[::-1,:,:,1:nlab+1]
@@ -167,7 +164,7 @@ def predict(subject_list,
         nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_coeffs.nii.gz"))
         ##########
 
-
+        ''' 
         ###########
         attention_layer_output = unet_model.get_layer('attn_wx').output
         get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
@@ -226,7 +223,6 @@ def predict(subject_list,
         ##########
 
 
-
         ###########
         #attention_layer_output = unet_model.get_layer('attn_g_2').output
         #get_attention_output = tf.keras.backend.function([unet_model.input], [attention_layer_output])
@@ -235,7 +231,7 @@ def predict(subject_list,
         #attention_nifti = nib.Nifti1Image(attention_output[0,...], aff2)
         #nib.save(attention_nifti,os.path.join(fs_subject_dir, subject, results_base_dir,"attn_g_2.nii.gz"))
         ##########
-
+        '''
 
         # Compute volumes (skip background)
         voxel_vol_mm3 = np.linalg.det(aff2)
@@ -254,6 +250,6 @@ def predict(subject_list,
         utils.save_volume(seg.astype(int), aff2, None, output_seg_file)
         np.save(output_vol_file, vols_in_mm3)
         utils.save_volume(posteriors, aff2, None, output_posteriors_file)
-        print('freeview ' + t1_file + ' ' + fa_file + ' '  + output_seg_file)
+        #print('freeview ' + t1_file + ' ' + fa_file + ' '  + output_seg_file)
 
         print('All done!')

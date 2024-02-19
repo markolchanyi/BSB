@@ -1,6 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 import tensorflow as tf
+import math
 
 def compute_entropy(posteriors):
     return -np.sum(posteriors * np.log(posteriors + 1e-8), axis=-1)
@@ -45,7 +46,6 @@ def RBF_kernel(size=3, sigma=1.0):
 
 
 def convolve_4d_with_gaussian(vol, size=3, sigma=1.0):
-    """Convolves a 4D numpy array with a Gaussian kernel across all spatial dimensions."""
     vol = tf.convert_to_tensor(vol, dtype=tf.float32)
     output_channels = []
 
@@ -69,9 +69,9 @@ def convolve_4d_with_gaussian(vol, size=3, sigma=1.0):
 
 
 
-def dense_crf_inference(cnn_output, iterations=5, step_size=0.015, entropy_weight=0.01, unary_weight=1.0, sigma_alpha=2.0, sigma_beta=5.0, sigma_K=1.0, radius=1, use_grad=False, rbf_convolve=True):
+def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight=0.05, unary_weight=1.0, sigma_alpha=2.0, sigma_beta=0.1, sigma_K=1.5, radius=1, use_grad=False, rbf_convolve=True):
     print(" =========== running CRF cleanup =========== ")
-    print("ierations: ", str(iterations))
+    print("iterations: ", str(iterations))
     print("unary potential weight: ", str(unary_weight))
     print("entropy potential weight: ", str(entropy_weight))
     print("sigma_alpha: ", str(sigma_alpha))
@@ -87,11 +87,17 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.015, entropy_weigh
     pairwise_matrices = {}  # pairwise potential cache
     new_Q = np.copy(unary)  # Initialize with unary potentials
 
+    sigma_scale = 1/(math.pi*sigma_beta*sigma_K)
+
+    print("--- pairwise scaling: " + str(sigma_scale) + " ---")
+
     for _ in range(iterations):
         print("---- iteration " + str(_) + " ----")
 
         # approximate distance term of pairwise potential with RBF each iteration
         # kernel size should be the same size as the local region for pairwise pot.
+
+        # don't interatively convolve!!
         if rbf_convolve:
             new_Q_rbf_convolved = convolve_4d_with_gaussian(new_Q, size=(radius*2+1), sigma=sigma_K)
 
@@ -100,12 +106,12 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.015, entropy_weigh
                 for x in range(5, width - 5):
                     if rbf_convolve:
                         local_region = new_Q_rbf_convolved[z-radius:z+radius+1, y-radius:y+radius+1, x-radius:x+radius+1, :]
-                        for l in range(1, num_labels):  # Skip the background channel
-                            pairwise_diff = np.maximum(0, new_Q_rbf_convolved[z, y, x, l] - local_region[..., l])
-                            new_Q[z, y, x, l] -= step_size * (np.sum(pairwise_diff, axis=(0, 1, 2)))
+                        pairwise_diff = np.maximum(0, new_Q_rbf_convolved[z, y, x, :] - local_region[..., :])
+                        #print("shape: ", np.sum(pairwise_diff, axis=(0, 1, 2)).shape)
+                        new_Q[z, y, x, :] -= step_size * sigma_scale * (np.sum(pairwise_diff, axis=(0, 1, 2)))
 
                         # apply opposite pairwise energy penalty to background label just to avoid background inpainting/dominance
-                        new_Q[z, y, x, 0] += step_size * 0.5 * np.sum(pairwise_diff, axis=(0, 1, 2))
+                        new_Q[z, y, x, 0] += step_size * sigma_scale * np.sum(pairwise_diff[...,0], axis=(0, 1, 2))
 
                     else:
                         local_region = new_Q[z-radius:z+radius+1, y-radius:y+radius+1, x-radius:x+radius+1, :]
@@ -114,7 +120,9 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.015, entropy_weigh
                                 pairwise_matrices[l] = compute_pairwise(local_region[...,l], radius, sigma_alpha, sigma_beta, use_grad)
 
                             positive_diff = np.maximum(0, new_Q[z, y, x, l] - local_region[..., l])
+                            #print("positive diff: ", positive_diff.shape)
                             pairwise_diff = pairwise_matrices[l] * positive_diff
+                            #print("pairwise diff: ", pairwise_diff.shape)
                             new_Q[z, y, x, l] -= step_size * (np.sum(pairwise_diff, axis=(0, 1, 2)))
 
                         # apply opposite pairwise energy penalty to background label just to avoid background inpainting/dominance
