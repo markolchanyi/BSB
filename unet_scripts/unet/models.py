@@ -338,10 +338,14 @@ def conv_dec(nb_features,
             cat_tensor = input_model.get_layer(conv_name).output
 
             # Add attention gate at the highest resolution level
+            # for the updated attention gate, set the only active level to level == nb_levels - 2
+            # otherwise, leave set to nb_levels - 4 <= level <= nb_levels - 2 for the original implementation...
             if attention_gating:
                 if level == nb_levels - 2:
+                #if nb_levels - 4 <= level and level <= nb_levels - 2:
                     ## upsample everything in the concatenated query list of feat outputs...dirty
                     cat_tensor = attention_gate_3d(cat_tensor, up_tensor_query_list, n_intermediate_filters=nb_lvl_feats)
+                    #cat_tensor = attention_gate_3d_orig(cat_tensor, up_tensor, layer_num=level, n_intermediate_filters=nb_lvl_feats)
 
             name = '%s_merge_%d' % (prefix, nb_levels + level)
             last_tensor = KL.concatenate([cat_tensor, last_tensor], axis=ndims + 1, name=name)
@@ -471,5 +475,30 @@ def attention_gate_3d(x, g, n_intermediate_filters=24,save_attention_layer=True)
     # Multiply the encoder tensor by the attention coefficients to generate the output
     name = "attn_out"
     out = KL.multiply([x, alpha], name=name)
+
+    return out
+
+
+def attention_gate_3d_orig(x, g, n_intermediate_filters=24,layer_num=None,save_attention_layer=True):
+    """
+    x: feat map from the encoder output
+    g: feat map from the decoder output
+    n_intermediate_filters: number of intermediate filters
+    """
+    g_conv_list = []
+    # Linear transformation on both inp and g using 3D convolutions
+    Wg = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='relu')(g)
+    Wx = KL.Conv3D(n_intermediate_filters, kernel_size=1, strides=1, padding='same', kernel_initializer='he_normal', activation='relu')(x)
+    # Add the transformed tensors and pass through a ReLU activation
+    psi = KL.add([Wg, Wx])
+
+    psi = KL.Activation(activation='relu')(psi)
+
+    # Pass the result through a 1x1x1 convolution to generate the attention coefficients (alpha)
+    name = 'attn_coeffs_%d' % layer_num
+    alpha = KL.Conv3D(1, kernel_size=1, strides=1, padding='same', kernel_initializer='GlorotNormal', activation='sigmoid', name=name)(psi)
+
+    # Multiply the encoder tensor by the attention coefficients to generate the output
+    out = KL.multiply([x, alpha])
 
     return out

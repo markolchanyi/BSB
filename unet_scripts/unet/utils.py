@@ -6,6 +6,7 @@ import nibabel as nib
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator as rgi
 from scipy.ndimage import gaussian_filter as gauss_filt
+from scipy.ndimage import zoom
 
 
 def load_volume(path_volume, im_only=True, squeeze=True, dtype=None, aff_ref=None):
@@ -420,3 +421,12 @@ def rescale_voxel_size(volume, aff, new_vox_size):
     aff2[:-1, -1] = aff2[:-1, -1] - np.matmul(aff2[:-1, :-1], 0.5 * (factor - 1))
 
     return volume2, aff2
+
+
+def downsample_upsample_scipy(volume, downsampling_factor, original_shape):
+    # Downsample
+    downsampled_volume = zoom(volume, zoom=downsampling_factor, order=1, prefilter=False)
+    # Upsample
+    upsampled_volume = zoom(downsampled_volume, zoom=[o/d for o, d in zip(original_shape, downsampled_volume.shape)], order=1, prefilter=False)
+
+    return upsampled_volume

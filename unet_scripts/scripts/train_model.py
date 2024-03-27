@@ -11,7 +11,7 @@ top_level_model_dir = '/autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_m
 
 ## Run specific parameters that will change for ablations
 # Name of the model - link to ablation spreadsheet
-model_name = 'model_shelled_attention_v10'
+model_name = 'model_shelled_attention_originalinterp_v1'
 # Fraction of DTI voxels to randomised. Between 0 and 1. Set to 0 to turn off speckle. 1 in 10k sounds right
 speckle_frac_selected=1e-4
 # Flag whether we'll individually rotate the DTI vectors
@@ -99,7 +99,7 @@ dice_epochs = 1000
 steps_per_epoch = 1000
 # Checkpoint file from which training will start (use None to start from scratch)
 #checkpoint = '/autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/9ROI_wmb_model_v4/dice_090.h5'
-checkpoint = None
+checkpoint = '/autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_originalinterp_v1/dice_435.h5'
 # frequency of saving model checkpoints (Dice iterations only)
 checkpoint_frequency = 15
 

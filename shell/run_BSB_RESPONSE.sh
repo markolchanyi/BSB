@@ -17,7 +17,23 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 
 
 # Declare an array of string with type
-declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc007_ses-1"
+declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c001"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c002"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c004"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c005"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c006"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c007"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c008"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c010"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c012"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c013"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c014"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c015"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c016"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c017"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c018"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c019"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc007_ses-1"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc008_ses-1"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc010_ses-1"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc011_ses-1"
@@ -33,6 +49,7 @@ declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PIL
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc021_ses-1"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc022_ses-1"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRc023_ses-1"
+                        "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp001_ses-early"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp003_ses-early"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp005_ses-early"
                         "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-TCRp006_ses-early"
@@ -72,7 +89,7 @@ for val in ${StringArray[@]}; do
                 let ER_COUNTER=ER_COUNTER+1
         fi
         # ----------- mrtrix BSB preprocessing script ----------- #
-        if [ -e $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm_new.nii.gz ]
+        if [ -e $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm.nii.gz ]
         then
                 echo "Trackgen outputs already exist...skipping"
         else
@@ -90,13 +107,13 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $OUTPUTPATH/unet_predictions/unet_results/wmunet.crfseg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions_raw_NEW/unet_results/wmunet.crfseg.mgz ]
         then
                 echo "Unet segmentation outputs already exist...skipping"
         else
                 python ../scripts/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v1/dice_510.h5 \
-                        --output_path $OUTPUTPATH/unet_predictions \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_495.h5 \
+                        --output_path $OUTPUTPATH/unet_predictions_raw \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \
                         --tract_file $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm.nii.gz \

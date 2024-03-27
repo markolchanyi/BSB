@@ -4,10 +4,10 @@ import tensorflow as tf
 import math
 
 def compute_entropy(posteriors):
-    return -np.sum(posteriors * np.log(posteriors + 1e-8), axis=-1)
+    return -np.sum(posteriors[...,1:] * np.log(posteriors[...,1:] + 1e-8), axis=-1)
 
 def compute_unary(posteriors, weight=10):
-    return -weight * np.log(posteriors + 1e-10)  # Added a small constant to avoid log(0)
+    return -weight * np.log(posteriors + 1e-10) 
 
 def compute_pairwise(region_center, radius=3, sigma_alpha=1.0, sigma_beta=2.0, use_grad=False):
     z, y, x = np.meshgrid(
@@ -69,7 +69,7 @@ def convolve_4d_with_gaussian(vol, size=3, sigma=1.0):
 
 
 
-def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight=0.05, unary_weight=1.0, sigma_alpha=2.0, sigma_beta=0.1, sigma_K=1.5, radius=1, use_grad=False, rbf_convolve=True):
+def dense_crf_inference(cnn_output, iterations=8, step_size=0.01, entropy_weight=0.1, unary_weight=1.0, sigma_alpha=2.0, sigma_beta=0.066, sigma_K=float(10/3), radius=1, rbf_kernel_size=5, use_grad=False, rbf_convolve=True):
     print(" =========== running CRF cleanup =========== ")
     print("iterations: ", str(iterations))
     print("unary potential weight: ", str(unary_weight))
@@ -77,7 +77,8 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight
     print("sigma_alpha: ", str(sigma_alpha))
     print("sigma beta: ", str(sigma_beta))
     print("RBF sigma: ", str(sigma_K))
-    print("pairwise potential region size: ", str(radius*2 + 1))
+    print("pairwise potential region size: ", str((radius*2)**2+1))
+    print("RBF kernel size: ", str(rbf_kernel_size))
     print("use_grad: ", str(use_grad))
 
     depth, height, width, num_labels = cnn_output.shape
@@ -90,6 +91,7 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight
     sigma_scale = 1/(math.pi*sigma_beta*sigma_K)
 
     print("--- pairwise scaling: " + str(sigma_scale) + " ---")
+    print("========================================== \n")
 
     for _ in range(iterations):
         print("---- iteration " + str(_) + " ----")
@@ -99,7 +101,7 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight
 
         # don't interatively convolve!!
         if rbf_convolve:
-            new_Q_rbf_convolved = convolve_4d_with_gaussian(new_Q, size=(radius*2+1), sigma=sigma_K)
+            new_Q_rbf_convolved = convolve_4d_with_gaussian(new_Q, size=rbf_kernel_size, sigma=sigma_K)
 
         for z in tqdm(range(5, depth - 5),desc="Processing",ascii=True):
             for y in range(5, height - 5):
@@ -107,11 +109,11 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight
                     if rbf_convolve:
                         local_region = new_Q_rbf_convolved[z-radius:z+radius+1, y-radius:y+radius+1, x-radius:x+radius+1, :]
                         pairwise_diff = np.maximum(0, new_Q_rbf_convolved[z, y, x, :] - local_region[..., :])
-                        #print("shape: ", np.sum(pairwise_diff, axis=(0, 1, 2)).shape)
                         new_Q[z, y, x, :] -= step_size * sigma_scale * (np.sum(pairwise_diff, axis=(0, 1, 2)))
 
+                        # dirty fix...
                         # apply opposite pairwise energy penalty to background label just to avoid background inpainting/dominance
-                        new_Q[z, y, x, 0] += step_size * sigma_scale * np.sum(pairwise_diff[...,0], axis=(0, 1, 2))
+                        new_Q[z, y, x, 0] += step_size * sigma_scale * (np.sum(pairwise_diff[...,0], axis=(0, 1, 2)))
 
                     else:
                         local_region = new_Q[z-radius:z+radius+1, y-radius:y+radius+1, x-radius:x+radius+1, :]
@@ -125,13 +127,14 @@ def dense_crf_inference(cnn_output, iterations=5, step_size=0.01, entropy_weight
                             #print("pairwise diff: ", pairwise_diff.shape)
                             new_Q[z, y, x, l] -= step_size * (np.sum(pairwise_diff, axis=(0, 1, 2)))
 
-                        # apply opposite pairwise energy penalty to background label just to avoid background inpainting/dominance
-                        new_Q[z, y, x, 0] += step_size * 0.5 * np.sum(pairwise_diff, axis=(0, 1, 2))
+                            # apply opposite pairwise energy penalty to background label just to avoid background inpainting/dominance
+                            new_Q[z, y, x, 0] += step_size * np.sum(pairwise_diff, axis=(0, 1, 2))
 
                     # Entropy change post-unary and pairwise update along label dimention
-                    current_entropy = compute_entropy(np.exp(-new_Q[z, y, x, :]))
+                    current_entropy = compute_entropy(np.exp(-new_Q[z, y, x, 1:]))
                     entropy_change = current_entropy - orig_entropy[z, y, x]
-                    new_Q[z, y, x, :] -= entropy_weight * entropy_change
+                    new_Q[z, y, x, 1:] -= entropy_weight * entropy_change
+                    new_Q[z, y, x, 0] += entropy_weight * entropy_change
 
         # Convert updated potentials back to beliefs
         Q = np.exp(-new_Q)

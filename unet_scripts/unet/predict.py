@@ -7,7 +7,8 @@ import tensorflow as tf
 import utils as utils
 import models
 from dcrf_gradient import dense_crf_inference
-from scipy.ndimage import gaussian_filter 
+from scipy.ndimage import gaussian_filter
+from utils import downsample_upsample_scipy 
 import nibabel as nib
 
 def predict(subject_list,
@@ -126,15 +127,19 @@ def predict(subject_list,
             #dti = v1
 
         if ds_factor is not None:
-            gauss_sigma = ds_factor/math.sqrt(12)
-            print("Downsampling with sigma = ",str(gauss_sigma))
+            #gauss_sigma = ds_factor/math.sqrt(12)
+            gauss_sigma = ds_factor/(math.sqrt(2*math.log(2)))
+            print("Downsample factor: ",ds_factor, "Downsampling with sigma = ",str(gauss_sigma))
             t1 = gaussian_filter(t1, sigma=gauss_sigma)
+            t1 = downsample_upsample_scipy(t1,downsampling_factor=1/(ds_factor),original_shape=t1.shape)
             fa = gaussian_filter(fa, sigma=gauss_sigma)
+            fa = downsample_upsample_scipy(fa,downsampling_factor=1/(ds_factor),original_shape=fa.shape)
 
             # for SIM volume
             for channel in range(dti.shape[3]):
                 # Apply Gaussian filter to each channel in-place
                 dti[:,:,:,channel] = gaussian_filter(dti[:,:,:,channel], sigma=gauss_sigma)
+                dti[:,:,:,channel] = downsample_upsample_scipy(dti[:,:,:,channel],downsampling_factor=1/(ds_factor),original_shape=dti[:,:,:,channel].shape)
 
         # Predict with left-right flipping augmentation
         if ablate_rgb:

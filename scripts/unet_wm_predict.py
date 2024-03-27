@@ -115,6 +115,11 @@ def unet_predict(output_path,
     crf_output = dense_crf_inference(posteriors)
     crf_segs = label_list[np.argmax(crf_output, axis=-1)]
 
+    print("CRF seg volumes: ")
+    values, counts = np.unique(crf_segs, return_counts=True)
+    for value, count in zip(values, counts):
+        print(f"Intensity Value: {value}, Total Voxels: {count}")
+
     # Write to disk and we're done!
     utils.save_volume(crf_output, aff2, None, output_crf_file)
     utils.save_volume(crf_segs, aff2, None, output_crf_seg_file)
