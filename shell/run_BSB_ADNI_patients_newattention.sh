@@ -24,6 +24,8 @@ SEARCH_DIR=/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_AD_nii
 # Create an empty array
 StringArray=()
 
+noise_txt_file="./ADNI_patients_noise.txt"
+
 # Loop through each item in the directory
 for item in "$SEARCH_DIR"/*; do
     # Check if the item is a directory
@@ -61,6 +63,34 @@ for val in ${StringArray[@]}; do
         PROCESSPATH=$BASEPATH
         OUTPUTPATH=$BASEPATH/bsb_outputs_attention
 
+
+
+
+        # apply denoising for noise map??
+        denoise=True
+
+        if [ "$denoise" = True ]; then
+            echo "starting mrtrix denoising"
+            dwi2mask $BASEPATH/data_raw.nii.gz $OUTPUTPATH/raw_brain_mask.nii.gz -fslgrad $bvecpath $bvalpath -nthreads 30
+            mrconvert $BASEPATH/data_raw.nii.gz $OUTPUTPATH/dwi_raw.mif -fslgrad $bvecpath $bvalpath -nthreads 30
+            dwiextract $OUTPUTPATH/dwi_raw.mif - -bzero | mrmath - mean $OUTPUTPATH/lowb_raw.nii.gz -axis 3 -nthreads 30
+            dwidenoise $BASEPATH/data_raw.nii.gz $OUTPUTPATH/data_raw_denoised.nii.gz -noise $OUTPUTPATH/raw_noise_map.nii.gz -nthreads 30
+            std_dev=$(mrstats $OUTPUTPATH/raw_noise_map.nii.gz -output std -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
+            mean_noise=$(mrstats $OUTPUTPATH/raw_noise_map.nii.gz -output mean -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
+            mean_signal=$(mrstats $OUTPUTPATH/lowb_raw.nii.gz -output mean -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
+
+            snr=$(echo "scale=2; $mean_signal / $mean_noise" | bc)
+
+            echo SNR is $snr    mean is $mean     std is $std_dev
+            echo $snr >> $noise_txt_file
+
+            rm $OUTPUTPATH/dwi_raw.mif
+        else
+            echo "not applying denoising"
+        fi
+
+
+
         ## check for existance of raw dwi path
         if [ -e $datapath ]
         then
@@ -93,7 +123,7 @@ for val in ${StringArray[@]}; do
                 echo "Unet segmentation outputs already exist...skipping"
         else
                 python ../scripts/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_720.h5 \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_480.h5 \
                         --output_path $OUTPUTPATH/unet_predictions_newattention_raw_orig \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \

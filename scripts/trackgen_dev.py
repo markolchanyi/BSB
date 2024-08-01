@@ -22,7 +22,7 @@ Usage:
 
 
 Author:
-Mark D. Olchanyi -- 03.17.2023
+Mark D. Olchanyi -- 07.31.2024
 """
 
 
@@ -115,14 +115,20 @@ try:
     if not os.path.exists(os.path.join(scratch_dir,"dwi.mif")) and not fsl_preprocess:
         os.system("mrconvert " + os.path.join(scratch_dir,"data.nii.gz") + " " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi_uncorrected.bvec") + " " + os.path.join(scratch_dir,"dwi_uncorrected.bval") + " -nthreads " + str(num_threads) + " -force")
 
-    ## check gradient table and fix it, A-P grad direction mismatches happen often!
+        ## check gradient table and fix it, A-P grad direction mismatches happen often!
         print("checking and fixing gradient table...")
         os.system("dwigradcheck " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " -export_grad_fsl " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
         os.system("mrconvert " + os.path.join(scratch_dir,"dwi_uncorrected.mif") + " " + os.path.join(scratch_dir,"dwi.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
 
+    bias_correct = True
+    if bias_correct:
+        print("Performing ANTs N4 bias field correction...")
+        os.system("dwi2mask " + os.path.join(scratch_dir,"dwi.mif") + " " + os.path.join(scratch_dir,"brain_mask_for_bias_correction.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -nthreads " + str(num_threads) + " -force")
+        os.system("dwibiascorrect ants " + os.path.join(scratch_dir,"dwi.mif") + " " + os.path.join(scratch_dir,"dwi_biascorrected.mif") + " -fslgrad " + os.path.join(scratch_dir,"dwi.bvec") + " " + os.path.join(scratch_dir,"dwi.bval") + " -mask " + os.path.join(scratch_dir,"brain_mask_for_bias_correction.mif") + " -bias " + os.path.join(output_dir,"bias_field.nii.gz") + " -nthreads " + str(num_threads) + " -force")
+
     # extract header voxel resolution and match it to HCP data (1.25mm iso) and
     # find out if single-shell or not to degermine which FOD algorithm to use.
-    os.system("mrinfo -json_all " + os.path.join(scratch_dir,"header.json") + " " + os.path.join(scratch_dir,"dwi.mif") + " -force")
+    os.system("mrinfo -json_all " + os.path.join(scratch_dir,"header.json") + " " + os.path.join(scratch_dir,"dwi_biascorrected.mif") + " -force")
     vox_resolution = get_header_resolution(os.path.join(scratch_dir,"header.json"))
     print("header resolution is " + str(vox_resolution) + " mm")
     shell_count = count_shells(os.path.join(scratch_dir,"header.json"))
@@ -131,8 +137,9 @@ try:
 
     if (vox_resolution > 1.05) or (vox_resolution < 0.95):
         print_no_newline("Resolution is out of bounds!! Regridding dwi to 1mm iso...")
-        os.system("mrgrid " + os.path.join(scratch_dir,"dwi.mif") + " regrid -vox 1.0 " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " -force")
+        os.system("mrgrid " + os.path.join(scratch_dir,"dwi_biascorrected.mif") + " regrid -vox 1.0 " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " -force")
         os.system("rm " + os.path.join(scratch_dir,"dwi.mif"))
+        os.system("rm " + os.path.join(scratch_dir,"dwi_biascorrected.mif"))
         os.system("mv " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " " + os.path.join(scratch_dir,"dwi.mif"))
         print("done")
 
@@ -142,10 +149,10 @@ try:
         os.system("dwiextract " + os.path.join(scratch_dir,"dwi.mif") + " - -bzero | mrmath - mean " + os.path.join(scratch_dir,"mean_b0.mif") + " -axis 3 -force")
         os.system("mrconvert " + os.path.join(scratch_dir,"mean_b0.mif") + " " + os.path.join(output_dir,"lowb_1mm.nii.gz")) # move all relevent volumes to output dir
         os.system("mrconvert " + os.path.join(scratch_dir,"mean_b0.mif") + " " + os.path.join(scratch_dir,"mean_b0.nii.gz") + " -datatype float32 -force")
+
         ## calculate all scalar volumes from tensor fit and move to output
         os.system("dwi2tensor " + os.path.join(scratch_dir,"dwi.mif") + " " + os.path.join(scratch_dir,"dwi_dt.mif") + " -nthreads " + str(num_threads) + " -force")
         os.system("tensor2metric " + os.path.join(scratch_dir,"dwi_dt.mif") + " -adc " + os.path.join(output_dir,"md_1mm.nii.gz") +  " -fa " + os.path.join(output_dir,"fa_1mm.nii.gz") + " -ad " + os.path.join(output_dir,"ad_1mm.nii.gz") + "  -rd " + os.path.join(output_dir,"rd_1mm.nii.gz") + " -vector " + os.path.join(output_dir,"v1_1mm.nii.gz") + " -value " + os.path.join(output_dir,"l1_1mm.nii.gz") + " -force")
-        #os.system("tensor2metric -dkt " + os.path.join(scratch_dir,"dkt.mif") + " -mk " + os.path.join(output_dir,"mk_1mm.nii.gz") + " -rk " + os.path.join(output_dir,"rk_1mm.nii.gz") + " -ak " + os.path.join(output_dir,"ak_1mm.nii.gz") + " -force")
     print("done")
 
 
@@ -391,10 +398,15 @@ try:
     ### move relevent files back to static directory
     os.system("mv " + os.path.join(scratch_dir,"tracts_concatenated.mif") + " " + output_dir)
     os.system("mrgrid " + os.path.join(output_dir,"tracts_concatenated.mif") + " regrid -voxel 1.0 " + os.path.join(output_dir,"tracts_concatenated_1mm.mif" + " -force"))
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " " + os.path.join(scratch_dir,'thal_brainstem_union_cropped.mgz'))
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(scratch_dir,'thal_brainstem_union.mgz') + " " + os.path.join(scratch_dir,'thal_brainstem_union_cropped.mgz'))
     os.system("mrconvert " + os.path.join(output_dir,"tracts_concatenated_1mm.mif") + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " -datatype float32 -force")
-    os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " " + os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
+    #os.system("mri_convert --crop " + str(round(float(brainstem_cntr_arr[0]))) + " " + str(round(float(brainstem_cntr_arr[1]))) + " " +  str(round(float(brainstem_cntr_arr[2]))) + " --cropsize " + crop_size + " " + crop_size + " " + crop_size + " " + os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz") + " " + os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
 
+    vol_tracts_full = nib.load(os.path.join(output_dir,"tracts_concatenated_1mm.nii.gz"))
+    vol_tracts_full_np = vol_tracts_full.get_fdata()
+    vol_tracts_full_cropped, _ = crop_around_centroid(vol_tracts_full_np,vol_pons_np,vol_tracts_full.affine,crop_size=crop_size)
+    output_img_tracts_full_cropped = nib.Nifti1Image(vol_tracts_full_cropped, new_cropped_affine, vol_tracts_full.header)
+    nib.save(output_img_tracts_full_cropped, os.path.join(output_dir,"tracts_concatenated_1mm_cropped.nii.gz"))
 
     ### move relevent files back to static directory
     #os.system("mv " + os.path.join(scratch_dir,"tracts_concatenated_new.mif") + " " + output_dir)
@@ -424,7 +436,7 @@ try:
     vol_lowb_np_normalized = rescale_intensities(vol_lowb_np,factor=5)
     vol_fa_np_normalized = rescale_intensities(vol_fa_np,factor=5)
 
-    output_img_tracts = nib.Nifti1Image(vol_tracts_np_normalized, new_cropped_affine, vol_header.header)
+    output_img_tracts = nib.Nifti1Image(vol_tracts_np_normalized, new_cropped_affine, vol_tracts.header)
     nib.save(output_img_tracts, os.path.join(output_dir,"tracts_concatenated_1mm_cropped_norm.nii.gz"))
 
     output_img_lowb = nib.Nifti1Image(vol_lowb_np_normalized, new_cropped_affine, vol_header.header)

@@ -18,12 +18,12 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 ER_COUNTER=0
 CASE_COUNTER=0
 
-SEARCH_DIR=/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_control_nii
+SEARCH_DIR=/autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD
 
 
 # Create an empty array
 StringArray=()
-noise_txt_file="./ADNI_controls_noise.txt"
+noise_txt_file="./PPMI_PD_noise.txt"
 
 # Loop through each item in the directory
 for item in "$SEARCH_DIR"/*; do
@@ -37,7 +37,7 @@ done
 
 for val in ${StringArray[@]}; do
         # Find the subdirectory that starts with "2"
-        for SUBDIR in $(find "$val/Axial_DTI" -maxdepth 1 -mindepth 1 -type d); do
+        for SUBDIR in $(find "$val/DTI_gated" -maxdepth 1 -mindepth 1 -type d); do
             # Get just the name of the subdirectory, without its path
             current_name=$(basename "$SUBDIR")
 
@@ -49,7 +49,7 @@ for val in ${StringArray[@]}; do
             fi
 	done
 
-	BASEPATH=$val/Axial_DTI/$SUBDIR_NAME
+	BASEPATH=$val/DTI_gated/$SUBDIR_NAME
         echo basepath provided is: $BASEPATH
 
         ## extract brain mask
@@ -60,16 +60,15 @@ for val in ${StringArray[@]}; do
         OUTPUTPATH=$BASEPATH/bsb_outputs_attention
 
 
-
         # apply denoising for noise map??
         denoise=True
 
         if [ "$denoise" = True ]; then
             echo "starting mrtrix denoising"
-            dwi2mask $BASEPATH/data_raw.nii.gz $OUTPUTPATH/raw_brain_mask.nii.gz -fslgrad $bvecpath $bvalpath -nthreads 30
-            mrconvert $BASEPATH/data_raw.nii.gz $OUTPUTPATH/dwi_raw.mif -fslgrad $bvecpath $bvalpath -nthreads 30
-            dwiextract $OUTPUTPATH/dwi_raw.mif - -bzero | mrmath - mean $OUTPUTPATH/lowb_raw.nii.gz -axis 3 -nthreads 30
-            dwidenoise $BASEPATH/data_raw.nii.gz $OUTPUTPATH/data_raw_denoised.nii.gz -noise $OUTPUTPATH/raw_noise_map.nii.gz -nthreads 30
+            dwi2mask $BASEPATH/data_raw.nii.gz $OUTPUTPATH/raw_brain_mask.nii.gz -fslgrad $bvecpath $bvalpath -nthreads 50
+            mrconvert $BASEPATH/data_raw.nii.gz $OUTPUTPATH/dwi_raw.mif -fslgrad $bvecpath $bvalpath -nthreads 50
+            dwiextract $OUTPUTPATH/dwi_raw.mif - -bzero | mrmath - mean $OUTPUTPATH/lowb_raw.nii.gz -axis 3 -nthreads 50
+            dwidenoise $BASEPATH/data_raw.nii.gz $OUTPUTPATH/data_raw_denoised.nii.gz -noise $OUTPUTPATH/raw_noise_map.nii.gz -nthreads 50
             std_dev=$(mrstats $OUTPUTPATH/raw_noise_map.nii.gz -output std -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
             mean_noise=$(mrstats $OUTPUTPATH/raw_noise_map.nii.gz -output mean -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
             mean_signal=$(mrstats $OUTPUTPATH/lowb_raw.nii.gz -output mean -mask $OUTPUTPATH/raw_brain_mask.nii.gz)
@@ -104,7 +103,7 @@ for val in ${StringArray[@]}; do
                         --bvecpath $bvecpath \
                         --cropsize 64 \
                         --output $OUTPUTPATH \
-                        --num_threads 50 \
+                        --num_threads 60 \
                         --use_fine_labels False
         fi
 
@@ -112,13 +111,13 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $OUTPUTPATH/unet_predictions_newattention_raw_orig/unet_results/wmunet.crfseg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions/unet_results/wmunet.crfseg.mgz ]
         then
             	echo "Unet segmentation outputs already exist...skipping"
         else
             	python ../scripts/unet_wm_predict.py \
                         --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_480.h5 \
-                        --output_path $OUTPUTPATH/unet_predictions_newattention_raw_orig \
+                        --output_path $OUTPUTPATH/unet_predictions \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \
                         --tract_file $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm.nii.gz \

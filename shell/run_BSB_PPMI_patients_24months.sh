@@ -18,12 +18,12 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 ER_COUNTER=0
 CASE_COUNTER=0
 
-SEARCH_DIR=/autofs/space/nicc_003/users/olchanyi/data/ADNI3_2mm/subject_control_nii
+SEARCH_DIR=/autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD_24month
 
 
 # Create an empty array
 StringArray=()
-noise_txt_file="./ADNI_controls_noise.txt"
+noise_txt_file="./PPMI_PD_24mo_noise.txt"
 
 # Loop through each item in the directory
 for item in "$SEARCH_DIR"/*; do
@@ -37,7 +37,7 @@ done
 
 for val in ${StringArray[@]}; do
         # Find the subdirectory that starts with "2"
-        for SUBDIR in $(find "$val/Axial_DTI" -maxdepth 1 -mindepth 1 -type d); do
+        for SUBDIR in $(find "$val/DTI_gated" -maxdepth 1 -mindepth 1 -type d); do
             # Get just the name of the subdirectory, without its path
             current_name=$(basename "$SUBDIR")
 
@@ -49,7 +49,7 @@ for val in ${StringArray[@]}; do
             fi
 	done
 
-	BASEPATH=$val/Axial_DTI/$SUBDIR_NAME
+	BASEPATH=$val/DTI_gated/$SUBDIR_NAME
         echo basepath provided is: $BASEPATH
 
         ## extract brain mask
@@ -58,8 +58,6 @@ for val in ${StringArray[@]}; do
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
         OUTPUTPATH=$BASEPATH/bsb_outputs_attention
-
-
 
         # apply denoising for noise map??
         denoise=True
@@ -104,7 +102,7 @@ for val in ${StringArray[@]}; do
                         --bvecpath $bvecpath \
                         --cropsize 64 \
                         --output $OUTPUTPATH \
-                        --num_threads 50 \
+                        --num_threads 60 \
                         --use_fine_labels False
         fi
 
@@ -112,13 +110,13 @@ for val in ${StringArray[@]}; do
 
 
         # ----------- Unet WM segmentation script ----------- #
-        if [ -e $OUTPUTPATH/unet_predictions_newattention_raw_orig/unet_results/wmunet.crfseg.mgz ]
+        if [ -e $OUTPUTPATH/unet_predictions/unet_results/wmunet.crfseg.mgz ]
         then
             	echo "Unet segmentation outputs already exist...skipping"
         else
             	python ../scripts/unet_wm_predict.py \
                         --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_480.h5 \
-                        --output_path $OUTPUTPATH/unet_predictions_newattention_raw_orig \
+                        --output_path $OUTPUTPATH/unet_predictions \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \
                         --tract_file $OUTPUTPATH/tracts_concatenated_1mm_cropped_norm.nii.gz \
