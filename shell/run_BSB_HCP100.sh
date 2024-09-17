@@ -17,7 +17,7 @@ export LD_LIBRARY_PATH=/usr/pubsw/packages/CUDA/9.1/lib64
 
 
 # Declare an array of string with type
-declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/HCP100/100307")
+declare -a StringArray=("/autofs/space/nicc_003/users/olchanyi/data/HCP100/208226")
 
 
 for val in ${StringArray[@]}; do
@@ -64,7 +64,7 @@ for val in ${StringArray[@]}; do
             	echo "Unet segmentation outputs already exist...skipping"
         else
             	python ../scripts/unet_wm_predict.py \
-                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v1/dice_510.h5 \
+                        --model_file /autofs/space/nicc_003/users/olchanyi/models/CRSEG_unet_models/model_shelled_attention_v10/dice_480.h5 \
                         --output_path $OUTPUTPATH/unet_predictions \
                         --lowb_file $OUTPUTPATH/lowb_1mm_cropped_norm.nii.gz \
                         --fa_file $OUTPUTPATH/fa_1mm_cropped_norm.nii.gz \

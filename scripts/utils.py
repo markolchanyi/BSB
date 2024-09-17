@@ -31,6 +31,12 @@ def parse_args_mrtrix():
     return parser.parse_args()
 
 
+def parse_args_fa():
+    parser = argparse.ArgumentParser(description="FA correction")
+    parser.add_argument('-o','--output_path', help="output path", type=str, required=True)
+
+    return parser.parse_args()
+
 def parse_args_crseg_main():
 
     parser = argparse.ArgumentParser(description="Runs white-matter constrained segmentation of Ascending arousal network nuclei in any HARDI volume")
@@ -149,6 +155,11 @@ def crop_around_centroid(vol,mask_vol,affine,crop_size=64):
 
 
 def rescale_intensities(vol,factor=5):
+    # Replace NaNs with zeros
+    vol = np.nan_to_num(vol, nan=0.0)
+    # Replace Infs with zeros
+    vol[np.isinf(vol)] = 0.0
+
     vol = vol - vol.mean()
     vol = vol/(factor*vol.std())
     vol += 0.5

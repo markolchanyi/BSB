@@ -1,0 +1,4 @@
+mrconvert /autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD_24month/3866/DTI_gated/2014-09-26_09_58_26.0/bsb_outputs_attention/temp_aqcfdtpbeb/dwi.mif /autofs/space/nicc_003/users/olchanyi/BSB/shell/dwibiascorrect-tmp-5MYMCO/in.mif -fslgrad /autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD_24month/3866/DTI_gated/2014-09-26_09_58_26.0/bsb_outputs_attention/temp_aqcfdtpbeb/dwi.bvec /autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD_24month/3866/DTI_gated/2014-09-26_09_58_26.0/bsb_outputs_attention/temp_aqcfdtpbeb/dwi.bval
+
+mrconvert: [ERROR] input file "/autofs/space/nicc_003/users/olchanyi/data/PPMI/nifti/ppmi_PD_24month/3866/DTI_gated/2014-09-26_09_58_26.0/bsb_outputs_attention/temp_aqcfdtpbeb/dwi.bvec" for option "-fslgrad" not found
+

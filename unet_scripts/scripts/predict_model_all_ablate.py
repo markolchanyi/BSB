@@ -7,12 +7,12 @@ from predict import predict
 
 
 # keep in list form since you can iterate over multiple sunjects explicitely...implicit will be added soon
-#subject_list = ["subject_C1_rotated"]
+subject_list = ["subject_EXC035","subject_EXC019"]
 #subject_list = ["subject_C1_rotated","subject_C2","subject_C4","subject_EXC007","subject_EXC012","subject_EXC020","subject_EXC021"]
-subject_list = ["subject_101107","subject_105115","subject_111312","subject_116524","subject_127933","subject_133019","subject_135225","subject_140925","subject_103414","subject_110411", "subject_113619","subject_124422","subject_131722","subject_133928","subject_136833","subject_144832"]
+#subject_list = ["subject_101107","subject_105115","subject_111312","subject_116524","subject_127933","subject_133019","subject_135225","subject_140925","subject_103414","subject_110411", "subject_113619","subject_124422","subject_131722","subject_133928","subject_136833","subject_144832"]
 #subject_list = ["subject_002_S_4213","subject_002_S_4225","subject_002_S_6009","subject_002_S_6030","subject_002_S_6053","subject_003_S_6259","subject_003_S_6260","subject_003_S_6307","subject_012_S_4643","subject_016_S_4951"]
 
-fs_subject_dir = '/autofs/space/nicc_003/users/olchanyi/data/CRSEG_unet_training_data/testing_dataset_HCP100/validate'
+fs_subject_dir = '/autofs/space/nicc_003/users/olchanyi/data/CRSEG_unet_training_data/testing_dataset_EXC/validate'
 # for now...must be
 dataset = 'template'
 path_label_list = '../../../data/CRSEG_unet_training_data/SHELLED_9ROI_training_dataset/brainstem_wm_label_list.npy'

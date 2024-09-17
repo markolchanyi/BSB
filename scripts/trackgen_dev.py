@@ -128,7 +128,7 @@ try:
 
     # extract header voxel resolution and match it to HCP data (1.25mm iso) and
     # find out if single-shell or not to degermine which FOD algorithm to use.
-    os.system("mrinfo -json_all " + os.path.join(scratch_dir,"header.json") + " " + os.path.join(scratch_dir,"dwi_biascorrected.mif") + " -force")
+    os.system("mrinfo -json_all " + os.path.join(scratch_dir,"header.json") + " " + os.path.join(scratch_dir,"dwi.mif") + " -force")
     vox_resolution = get_header_resolution(os.path.join(scratch_dir,"header.json"))
     print("header resolution is " + str(vox_resolution) + " mm")
     shell_count = count_shells(os.path.join(scratch_dir,"header.json"))
@@ -138,8 +138,8 @@ try:
     if (vox_resolution > 1.05) or (vox_resolution < 0.95):
         print_no_newline("Resolution is out of bounds!! Regridding dwi to 1mm iso...")
         os.system("mrgrid " + os.path.join(scratch_dir,"dwi_biascorrected.mif") + " regrid -vox 1.0 " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " -force")
-        os.system("rm " + os.path.join(scratch_dir,"dwi.mif"))
         os.system("rm " + os.path.join(scratch_dir,"dwi_biascorrected.mif"))
+        os.system("rm " + os.path.join(scratch_dir,"dwi.mif"))
         os.system("mv " + os.path.join(scratch_dir,"dwi_regridded_1mm.mif") + " " + os.path.join(scratch_dir,"dwi.mif"))
         print("done")
 
