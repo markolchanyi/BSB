@@ -40,16 +40,6 @@ scrape = args.scrape
 unet_segment = args.unet_segment
 num_threads = args.num_threads
 
-#case_list_full = []
-#if case_list_txt == None:
-#    case_list_full.append(os.path.)
-#else:
-#    casefile = open(case_list_txt, "r")
-#    lines = casefile.readlines()
-#    for index, line in enumerate(lines):
-#        case = line.strip()
-#        case_list_full.append(os.path.join(basepath,case))
-#    casefile.close()
 
 try:
     print("============================================================")

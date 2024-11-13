@@ -1,0 +1,6 @@
+mrconvert /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c019/data.nii.gz - -strides 0,0,0,1 -fslgrad /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c019/bvecs /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c019/bvals | dwiextract - /autofs/space/nicc_003/users/olchanyi/BSB/shell/dwi2response-tmp-QHQUFX/dwi.mif -singleshell -no_bzero
+
+mrconvert: [ERROR] input file "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c019/bvecs" for option "-fslgrad" not found
+dwiextract: [ERROR] no filename supplied to standard input (broken pipe?)
+dwiextract: [ERROR] error opening image "-"
+

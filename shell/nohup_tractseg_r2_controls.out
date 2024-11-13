@@ -1,0 +1,1441 @@
+nohup: ignoring input
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c001/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-SEBZkq.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 210.92 mean signal is 198.102 mean noise is 0.939189
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+1
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c001/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:11<27:23, 11.49s/it]  8%|▊         | 11/144 [00:11<01:41,  1.31it/s] 15%|█▍        | 21/144 [00:11<00:40,  3.01it/s] 23%|██▎       | 33/144 [00:11<00:19,  5.81it/s] 31%|███▏      | 45/144 [00:11<00:10,  9.57it/s] 40%|███▉      | 57/144 [00:12<00:05, 14.53it/s] 48%|████▊     | 69/144 [00:12<00:03, 20.89it/s] 56%|█████▋    | 81/144 [00:12<00:02, 28.71it/s] 65%|██████▍   | 93/144 [00:12<00:01, 37.90it/s] 73%|███████▎  | 105/144 [00:12<00:00, 48.22it/s] 81%|████████▏ | 117/144 [00:12<00:00, 59.00it/s] 90%|████████▉ | 129/144 [00:12<00:00, 69.90it/s] 98%|█████████▊| 141/144 [00:12<00:00, 79.33it/s]100%|██████████| 144/144 [00:12<00:00, 11.29it/s]
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 93.00it/s] 15%|█▍        | 21/144 [00:00<00:01, 100.12it/s] 23%|██▎       | 33/144 [00:00<00:01, 107.46it/s] 31%|███▏      | 45/144 [00:00<00:00, 110.86it/s] 40%|███▉      | 57/144 [00:00<00:00, 112.74it/s] 48%|████▊     | 69/144 [00:00<00:00, 113.87it/s] 56%|█████▋    | 81/144 [00:00<00:00, 114.85it/s] 65%|██████▍   | 93/144 [00:00<00:00, 115.44it/s] 73%|███████▎  | 105/144 [00:00<00:00, 114.91it/s] 81%|████████▏ | 117/144 [00:01<00:00, 114.73it/s] 90%|████████▉ | 129/144 [00:01<00:00, 114.51it/s] 98%|█████████▊| 141/144 [00:01<00:00, 114.87it/s]100%|██████████| 144/144 [00:01<00:00, 112.79it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  6%|▋         | 9/144 [00:00<00:01, 78.91it/s] 13%|█▎        | 19/144 [00:00<00:01, 90.00it/s] 22%|██▏       | 31/144 [00:00<00:01, 101.27it/s] 30%|██▉       | 43/144 [00:00<00:00, 107.00it/s] 38%|███▊      | 55/144 [00:00<00:00, 109.25it/s] 47%|████▋     | 67/144 [00:00<00:00, 111.29it/s] 55%|█████▍    | 79/144 [00:00<00:00, 112.79it/s] 63%|██████▎   | 91/144 [00:00<00:00, 113.28it/s] 72%|███████▏  | 103/144 [00:00<00:00, 112.80it/s] 80%|███████▉  | 115/144 [00:01<00:00, 113.67it/s] 88%|████████▊ | 127/144 [00:01<00:00, 114.34it/s] 97%|█████████▋| 139/144 [00:01<00:00, 114.17it/s]100%|██████████| 144/144 [00:01<00:00, 110.24it/s]
+-------- NUMBER OF CASES DONE ----------
+1
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c002/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-x1lKa4.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 234.68 mean signal is 216.515 mean noise is 0.922565
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+2
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c002/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:22,  1.74it/s]  8%|▊         | 11/144 [00:00<00:06, 21.08it/s] 15%|█▌        | 22/144 [00:00<00:03, 40.12it/s] 23%|██▎       | 33/144 [00:00<00:01, 55.76it/s] 31%|███▏      | 45/144 [00:00<00:01, 71.37it/s] 40%|███▉      | 57/144 [00:01<00:01, 83.59it/s] 48%|████▊     | 69/144 [00:01<00:00, 92.77it/s] 56%|█████▋    | 81/144 [00:01<00:00, 99.70it/s] 65%|██████▍   | 93/144 [00:01<00:00, 105.10it/s] 73%|███████▎  | 105/144 [00:01<00:00, 109.05it/s] 81%|████████▏ | 117/144 [00:01<00:00, 111.40it/s] 90%|████████▉ | 129/144 [00:01<00:00, 113.07it/s] 98%|█████████▊| 141/144 [00:01<00:00, 114.63it/s]100%|██████████| 144/144 [00:01<00:00, 78.40it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 102.98it/s] 16%|█▌        | 23/144 [00:00<00:01, 111.24it/s] 24%|██▍       | 35/144 [00:00<00:00, 113.27it/s] 33%|███▎      | 47/144 [00:00<00:00, 114.35it/s] 41%|████      | 59/144 [00:00<00:00, 114.98it/s] 49%|████▉     | 71/144 [00:00<00:00, 115.61it/s] 58%|█████▊    | 83/144 [00:00<00:00, 115.71it/s] 66%|██████▌   | 95/144 [00:00<00:00, 116.65it/s] 74%|███████▍  | 107/144 [00:00<00:00, 116.96it/s] 83%|████████▎ | 119/144 [00:01<00:00, 117.00it/s] 91%|█████████ | 131/144 [00:01<00:00, 117.42it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.84it/s]100%|██████████| 144/144 [00:01<00:00, 115.60it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 98.66it/s] 15%|█▍        | 21/144 [00:00<00:01, 100.92it/s] 22%|██▏       | 32/144 [00:00<00:01, 103.70it/s] 31%|███       | 44/144 [00:00<00:00, 109.09it/s] 39%|███▉      | 56/144 [00:00<00:00, 112.34it/s] 47%|████▋     | 68/144 [00:00<00:00, 114.15it/s] 56%|█████▌    | 80/144 [00:00<00:00, 115.92it/s] 64%|██████▍   | 92/144 [00:00<00:00, 115.85it/s] 72%|███████▏  | 104/144 [00:00<00:00, 116.02it/s] 81%|████████  | 116/144 [00:01<00:00, 116.61it/s] 89%|████████▉ | 128/144 [00:01<00:00, 117.31it/s] 97%|█████████▋| 140/144 [00:01<00:00, 117.78it/s]100%|██████████| 144/144 [00:01<00:00, 114.11it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+2
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c003/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-cUsSnG.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 211.72 mean signal is 205.758 mean noise is 0.97181
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+3
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c003/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:23,  1.71it/s]  8%|▊         | 11/144 [00:00<00:06, 20.91it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.71it/s] 24%|██▎       | 34/144 [00:00<00:01, 57.53it/s] 32%|███▏      | 46/144 [00:01<00:01, 72.39it/s] 40%|████      | 58/144 [00:01<00:01, 83.70it/s] 49%|████▊     | 70/144 [00:01<00:00, 92.76it/s] 57%|█████▋    | 82/144 [00:01<00:00, 98.87it/s] 65%|██████▌   | 94/144 [00:01<00:00, 103.49it/s] 74%|███████▎  | 106/144 [00:01<00:00, 105.70it/s] 82%|████████▏ | 118/144 [00:01<00:00, 107.97it/s] 90%|█████████ | 130/144 [00:01<00:00, 108.20it/s] 99%|█████████▊| 142/144 [00:01<00:00, 109.17it/s]100%|██████████| 144/144 [00:01<00:00, 76.90it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 107.71it/s] 16%|█▌        | 23/144 [00:00<00:01, 112.70it/s] 24%|██▍       | 35/144 [00:00<00:00, 113.64it/s] 33%|███▎      | 47/144 [00:00<00:00, 114.78it/s] 41%|████      | 59/144 [00:00<00:00, 114.74it/s] 49%|████▉     | 71/144 [00:00<00:00, 115.40it/s] 58%|█████▊    | 83/144 [00:00<00:00, 114.59it/s] 66%|██████▌   | 95/144 [00:00<00:00, 115.38it/s] 74%|███████▍  | 107/144 [00:00<00:00, 113.33it/s] 83%|████████▎ | 119/144 [00:01<00:00, 113.22it/s] 91%|█████████ | 131/144 [00:01<00:00, 113.82it/s] 99%|█████████▉| 143/144 [00:01<00:00, 113.48it/s]100%|██████████| 144/144 [00:01<00:00, 113.84it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 104.90it/s] 15%|█▌        | 22/144 [00:00<00:01, 105.67it/s] 24%|██▎       | 34/144 [00:00<00:00, 111.72it/s] 33%|███▎      | 47/144 [00:00<00:00, 115.12it/s] 42%|████▏     | 60/144 [00:00<00:00, 116.99it/s] 50%|█████     | 72/144 [00:00<00:00, 117.81it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.13it/s] 67%|██████▋   | 96/144 [00:00<00:00, 117.20it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.44it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.46it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.96it/s]100%|██████████| 144/144 [00:01<00:00, 116.53it/s]
+-------- NUMBER OF CASES DONE ----------
+3
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... .done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c004/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-JhhnsC.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 182.79 mean signal is 172.896 mean noise is 0.94584
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+4
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c004/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:32,  1.55it/s]  8%|▊         | 11/144 [00:00<00:06, 19.15it/s] 15%|█▌        | 22/144 [00:00<00:03, 37.30it/s] 23%|██▎       | 33/144 [00:00<00:02, 53.42it/s] 31%|███▏      | 45/144 [00:01<00:01, 68.25it/s] 40%|███▉      | 57/144 [00:01<00:01, 80.25it/s] 48%|████▊     | 69/144 [00:01<00:00, 89.64it/s] 56%|█████▋    | 81/144 [00:01<00:00, 96.53it/s] 65%|██████▍   | 93/144 [00:01<00:00, 101.57it/s] 73%|███████▎  | 105/144 [00:01<00:00, 104.83it/s] 81%|████████▏ | 117/144 [00:01<00:00, 107.20it/s] 90%|████████▉ | 129/144 [00:01<00:00, 108.55it/s] 98%|█████████▊| 141/144 [00:01<00:00, 109.78it/s]100%|██████████| 144/144 [00:01<00:00, 74.24it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 100.59it/s] 15%|█▌        | 22/144 [00:00<00:01, 100.34it/s] 23%|██▎       | 33/144 [00:00<00:01, 103.26it/s] 31%|███▏      | 45/144 [00:00<00:00, 106.17it/s] 39%|███▉      | 56/144 [00:00<00:00, 106.35it/s] 47%|████▋     | 67/144 [00:00<00:00, 105.40it/s] 54%|█████▍    | 78/144 [00:00<00:00, 105.77it/s] 62%|██████▏   | 89/144 [00:00<00:00, 106.07it/s] 69%|██████▉   | 100/144 [00:00<00:00, 106.73it/s] 77%|███████▋  | 111/144 [00:01<00:00, 105.42it/s] 85%|████████▌ | 123/144 [00:01<00:00, 107.01it/s] 94%|█████████▍| 135/144 [00:01<00:00, 108.07it/s]100%|██████████| 144/144 [00:01<00:00, 106.24it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 103.20it/s] 15%|█▌        | 22/144 [00:00<00:01, 102.87it/s] 24%|██▎       | 34/144 [00:00<00:01, 108.17it/s] 32%|███▏      | 46/144 [00:00<00:00, 111.11it/s] 40%|████      | 58/144 [00:00<00:00, 111.98it/s] 49%|████▊     | 70/144 [00:00<00:00, 112.80it/s] 57%|█████▋    | 82/144 [00:00<00:00, 113.34it/s] 65%|██████▌   | 94/144 [00:00<00:00, 113.74it/s] 74%|███████▎  | 106/144 [00:00<00:00, 114.39it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.41it/s] 91%|█████████ | 131/144 [00:01<00:00, 117.13it/s]100%|██████████| 144/144 [00:01<00:00, 118.18it/s]100%|██████████| 144/144 [00:01<00:00, 114.03it/s]
+-------- NUMBER OF CASES DONE ----------
+4
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c005/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-0IHaP3.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 212.13 mean signal is 186.704 mean noise is 0.880132
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+5
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c005/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:33,  1.53it/s]  7%|▋         | 10/144 [00:00<00:07, 17.22it/s] 14%|█▍        | 20/144 [00:00<00:03, 33.93it/s] 22%|██▏       | 31/144 [00:00<00:02, 50.18it/s] 30%|██▉       | 43/144 [00:01<00:01, 65.95it/s] 38%|███▊      | 55/144 [00:01<00:01, 78.50it/s] 47%|████▋     | 67/144 [00:01<00:00, 88.09it/s] 55%|█████▍    | 79/144 [00:01<00:00, 95.20it/s] 63%|██████▎   | 91/144 [00:01<00:00, 99.99it/s] 72%|███████▏  | 103/144 [00:01<00:00, 103.76it/s] 80%|███████▉  | 115/144 [00:01<00:00, 106.48it/s] 88%|████████▊ | 127/144 [00:01<00:00, 108.70it/s] 97%|█████████▋| 139/144 [00:01<00:00, 110.09it/s]100%|██████████| 144/144 [00:01<00:00, 73.29it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 96.04it/s] 14%|█▍        | 20/144 [00:00<00:01, 97.37it/s] 22%|██▏       | 31/144 [00:00<00:01, 101.85it/s] 30%|██▉       | 43/144 [00:00<00:00, 106.38it/s] 38%|███▊      | 55/144 [00:00<00:00, 107.94it/s] 47%|████▋     | 67/144 [00:00<00:00, 109.79it/s] 55%|█████▍    | 79/144 [00:00<00:00, 110.69it/s] 63%|██████▎   | 91/144 [00:00<00:00, 111.18it/s] 72%|███████▏  | 103/144 [00:00<00:00, 111.86it/s] 80%|███████▉  | 115/144 [00:01<00:00, 112.42it/s] 88%|████████▊ | 127/144 [00:01<00:00, 112.64it/s] 97%|█████████▋| 139/144 [00:01<00:00, 113.18it/s]100%|██████████| 144/144 [00:01<00:00, 110.01it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 103.23it/s] 15%|█▌        | 22/144 [00:00<00:01, 104.81it/s] 24%|██▎       | 34/144 [00:00<00:01, 108.13it/s] 32%|███▏      | 46/144 [00:00<00:00, 110.36it/s] 40%|████      | 58/144 [00:00<00:00, 111.74it/s] 49%|████▊     | 70/144 [00:00<00:00, 110.45it/s] 57%|█████▋    | 82/144 [00:00<00:00, 111.58it/s] 65%|██████▌   | 94/144 [00:00<00:00, 111.76it/s] 74%|███████▎  | 106/144 [00:00<00:00, 112.13it/s] 82%|████████▏ | 118/144 [00:01<00:00, 112.43it/s] 90%|█████████ | 130/144 [00:01<00:00, 112.10it/s] 99%|█████████▊| 142/144 [00:01<00:00, 110.11it/s]100%|██████████| 144/144 [00:01<00:00, 110.51it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+5
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c006/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-mcAOFy.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 243.37 mean signal is 252.662 mean noise is 1.03816
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+6
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c006/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:32,  1.54it/s]  8%|▊         | 11/144 [00:00<00:06, 19.06it/s] 15%|█▌        | 22/144 [00:00<00:03, 36.97it/s] 24%|██▎       | 34/144 [00:00<00:02, 54.55it/s] 32%|███▏      | 46/144 [00:01<00:01, 69.64it/s] 40%|███▉      | 57/144 [00:01<00:01, 79.68it/s] 47%|████▋     | 68/144 [00:01<00:00, 86.87it/s] 55%|█████▍    | 79/144 [00:01<00:00, 93.04it/s] 62%|██████▎   | 90/144 [00:01<00:00, 94.91it/s] 71%|███████   | 102/144 [00:01<00:00, 99.43it/s] 78%|███████▊  | 113/144 [00:01<00:00, 99.75it/s] 86%|████████▌ | 124/144 [00:01<00:00, 102.53it/s] 94%|█████████▍| 136/144 [00:01<00:00, 105.12it/s]100%|██████████| 144/144 [00:01<00:00, 72.45it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 91.46it/s] 15%|█▍        | 21/144 [00:00<00:01, 98.79it/s] 22%|██▏       | 32/144 [00:00<00:01, 100.70it/s] 31%|███       | 44/144 [00:00<00:00, 107.09it/s] 39%|███▉      | 56/144 [00:00<00:00, 110.16it/s] 47%|████▋     | 68/144 [00:00<00:00, 112.32it/s] 56%|█████▌    | 80/144 [00:00<00:00, 113.89it/s] 64%|██████▍   | 92/144 [00:00<00:00, 114.72it/s] 72%|███████▏  | 104/144 [00:00<00:00, 115.43it/s] 81%|████████  | 116/144 [00:01<00:00, 116.11it/s] 89%|████████▉ | 128/144 [00:01<00:00, 116.28it/s] 97%|█████████▋| 140/144 [00:01<00:00, 116.76it/s]100%|██████████| 144/144 [00:01<00:00, 112.50it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 108.60it/s] 16%|█▌        | 23/144 [00:00<00:01, 114.00it/s] 24%|██▍       | 35/144 [00:00<00:00, 115.05it/s] 33%|███▎      | 47/144 [00:00<00:00, 115.98it/s] 41%|████      | 59/144 [00:00<00:00, 116.17it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.40it/s] 58%|█████▊    | 83/144 [00:00<00:00, 114.43it/s] 66%|██████▌   | 95/144 [00:00<00:00, 114.92it/s] 74%|███████▍  | 107/144 [00:00<00:00, 113.68it/s] 83%|████████▎ | 119/144 [00:01<00:00, 113.15it/s] 91%|█████████ | 131/144 [00:01<00:00, 113.43it/s] 99%|█████████▉| 143/144 [00:01<00:00, 114.55it/s]100%|██████████| 144/144 [00:01<00:00, 114.42it/s]
+INFO: Using bundle specific postprocessing for FX_right because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+6
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c007/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-jBCFcb.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 193.48 mean signal is 186.775 mean noise is 0.96533
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+7
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c007/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:24,  1.70it/s]  8%|▊         | 12/144 [00:00<00:05, 22.46it/s] 16%|█▌        | 23/144 [00:00<00:02, 40.57it/s] 24%|██▎       | 34/144 [00:00<00:01, 56.14it/s] 32%|███▏      | 46/144 [00:01<00:01, 71.21it/s] 40%|████      | 58/144 [00:01<00:01, 83.35it/s] 49%|████▊     | 70/144 [00:01<00:00, 92.65it/s] 57%|█████▋    | 82/144 [00:01<00:00, 99.53it/s] 65%|██████▌   | 94/144 [00:01<00:00, 104.71it/s] 74%|███████▎  | 106/144 [00:01<00:00, 108.40it/s] 82%|████████▏ | 118/144 [00:01<00:00, 111.29it/s] 90%|█████████ | 130/144 [00:01<00:00, 112.87it/s] 99%|█████████▊| 142/144 [00:01<00:00, 113.99it/s]100%|██████████| 144/144 [00:01<00:00, 77.88it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 108.47it/s] 16%|█▌        | 23/144 [00:00<00:01, 112.17it/s] 24%|██▍       | 35/144 [00:00<00:00, 114.36it/s] 33%|███▎      | 47/144 [00:00<00:00, 114.28it/s] 41%|████      | 59/144 [00:00<00:00, 115.45it/s] 49%|████▉     | 71/144 [00:00<00:00, 115.88it/s] 58%|█████▊    | 83/144 [00:00<00:00, 116.34it/s] 66%|██████▌   | 95/144 [00:00<00:00, 116.50it/s] 74%|███████▍  | 107/144 [00:00<00:00, 116.62it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.97it/s] 91%|█████████ | 131/144 [00:01<00:00, 116.67it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.50it/s]100%|██████████| 144/144 [00:01<00:00, 115.77it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 110.31it/s] 17%|█▋        | 24/144 [00:00<00:01, 109.13it/s] 25%|██▌       | 36/144 [00:00<00:00, 109.73it/s] 33%|███▎      | 48/144 [00:00<00:00, 110.64it/s] 42%|████▏     | 60/144 [00:00<00:00, 112.03it/s] 50%|█████     | 72/144 [00:00<00:00, 112.91it/s] 58%|█████▊    | 84/144 [00:00<00:00, 114.20it/s] 67%|██████▋   | 96/144 [00:00<00:00, 115.12it/s] 75%|███████▌  | 108/144 [00:00<00:00, 114.84it/s] 83%|████████▎ | 120/144 [00:01<00:00, 115.08it/s] 92%|█████████▏| 132/144 [00:01<00:00, 114.93it/s]100%|██████████| 144/144 [00:01<00:00, 114.47it/s]100%|██████████| 144/144 [00:01<00:00, 113.44it/s]
+-------- NUMBER OF CASES DONE ----------
+7
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c008/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-zsCu7q.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 195.73 mean signal is 178.446 mean noise is 0.911653
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+8
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c008/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:31,  1.57it/s]  8%|▊         | 11/144 [00:00<00:06, 19.54it/s] 15%|█▌        | 22/144 [00:00<00:03, 37.62it/s] 24%|██▎       | 34/144 [00:00<00:01, 55.23it/s] 32%|███▏      | 46/144 [00:01<00:01, 70.23it/s] 40%|████      | 58/144 [00:01<00:01, 82.24it/s] 48%|████▊     | 69/144 [00:01<00:00, 88.23it/s] 56%|█████▋    | 81/144 [00:01<00:00, 95.03it/s] 65%|██████▍   | 93/144 [00:01<00:00, 100.16it/s] 73%|███████▎  | 105/144 [00:01<00:00, 103.22it/s] 81%|████████▏ | 117/144 [00:01<00:00, 105.37it/s] 90%|████████▉ | 129/144 [00:01<00:00, 106.80it/s] 97%|█████████▋| 140/144 [00:01<00:00, 107.32it/s]100%|██████████| 144/144 [00:01<00:00, 74.00it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 92.37it/s] 15%|█▍        | 21/144 [00:00<00:01, 98.43it/s] 23%|██▎       | 33/144 [00:00<00:01, 105.51it/s] 31%|███▏      | 45/144 [00:00<00:00, 108.97it/s] 40%|███▉      | 57/144 [00:00<00:00, 110.66it/s] 48%|████▊     | 69/144 [00:00<00:00, 111.05it/s] 56%|█████▋    | 81/144 [00:00<00:00, 111.48it/s] 65%|██████▍   | 93/144 [00:00<00:00, 111.86it/s] 73%|███████▎  | 105/144 [00:00<00:00, 112.28it/s] 81%|████████▏ | 117/144 [00:01<00:00, 112.61it/s] 90%|████████▉ | 129/144 [00:01<00:00, 112.67it/s] 98%|█████████▊| 141/144 [00:01<00:00, 112.93it/s]100%|██████████| 144/144 [00:01<00:00, 110.53it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 100.46it/s] 15%|█▌        | 22/144 [00:00<00:01, 101.68it/s] 23%|██▎       | 33/144 [00:00<00:01, 102.95it/s] 31%|███▏      | 45/144 [00:00<00:00, 108.09it/s] 40%|███▉      | 57/144 [00:00<00:00, 110.67it/s] 48%|████▊     | 69/144 [00:00<00:00, 112.09it/s] 56%|█████▋    | 81/144 [00:00<00:00, 114.18it/s] 65%|██████▍   | 93/144 [00:00<00:00, 115.56it/s] 73%|███████▎  | 105/144 [00:00<00:00, 116.29it/s] 81%|████████▏ | 117/144 [00:01<00:00, 116.38it/s] 90%|████████▉ | 129/144 [00:01<00:00, 116.14it/s] 98%|█████████▊| 141/144 [00:01<00:00, 113.17it/s]100%|██████████| 144/144 [00:01<00:00, 112.08it/s]
+-------- NUMBER OF CASES DONE ----------
+8
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c010/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-8QUPsY.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 178.82 mean signal is 187.27 mean noise is 1.0472
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+9
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c010/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:32,  1.55it/s]  8%|▊         | 11/144 [00:00<00:06, 19.11it/s] 15%|█▌        | 22/144 [00:00<00:03, 37.46it/s] 24%|██▎       | 34/144 [00:00<00:01, 55.19it/s] 32%|███▏      | 46/144 [00:01<00:01, 70.22it/s] 40%|████      | 58/144 [00:01<00:01, 82.28it/s] 49%|████▊     | 70/144 [00:01<00:00, 90.31it/s] 57%|█████▋    | 82/144 [00:01<00:00, 97.36it/s] 65%|██████▌   | 94/144 [00:01<00:00, 102.80it/s] 74%|███████▎  | 106/144 [00:01<00:00, 107.08it/s] 82%|████████▏ | 118/144 [00:01<00:00, 110.15it/s] 90%|█████████ | 130/144 [00:01<00:00, 112.28it/s] 99%|█████████▊| 142/144 [00:01<00:00, 113.72it/s]100%|██████████| 144/144 [00:01<00:00, 75.43it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 102.41it/s] 15%|█▌        | 22/144 [00:00<00:01, 106.20it/s] 23%|██▎       | 33/144 [00:00<00:01, 107.26it/s] 31%|███▏      | 45/144 [00:00<00:00, 111.00it/s] 40%|███▉      | 57/144 [00:00<00:00, 113.39it/s] 48%|████▊     | 69/144 [00:00<00:00, 114.64it/s] 56%|█████▋    | 81/144 [00:00<00:00, 114.78it/s] 65%|██████▍   | 93/144 [00:00<00:00, 114.59it/s] 73%|███████▎  | 105/144 [00:00<00:00, 115.35it/s] 81%|████████▏ | 117/144 [00:01<00:00, 115.68it/s] 90%|████████▉ | 129/144 [00:01<00:00, 116.30it/s] 99%|█████████▊| 142/144 [00:01<00:00, 118.01it/s]100%|██████████| 144/144 [00:01<00:00, 114.56it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 104.28it/s] 16%|█▌        | 23/144 [00:00<00:01, 108.88it/s] 24%|██▍       | 35/144 [00:00<00:00, 109.92it/s] 33%|███▎      | 47/144 [00:00<00:00, 110.61it/s] 41%|████      | 59/144 [00:00<00:00, 110.90it/s] 49%|████▉     | 71/144 [00:00<00:00, 111.61it/s] 58%|█████▊    | 83/144 [00:00<00:00, 112.38it/s] 66%|██████▌   | 95/144 [00:00<00:00, 112.97it/s] 74%|███████▍  | 107/144 [00:00<00:00, 113.40it/s] 83%|████████▎ | 119/144 [00:01<00:00, 113.72it/s] 91%|█████████ | 131/144 [00:01<00:00, 114.13it/s] 99%|█████████▉| 143/144 [00:01<00:00, 114.27it/s]100%|██████████| 144/144 [00:01<00:00, 112.51it/s]
+-------- NUMBER OF CASES DONE ----------
+9
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c011/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-Yvg3qu.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 203.28 mean signal is 261.333 mean noise is 1.28555
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+10
+----------------------------------------
+dwi2response: Optimising... [====]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c011/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:30,  1.58it/s]  8%|▊         | 11/144 [00:00<00:06, 19.44it/s] 15%|█▌        | 22/144 [00:00<00:03, 37.89it/s] 24%|██▎       | 34/144 [00:00<00:01, 56.12it/s] 32%|███▏      | 46/144 [00:01<00:01, 71.23it/s] 40%|████      | 58/144 [00:01<00:01, 82.57it/s] 49%|████▊     | 70/144 [00:01<00:00, 91.72it/s] 57%|█████▋    | 82/144 [00:01<00:00, 97.75it/s] 65%|██████▌   | 94/144 [00:01<00:00, 101.48it/s] 74%|███████▎  | 106/144 [00:01<00:00, 103.84it/s] 82%|████████▏ | 118/144 [00:01<00:00, 107.31it/s] 90%|█████████ | 130/144 [00:01<00:00, 110.11it/s] 99%|█████████▊| 142/144 [00:01<00:00, 111.81it/s]100%|██████████| 144/144 [00:01<00:00, 75.43it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  6%|▋         | 9/144 [00:00<00:01, 88.73it/s] 13%|█▎        | 19/144 [00:00<00:01, 93.71it/s] 21%|██        | 30/144 [00:00<00:01, 96.99it/s] 29%|██▉       | 42/144 [00:00<00:00, 102.91it/s] 38%|███▊      | 54/144 [00:00<00:00, 106.41it/s] 46%|████▌     | 66/144 [00:00<00:00, 108.28it/s] 54%|█████▍    | 78/144 [00:00<00:00, 109.31it/s] 62%|██████▎   | 90/144 [00:00<00:00, 111.16it/s] 71%|███████   | 102/144 [00:00<00:00, 112.12it/s] 79%|███████▉  | 114/144 [00:01<00:00, 112.51it/s] 88%|████████▊ | 126/144 [00:01<00:00, 112.56it/s] 96%|█████████▌| 138/144 [00:01<00:00, 112.61it/s]100%|██████████| 144/144 [00:01<00:00, 108.61it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 92.36it/s] 15%|█▍        | 21/144 [00:00<00:01, 97.14it/s] 22%|██▏       | 32/144 [00:00<00:01, 100.08it/s] 30%|██▉       | 43/144 [00:00<00:00, 102.69it/s] 38%|███▊      | 55/144 [00:00<00:00, 105.78it/s] 46%|████▌     | 66/144 [00:00<00:00, 106.50it/s] 53%|█████▎    | 77/144 [00:00<00:00, 106.83it/s] 61%|██████    | 88/144 [00:00<00:00, 106.96it/s] 69%|██████▉   | 99/144 [00:00<00:00, 107.80it/s] 76%|███████▋  | 110/144 [00:01<00:00, 107.77it/s] 84%|████████▍ | 121/144 [00:01<00:00, 108.13it/s] 92%|█████████▏| 132/144 [00:01<00:00, 108.38it/s]100%|██████████| 144/144 [00:01<00:00, 109.38it/s]100%|██████████| 144/144 [00:01<00:00, 106.38it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+10
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c012/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-49SaEO.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 200.82 mean signal is 223.786 mean noise is 1.11435
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+11
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c012/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:21,  1.75it/s]  8%|▊         | 11/144 [00:00<00:06, 21.22it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.99it/s] 23%|██▎       | 33/144 [00:00<00:02, 55.42it/s] 31%|███▏      | 45/144 [00:01<00:01, 70.18it/s] 40%|███▉      | 57/144 [00:01<00:01, 82.59it/s] 48%|████▊     | 69/144 [00:01<00:00, 91.39it/s] 56%|█████▋    | 81/144 [00:01<00:00, 98.82it/s] 65%|██████▍   | 93/144 [00:01<00:00, 103.23it/s] 73%|███████▎  | 105/144 [00:01<00:00, 107.25it/s] 81%|████████▏ | 117/144 [00:01<00:00, 109.41it/s] 90%|████████▉ | 129/144 [00:01<00:00, 111.66it/s] 98%|█████████▊| 141/144 [00:01<00:00, 113.77it/s]100%|██████████| 144/144 [00:01<00:00, 77.80it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 113.76it/s] 17%|█▋        | 24/144 [00:00<00:01, 117.13it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.36it/s] 33%|███▎      | 48/144 [00:00<00:00, 116.45it/s] 42%|████▏     | 60/144 [00:00<00:00, 116.48it/s] 50%|█████     | 72/144 [00:00<00:00, 114.72it/s] 58%|█████▊    | 84/144 [00:00<00:00, 114.84it/s] 67%|██████▋   | 96/144 [00:00<00:00, 115.01it/s] 75%|███████▌  | 108/144 [00:00<00:00, 115.43it/s] 83%|████████▎ | 120/144 [00:01<00:00, 115.69it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.46it/s]100%|██████████| 144/144 [00:01<00:00, 116.51it/s]100%|██████████| 144/144 [00:01<00:00, 115.89it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 117.42it/s] 17%|█▋        | 24/144 [00:00<00:01, 117.91it/s] 25%|██▌       | 36/144 [00:00<00:00, 118.37it/s] 33%|███▎      | 48/144 [00:00<00:00, 118.58it/s] 42%|████▏     | 60/144 [00:00<00:00, 117.01it/s] 50%|█████     | 72/144 [00:00<00:00, 117.59it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.49it/s] 67%|██████▋   | 96/144 [00:00<00:00, 117.53it/s] 75%|███████▌  | 108/144 [00:00<00:00, 118.10it/s] 83%|████████▎ | 120/144 [00:01<00:00, 118.26it/s] 92%|█████████▏| 132/144 [00:01<00:00, 118.34it/s]100%|██████████| 144/144 [00:01<00:00, 118.17it/s]100%|██████████| 144/144 [00:01<00:00, 117.94it/s]
+-------- NUMBER OF CASES DONE ----------
+11
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c013/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-z220L5.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 191.88 mean signal is 222.729 mean noise is 1.16072
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+12
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c013/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:20,  1.77it/s]  8%|▊         | 12/144 [00:00<00:05, 23.28it/s] 16%|█▌        | 23/144 [00:00<00:02, 41.83it/s] 24%|██▍       | 35/144 [00:00<00:01, 59.94it/s] 33%|███▎      | 47/144 [00:00<00:01, 74.78it/s] 41%|████      | 59/144 [00:01<00:00, 86.52it/s] 49%|████▉     | 71/144 [00:01<00:00, 95.33it/s] 58%|█████▊    | 83/144 [00:01<00:00, 101.99it/s] 66%|██████▌   | 95/144 [00:01<00:00, 102.98it/s] 74%|███████▍  | 107/144 [00:01<00:00, 105.75it/s] 83%|████████▎ | 119/144 [00:01<00:00, 109.35it/s] 91%|█████████ | 131/144 [00:01<00:00, 112.13it/s] 99%|█████████▉| 143/144 [00:01<00:00, 114.23it/s]100%|██████████| 144/144 [00:01<00:00, 79.16it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 109.24it/s] 16%|█▌        | 23/144 [00:00<00:01, 113.79it/s] 24%|██▍       | 35/144 [00:00<00:00, 114.22it/s] 33%|███▎      | 47/144 [00:00<00:00, 115.36it/s] 41%|████      | 59/144 [00:00<00:00, 116.40it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.93it/s] 58%|█████▊    | 83/144 [00:00<00:00, 117.34it/s] 66%|██████▌   | 95/144 [00:00<00:00, 117.40it/s] 74%|███████▍  | 107/144 [00:00<00:00, 114.93it/s] 83%|████████▎ | 119/144 [00:01<00:00, 114.53it/s] 91%|█████████ | 131/144 [00:01<00:00, 113.54it/s] 99%|█████████▉| 143/144 [00:01<00:00, 115.31it/s]100%|██████████| 144/144 [00:01<00:00, 115.30it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 117.00it/s] 17%|█▋        | 24/144 [00:00<00:01, 108.96it/s] 24%|██▍       | 35/144 [00:00<00:01, 108.41it/s] 33%|███▎      | 47/144 [00:00<00:00, 111.20it/s] 41%|████      | 59/144 [00:00<00:00, 113.31it/s] 49%|████▉     | 71/144 [00:00<00:00, 113.92it/s] 58%|█████▊    | 83/144 [00:00<00:00, 114.92it/s] 66%|██████▌   | 95/144 [00:00<00:00, 115.84it/s] 74%|███████▍  | 107/144 [00:00<00:00, 116.21it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.24it/s] 91%|█████████ | 131/144 [00:01<00:00, 116.68it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.90it/s]100%|██████████| 144/144 [00:01<00:00, 114.87it/s]
+-------- NUMBER OF CASES DONE ----------
+12
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ...done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c014/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-QmcdpB.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 211.66 mean signal is 222.161 mean noise is 1.0496
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+13
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c014/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:19,  1.79it/s]  8%|▊         | 11/144 [00:00<00:06, 21.65it/s] 15%|█▌        | 22/144 [00:00<00:02, 40.98it/s] 24%|██▎       | 34/144 [00:00<00:01, 58.81it/s] 32%|███▏      | 46/144 [00:00<00:01, 73.59it/s] 40%|████      | 58/144 [00:01<00:01, 85.21it/s] 49%|████▊     | 70/144 [00:01<00:00, 94.33it/s] 58%|█████▊    | 83/144 [00:01<00:00, 101.95it/s] 67%|██████▋   | 96/144 [00:01<00:00, 107.47it/s] 75%|███████▌  | 108/144 [00:01<00:00, 110.63it/s] 83%|████████▎ | 120/144 [00:01<00:00, 111.26it/s] 92%|█████████▏| 132/144 [00:01<00:00, 112.82it/s]100%|██████████| 144/144 [00:01<00:00, 114.51it/s]100%|██████████| 144/144 [00:01<00:00, 79.53it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 112.64it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.39it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.53it/s] 33%|███▎      | 48/144 [00:00<00:00, 117.31it/s] 42%|████▏     | 60/144 [00:00<00:00, 117.64it/s] 50%|█████     | 72/144 [00:00<00:00, 118.03it/s] 58%|█████▊    | 84/144 [00:00<00:00, 118.25it/s] 67%|██████▋   | 96/144 [00:00<00:00, 118.21it/s] 75%|███████▌  | 108/144 [00:00<00:00, 118.42it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.51it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.31it/s]100%|██████████| 144/144 [00:01<00:00, 117.24it/s]100%|██████████| 144/144 [00:01<00:00, 117.35it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 115.45it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.52it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.01it/s] 33%|███▎      | 48/144 [00:00<00:00, 116.42it/s] 42%|████▏     | 60/144 [00:00<00:00, 113.71it/s] 50%|█████     | 72/144 [00:00<00:00, 113.53it/s] 58%|█████▊    | 84/144 [00:00<00:00, 112.52it/s] 67%|██████▋   | 96/144 [00:00<00:00, 112.66it/s] 75%|███████▌  | 108/144 [00:00<00:00, 112.61it/s] 83%|████████▎ | 120/144 [00:01<00:00, 112.18it/s] 92%|█████████▏| 132/144 [00:01<00:00, 112.36it/s]100%|██████████| 144/144 [00:01<00:00, 112.59it/s]100%|██████████| 144/144 [00:01<00:00, 113.28it/s]
+-------- NUMBER OF CASES DONE ----------
+13
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c015/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-B9gCc6.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 207.70 mean signal is 226.161 mean noise is 1.08888
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+14
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c015/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:29,  1.59it/s]  8%|▊         | 11/144 [00:00<00:06, 19.57it/s] 15%|█▌        | 22/144 [00:00<00:03, 37.69it/s] 23%|██▎       | 33/144 [00:00<00:02, 53.24it/s] 31%|███▏      | 45/144 [00:01<00:01, 68.65it/s] 40%|███▉      | 57/144 [00:01<00:01, 80.79it/s] 48%|████▊     | 69/144 [00:01<00:00, 90.01it/s] 56%|█████▋    | 81/144 [00:01<00:00, 97.06it/s] 65%|██████▍   | 93/144 [00:01<00:00, 101.13it/s] 73%|███████▎  | 105/144 [00:01<00:00, 104.70it/s] 81%|████████▏ | 117/144 [00:01<00:00, 107.34it/s] 90%|████████▉ | 129/144 [00:01<00:00, 109.05it/s] 98%|█████████▊| 141/144 [00:01<00:00, 109.23it/s]100%|██████████| 144/144 [00:01<00:00, 74.64it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 106.97it/s] 16%|█▌        | 23/144 [00:00<00:01, 110.76it/s] 24%|██▍       | 35/144 [00:00<00:00, 111.90it/s] 33%|███▎      | 47/144 [00:00<00:00, 112.67it/s] 41%|████      | 59/144 [00:00<00:00, 112.90it/s] 49%|████▉     | 71/144 [00:00<00:00, 113.44it/s] 58%|█████▊    | 83/144 [00:00<00:00, 112.56it/s] 66%|██████▌   | 95/144 [00:00<00:00, 112.56it/s] 74%|███████▍  | 107/144 [00:00<00:00, 112.64it/s] 83%|████████▎ | 119/144 [00:01<00:00, 112.94it/s] 91%|█████████ | 131/144 [00:01<00:00, 113.13it/s] 99%|█████████▉| 143/144 [00:01<00:00, 112.74it/s]100%|██████████| 144/144 [00:01<00:00, 112.50it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 95.35it/s] 15%|█▍        | 21/144 [00:00<00:01, 100.14it/s] 23%|██▎       | 33/144 [00:00<00:01, 106.18it/s] 31%|███▏      | 45/144 [00:00<00:00, 109.26it/s] 40%|███▉      | 57/144 [00:00<00:00, 110.58it/s] 48%|████▊     | 69/144 [00:00<00:00, 111.73it/s] 56%|█████▋    | 81/144 [00:00<00:00, 110.83it/s] 65%|██████▍   | 93/144 [00:00<00:00, 110.83it/s] 73%|███████▎  | 105/144 [00:00<00:00, 110.15it/s] 81%|████████▏ | 117/144 [00:01<00:00, 110.15it/s] 90%|████████▉ | 129/144 [00:01<00:00, 110.35it/s] 98%|█████████▊| 141/144 [00:01<00:00, 110.29it/s]100%|██████████| 144/144 [00:01<00:00, 109.43it/s]
+-------- NUMBER OF CASES DONE ----------
+14
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c016/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-1xuCPW.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 192.14 mean signal is 175.187 mean noise is 0.911751
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+15
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c016/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:25,  1.67it/s]  8%|▊         | 11/144 [00:00<00:06, 20.48it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.25it/s] 23%|██▎       | 33/144 [00:00<00:02, 54.80it/s] 31%|███▏      | 45/144 [00:01<00:01, 70.56it/s] 40%|███▉      | 57/144 [00:01<00:01, 82.83it/s] 48%|████▊     | 69/144 [00:01<00:00, 92.36it/s] 56%|█████▋    | 81/144 [00:01<00:00, 99.52it/s] 65%|██████▍   | 93/144 [00:01<00:00, 104.91it/s] 73%|███████▎  | 105/144 [00:01<00:00, 108.66it/s] 81%|████████▏ | 117/144 [00:01<00:00, 111.41it/s] 90%|████████▉ | 129/144 [00:01<00:00, 113.64it/s] 98%|█████████▊| 141/144 [00:01<00:00, 114.85it/s]100%|██████████| 144/144 [00:01<00:00, 77.58it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 108.67it/s] 16%|█▌        | 23/144 [00:00<00:01, 113.62it/s] 24%|██▍       | 35/144 [00:00<00:00, 114.67it/s] 33%|███▎      | 47/144 [00:00<00:00, 115.80it/s] 41%|████      | 59/144 [00:00<00:00, 116.35it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.73it/s] 58%|█████▊    | 83/144 [00:00<00:00, 116.82it/s] 66%|██████▌   | 95/144 [00:00<00:00, 116.12it/s] 74%|███████▍  | 107/144 [00:00<00:00, 116.43it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.61it/s] 91%|█████████ | 131/144 [00:01<00:00, 115.32it/s] 99%|█████████▉| 143/144 [00:01<00:00, 115.03it/s]100%|██████████| 144/144 [00:01<00:00, 115.53it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 111.48it/s] 17%|█▋        | 24/144 [00:00<00:01, 113.64it/s] 25%|██▌       | 36/144 [00:00<00:00, 115.28it/s] 33%|███▎      | 48/144 [00:00<00:00, 115.78it/s] 42%|████▏     | 60/144 [00:00<00:00, 116.53it/s] 50%|█████     | 72/144 [00:00<00:00, 117.18it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.53it/s] 67%|██████▋   | 96/144 [00:00<00:00, 117.76it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.62it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.63it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.62it/s]100%|██████████| 144/144 [00:01<00:00, 116.42it/s]100%|██████████| 144/144 [00:01<00:00, 116.42it/s]
+-------- NUMBER OF CASES DONE ----------
+15
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c017/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-KJFR2V.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 178.33 mean signal is 168.656 mean noise is 0.945723
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+16
+----------------------------------------
+dwi2response: Optimising... [=======]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c017/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:22,  1.72it/s]  8%|▊         | 11/144 [00:00<00:06, 20.88it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.88it/s] 23%|██▎       | 33/144 [00:00<00:01, 56.10it/s] 31%|███▏      | 45/144 [00:00<00:01, 71.84it/s] 40%|███▉      | 57/144 [00:01<00:01, 84.25it/s] 48%|████▊     | 69/144 [00:01<00:00, 93.72it/s] 56%|█████▋    | 81/144 [00:01<00:00, 96.61it/s] 64%|██████▍   | 92/144 [00:01<00:00, 98.59it/s] 72%|███████▏  | 104/144 [00:01<00:00, 102.88it/s] 81%|████████  | 116/144 [00:01<00:00, 107.54it/s] 89%|████████▉ | 128/144 [00:01<00:00, 110.98it/s] 97%|█████████▋| 140/144 [00:01<00:00, 113.33it/s]100%|██████████| 144/144 [00:01<00:00, 77.35it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 109.39it/s] 16%|█▌        | 23/144 [00:00<00:01, 113.50it/s] 24%|██▍       | 35/144 [00:00<00:00, 115.54it/s] 33%|███▎      | 47/144 [00:00<00:00, 116.71it/s] 41%|████      | 59/144 [00:00<00:00, 117.29it/s] 49%|████▉     | 71/144 [00:00<00:00, 117.75it/s] 58%|█████▊    | 83/144 [00:00<00:00, 118.04it/s] 66%|██████▌   | 95/144 [00:00<00:00, 118.23it/s] 74%|███████▍  | 107/144 [00:00<00:00, 118.29it/s] 83%|████████▎ | 119/144 [00:01<00:00, 118.16it/s] 91%|█████████ | 131/144 [00:01<00:00, 118.49it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.84it/s]100%|██████████| 144/144 [00:01<00:00, 117.07it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 116.67it/s] 17%|█▋        | 24/144 [00:00<00:01, 116.94it/s] 25%|██▌       | 36/144 [00:00<00:00, 117.40it/s] 33%|███▎      | 48/144 [00:00<00:00, 116.63it/s] 42%|████▏     | 60/144 [00:00<00:00, 116.45it/s] 50%|█████     | 72/144 [00:00<00:00, 116.97it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.09it/s] 67%|██████▋   | 96/144 [00:00<00:00, 117.66it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.91it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.90it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.62it/s]100%|██████████| 144/144 [00:01<00:00, 117.47it/s]100%|██████████| 144/144 [00:01<00:00, 117.31it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+16
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c018/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-GtK2NI.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 226.43 mean signal is 245.731 mean noise is 1.08523
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+17
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c018/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:21,  1.77it/s]  7%|▋         | 10/144 [00:00<00:06, 19.36it/s] 15%|█▍        | 21/144 [00:00<00:03, 39.01it/s] 22%|██▏       | 31/144 [00:00<00:02, 52.56it/s] 30%|██▉       | 43/144 [00:00<00:01, 68.57it/s] 38%|███▊      | 55/144 [00:01<00:01, 81.57it/s] 47%|████▋     | 67/144 [00:01<00:00, 91.72it/s] 55%|█████▍    | 79/144 [00:01<00:00, 99.20it/s] 63%|██████▎   | 91/144 [00:01<00:00, 104.53it/s] 72%|███████▏  | 103/144 [00:01<00:00, 108.40it/s] 80%|███████▉  | 115/144 [00:01<00:00, 111.42it/s] 88%|████████▊ | 127/144 [00:01<00:00, 108.34it/s] 97%|█████████▋| 139/144 [00:01<00:00, 109.30it/s]100%|██████████| 144/144 [00:01<00:00, 76.93it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 110.53it/s] 17%|█▋        | 24/144 [00:00<00:01, 114.89it/s] 25%|██▌       | 36/144 [00:00<00:00, 115.40it/s] 33%|███▎      | 48/144 [00:00<00:00, 116.61it/s] 42%|████▏     | 60/144 [00:00<00:00, 115.23it/s] 50%|█████     | 72/144 [00:00<00:00, 115.85it/s] 58%|█████▊    | 84/144 [00:00<00:00, 116.17it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.50it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.78it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.03it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.36it/s]100%|██████████| 144/144 [00:01<00:00, 117.35it/s]100%|██████████| 144/144 [00:01<00:00, 116.40it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 117.04it/s] 17%|█▋        | 24/144 [00:00<00:01, 117.78it/s] 25%|██▌       | 36/144 [00:00<00:00, 118.33it/s] 33%|███▎      | 48/144 [00:00<00:00, 118.47it/s] 42%|████▏     | 60/144 [00:00<00:00, 118.35it/s] 50%|█████     | 72/144 [00:00<00:00, 118.74it/s] 58%|█████▊    | 84/144 [00:00<00:00, 118.41it/s] 67%|██████▋   | 96/144 [00:00<00:00, 118.25it/s] 75%|███████▌  | 108/144 [00:00<00:00, 118.23it/s] 83%|████████▎ | 120/144 [00:01<00:00, 118.14it/s] 92%|█████████▏| 132/144 [00:01<00:00, 118.41it/s]100%|██████████| 144/144 [00:01<00:00, 117.84it/s]100%|██████████| 144/144 [00:01<00:00, 118.14it/s]
+-------- NUMBER OF CASES DONE ----------
+17
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c019/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-TrDqGq.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 185.69 mean signal is 207.81 mean noise is 1.1191
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+18
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c019/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:21,  1.74it/s]  8%|▊         | 11/144 [00:00<00:06, 21.15it/s] 15%|█▌        | 22/144 [00:00<00:03, 40.63it/s] 24%|██▎       | 34/144 [00:00<00:01, 58.36it/s] 32%|███▏      | 46/144 [00:00<00:01, 73.16it/s] 40%|████      | 58/144 [00:01<00:01, 84.55it/s] 49%|████▊     | 70/144 [00:01<00:00, 93.62it/s] 56%|█████▋    | 81/144 [00:01<00:00, 97.82it/s] 65%|██████▍   | 93/144 [00:01<00:00, 103.22it/s] 73%|███████▎  | 105/144 [00:01<00:00, 106.09it/s] 81%|████████▏ | 117/144 [00:01<00:00, 108.71it/s] 90%|████████▉ | 129/144 [00:01<00:00, 110.33it/s] 98%|█████████▊| 141/144 [00:01<00:00, 109.14it/s]100%|██████████| 144/144 [00:01<00:00, 77.56it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 109.04it/s] 16%|█▌        | 23/144 [00:00<00:01, 111.13it/s] 24%|██▍       | 35/144 [00:00<00:00, 113.18it/s] 33%|███▎      | 47/144 [00:00<00:00, 114.93it/s] 41%|████      | 59/144 [00:00<00:00, 115.62it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.28it/s] 58%|█████▊    | 83/144 [00:00<00:00, 116.49it/s] 66%|██████▌   | 95/144 [00:00<00:00, 116.53it/s] 74%|███████▍  | 107/144 [00:00<00:00, 116.64it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.24it/s] 91%|█████████ | 131/144 [00:01<00:00, 114.42it/s] 99%|█████████▉| 143/144 [00:01<00:00, 114.77it/s]100%|██████████| 144/144 [00:01<00:00, 115.07it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 115.85it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.49it/s] 25%|██▌       | 36/144 [00:00<00:00, 115.06it/s] 33%|███▎      | 48/144 [00:00<00:00, 115.48it/s] 42%|████▏     | 60/144 [00:00<00:00, 114.81it/s] 50%|█████     | 72/144 [00:00<00:00, 115.66it/s] 58%|█████▊    | 84/144 [00:00<00:00, 115.72it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.20it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.71it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.83it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.53it/s]100%|██████████| 144/144 [00:01<00:00, 116.20it/s]100%|██████████| 144/144 [00:01<00:00, 115.98it/s]
+-------- NUMBER OF CASES DONE ----------
+18
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c020/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-zkxPjg.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 179.69 mean signal is 238.958 mean noise is 1.32981
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+19
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c020/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:24,  1.69it/s]  8%|▊         | 12/144 [00:00<00:05, 22.43it/s] 16%|█▌        | 23/144 [00:00<00:02, 40.69it/s] 24%|██▎       | 34/144 [00:00<00:01, 56.31it/s] 32%|███▏      | 46/144 [00:01<00:01, 71.79it/s] 40%|████      | 58/144 [00:01<00:01, 84.08it/s] 49%|████▊     | 70/144 [00:01<00:00, 93.34it/s] 57%|█████▋    | 82/144 [00:01<00:00, 99.91it/s] 65%|██████▌   | 94/144 [00:01<00:00, 104.89it/s] 74%|███████▎  | 106/144 [00:01<00:00, 108.31it/s] 82%|████████▏ | 118/144 [00:01<00:00, 110.96it/s] 90%|█████████ | 130/144 [00:01<00:00, 113.04it/s] 99%|█████████▊| 142/144 [00:01<00:00, 114.59it/s]100%|██████████| 144/144 [00:01<00:00, 78.05it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 111.54it/s] 17%|█▋        | 24/144 [00:00<00:01, 113.04it/s] 25%|██▌       | 36/144 [00:00<00:00, 114.24it/s] 33%|███▎      | 48/144 [00:00<00:00, 113.95it/s] 42%|████▏     | 60/144 [00:00<00:00, 115.41it/s] 50%|█████     | 72/144 [00:00<00:00, 116.54it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.16it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.07it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.70it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.30it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.06it/s]100%|██████████| 144/144 [00:01<00:00, 116.41it/s]100%|██████████| 144/144 [00:01<00:00, 115.79it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  9%|▉         | 13/144 [00:00<00:01, 121.23it/s] 18%|█▊        | 26/144 [00:00<00:00, 121.09it/s] 27%|██▋       | 39/144 [00:00<00:00, 120.41it/s] 36%|███▌      | 52/144 [00:00<00:00, 120.80it/s] 45%|████▌     | 65/144 [00:00<00:00, 120.92it/s] 54%|█████▍    | 78/144 [00:00<00:00, 119.21it/s] 62%|██████▎   | 90/144 [00:00<00:00, 118.82it/s] 71%|███████   | 102/144 [00:00<00:00, 119.07it/s] 79%|███████▉  | 114/144 [00:00<00:00, 118.94it/s] 88%|████████▊ | 126/144 [00:01<00:00, 119.09it/s] 96%|█████████▌| 138/144 [00:01<00:00, 119.22it/s]100%|██████████| 144/144 [00:01<00:00, 119.53it/s]
+-------- NUMBER OF CASES DONE ----------
+19
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c021/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-dPE0fM.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 181.65 mean signal is 187.284 mean noise is 1.031
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+20
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c021/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:35,  1.49it/s]  7%|▋         | 10/144 [00:00<00:07, 17.03it/s] 15%|█▍        | 21/144 [00:00<00:03, 35.11it/s] 22%|██▏       | 32/144 [00:00<00:02, 51.22it/s] 31%|███       | 44/144 [00:01<00:01, 66.66it/s] 39%|███▉      | 56/144 [00:01<00:01, 79.07it/s] 47%|████▋     | 67/144 [00:01<00:00, 85.29it/s] 55%|█████▍    | 79/144 [00:01<00:00, 93.81it/s] 63%|██████▎   | 91/144 [00:01<00:00, 100.03it/s] 72%|███████▏  | 103/144 [00:01<00:00, 104.33it/s] 80%|███████▉  | 115/144 [00:01<00:00, 108.23it/s] 88%|████████▊ | 127/144 [00:01<00:00, 110.69it/s] 97%|█████████▋| 139/144 [00:01<00:00, 112.03it/s]100%|██████████| 144/144 [00:01<00:00, 73.32it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 97.08it/s] 15%|█▍        | 21/144 [00:00<00:01, 100.57it/s] 22%|██▏       | 32/144 [00:00<00:01, 104.01it/s] 31%|███       | 44/144 [00:00<00:00, 108.53it/s] 39%|███▉      | 56/144 [00:00<00:00, 109.91it/s] 47%|████▋     | 68/144 [00:00<00:00, 111.63it/s] 56%|█████▌    | 80/144 [00:00<00:00, 112.86it/s] 64%|██████▍   | 92/144 [00:00<00:00, 114.22it/s] 72%|███████▏  | 104/144 [00:00<00:00, 114.99it/s] 81%|████████  | 116/144 [00:01<00:00, 115.72it/s] 89%|████████▉ | 128/144 [00:01<00:00, 115.52it/s] 97%|█████████▋| 140/144 [00:01<00:00, 111.28it/s]100%|██████████| 144/144 [00:01<00:00, 111.20it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  6%|▋         | 9/144 [00:00<00:01, 89.13it/s] 14%|█▍        | 20/144 [00:00<00:01, 96.80it/s] 22%|██▏       | 31/144 [00:00<00:01, 102.20it/s] 30%|██▉       | 43/144 [00:00<00:00, 107.45it/s] 38%|███▊      | 55/144 [00:00<00:00, 109.55it/s] 47%|████▋     | 67/144 [00:00<00:00, 111.60it/s] 55%|█████▍    | 79/144 [00:00<00:00, 112.58it/s] 63%|██████▎   | 91/144 [00:00<00:00, 113.73it/s] 72%|███████▏  | 103/144 [00:00<00:00, 113.18it/s] 80%|███████▉  | 115/144 [00:01<00:00, 113.01it/s] 88%|████████▊ | 127/144 [00:01<00:00, 113.62it/s] 97%|█████████▋| 139/144 [00:01<00:00, 113.94it/s]100%|██████████| 144/144 [00:01<00:00, 110.88it/s]
+-------- NUMBER OF CASES DONE ----------
+20
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c022/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-18RvTi.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 183.40 mean signal is 183.783 mean noise is 1.00208
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+21
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c022/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:24,  1.68it/s]  8%|▊         | 11/144 [00:00<00:06, 20.58it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.28it/s] 23%|██▎       | 33/144 [00:00<00:02, 55.03it/s] 31%|███▏      | 45/144 [00:01<00:01, 70.45it/s] 40%|███▉      | 57/144 [00:01<00:01, 82.61it/s] 48%|████▊     | 69/144 [00:01<00:00, 90.88it/s] 56%|█████▋    | 81/144 [00:01<00:00, 97.89it/s] 65%|██████▍   | 93/144 [00:01<00:00, 102.71it/s] 73%|███████▎  | 105/144 [00:01<00:00, 106.46it/s] 81%|████████▏ | 117/144 [00:01<00:00, 109.48it/s] 90%|████████▉ | 129/144 [00:01<00:00, 111.76it/s] 98%|█████████▊| 141/144 [00:01<00:00, 113.22it/s]100%|██████████| 144/144 [00:01<00:00, 77.00it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 107.05it/s] 16%|█▌        | 23/144 [00:00<00:01, 113.18it/s] 24%|██▍       | 35/144 [00:00<00:00, 115.45it/s] 33%|███▎      | 47/144 [00:00<00:00, 116.31it/s] 41%|████      | 59/144 [00:00<00:00, 117.46it/s] 49%|████▉     | 71/144 [00:00<00:00, 117.61it/s] 58%|█████▊    | 83/144 [00:00<00:00, 118.12it/s] 66%|██████▌   | 95/144 [00:00<00:00, 117.31it/s] 74%|███████▍  | 107/144 [00:00<00:00, 115.77it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.55it/s] 91%|█████████ | 131/144 [00:01<00:00, 116.61it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.55it/s]100%|██████████| 144/144 [00:01<00:00, 116.35it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 116.38it/s] 17%|█▋        | 24/144 [00:00<00:01, 117.26it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.70it/s] 33%|███▎      | 48/144 [00:00<00:00, 114.89it/s] 42%|████▏     | 60/144 [00:00<00:00, 112.42it/s] 50%|█████     | 72/144 [00:00<00:00, 114.35it/s] 58%|█████▊    | 84/144 [00:00<00:00, 115.57it/s] 67%|██████▋   | 96/144 [00:00<00:00, 115.88it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.59it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.15it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.57it/s]100%|██████████| 144/144 [00:01<00:00, 117.50it/s]100%|██████████| 144/144 [00:01<00:00, 116.26it/s]
+-------- NUMBER OF CASES DONE ----------
+21
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c023/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-CCa7ah.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 181.43 mean signal is 191.891 mean noise is 1.05764
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+22
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c023/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:24,  1.70it/s]  8%|▊         | 11/144 [00:00<00:06, 20.57it/s] 15%|█▌        | 22/144 [00:00<00:03, 39.35it/s] 23%|██▎       | 33/144 [00:00<00:02, 55.10it/s] 31%|███▏      | 45/144 [00:01<00:01, 70.33it/s] 40%|███▉      | 57/144 [00:01<00:01, 82.29it/s] 48%|████▊     | 69/144 [00:01<00:00, 91.59it/s] 56%|█████▋    | 81/144 [00:01<00:00, 98.68it/s] 65%|██████▍   | 93/144 [00:01<00:00, 103.87it/s] 73%|███████▎  | 105/144 [00:01<00:00, 107.80it/s] 81%|████████▏ | 117/144 [00:01<00:00, 110.73it/s] 90%|████████▉ | 129/144 [00:01<00:00, 112.62it/s] 98%|█████████▊| 141/144 [00:01<00:00, 113.87it/s]100%|██████████| 144/144 [00:01<00:00, 77.38it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 104.42it/s] 16%|█▌        | 23/144 [00:00<00:01, 111.77it/s] 24%|██▍       | 35/144 [00:00<00:00, 113.29it/s] 33%|███▎      | 47/144 [00:00<00:00, 112.28it/s] 41%|████      | 59/144 [00:00<00:00, 110.66it/s] 49%|████▉     | 71/144 [00:00<00:00, 110.93it/s] 58%|█████▊    | 83/144 [00:00<00:00, 113.01it/s] 66%|██████▌   | 95/144 [00:00<00:00, 114.57it/s] 74%|███████▍  | 107/144 [00:00<00:00, 114.44it/s] 83%|████████▎ | 119/144 [00:01<00:00, 115.47it/s] 91%|█████████ | 131/144 [00:01<00:00, 116.67it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.96it/s]100%|██████████| 144/144 [00:01<00:00, 114.17it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 103.79it/s] 15%|█▌        | 22/144 [00:00<00:01, 103.89it/s] 24%|██▎       | 34/144 [00:00<00:01, 109.28it/s] 32%|███▏      | 46/144 [00:00<00:00, 112.58it/s] 40%|████      | 58/144 [00:00<00:00, 114.65it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.43it/s] 58%|█████▊    | 83/144 [00:00<00:00, 117.05it/s] 66%|██████▌   | 95/144 [00:00<00:00, 117.66it/s] 74%|███████▍  | 107/144 [00:00<00:00, 117.89it/s] 83%|████████▎ | 119/144 [00:01<00:00, 118.31it/s] 91%|█████████ | 131/144 [00:01<00:00, 117.57it/s] 99%|█████████▉| 143/144 [00:01<00:00, 118.03it/s]100%|██████████| 144/144 [00:01<00:00, 115.71it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+22
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c024/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-iHi83p.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 201.32 mean signal is 182.884 mean noise is 0.908417
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+23
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c024/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:20,  1.78it/s]  8%|▊         | 11/144 [00:00<00:06, 21.63it/s] 15%|█▌        | 22/144 [00:00<00:02, 40.98it/s] 23%|██▎       | 33/144 [00:00<00:01, 56.83it/s] 31%|███▏      | 45/144 [00:00<00:01, 72.46it/s] 40%|███▉      | 57/144 [00:01<00:01, 84.68it/s] 48%|████▊     | 69/144 [00:01<00:00, 93.94it/s] 56%|█████▋    | 81/144 [00:01<00:00, 100.69it/s] 65%|██████▍   | 93/144 [00:01<00:00, 105.75it/s] 73%|███████▎  | 105/144 [00:01<00:00, 109.36it/s] 81%|████████▏ | 117/144 [00:01<00:00, 111.42it/s] 90%|████████▉ | 129/144 [00:01<00:00, 112.70it/s] 98%|█████████▊| 141/144 [00:01<00:00, 114.22it/s]100%|██████████| 144/144 [00:01<00:00, 79.22it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 113.58it/s] 17%|█▋        | 24/144 [00:00<00:01, 116.33it/s] 25%|██▌       | 36/144 [00:00<00:00, 117.31it/s] 33%|███▎      | 48/144 [00:00<00:00, 117.77it/s] 42%|████▏     | 60/144 [00:00<00:00, 118.07it/s] 50%|█████     | 72/144 [00:00<00:00, 117.09it/s] 58%|█████▊    | 84/144 [00:00<00:00, 117.23it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.70it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.27it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.45it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.14it/s]100%|██████████| 144/144 [00:01<00:00, 117.50it/s]100%|██████████| 144/144 [00:01<00:00, 117.21it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 107.02it/s] 16%|█▌        | 23/144 [00:00<00:01, 113.18it/s] 24%|██▍       | 35/144 [00:00<00:00, 115.57it/s] 33%|███▎      | 47/144 [00:00<00:00, 116.44it/s] 41%|████      | 59/144 [00:00<00:00, 117.02it/s] 49%|████▉     | 71/144 [00:00<00:00, 117.25it/s] 58%|█████▊    | 83/144 [00:00<00:00, 117.48it/s] 66%|██████▌   | 95/144 [00:00<00:00, 116.90it/s] 74%|███████▍  | 107/144 [00:00<00:00, 117.22it/s] 83%|████████▎ | 119/144 [00:01<00:00, 117.33it/s] 91%|█████████ | 131/144 [00:01<00:00, 117.24it/s] 99%|█████████▉| 143/144 [00:01<00:00, 115.68it/s]100%|██████████| 144/144 [00:01<00:00, 116.22it/s]
+-------- NUMBER OF CASES DONE ----------
+23
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c025/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-3TzkwK.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 223.41 mean signal is 227.161 mean noise is 1.01676
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+24
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c025/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:20,  1.77it/s]  8%|▊         | 11/144 [00:00<00:06, 21.62it/s] 15%|█▌        | 22/144 [00:00<00:02, 41.02it/s] 24%|██▎       | 34/144 [00:00<00:01, 59.13it/s] 32%|███▏      | 46/144 [00:00<00:01, 73.40it/s] 40%|████      | 58/144 [00:01<00:01, 85.26it/s] 49%|████▊     | 70/144 [00:01<00:00, 94.34it/s] 57%|█████▋    | 82/144 [00:01<00:00, 101.06it/s] 65%|██████▌   | 94/144 [00:01<00:00, 106.18it/s] 74%|███████▎  | 106/144 [00:01<00:00, 109.78it/s] 82%|████████▏ | 118/144 [00:01<00:00, 112.37it/s] 90%|█████████ | 130/144 [00:01<00:00, 114.12it/s] 99%|█████████▊| 142/144 [00:01<00:00, 115.44it/s]100%|██████████| 144/144 [00:01<00:00, 79.63it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 112.56it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.53it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.77it/s] 33%|███▎      | 48/144 [00:00<00:00, 117.69it/s] 42%|████▏     | 60/144 [00:00<00:00, 118.21it/s] 50%|█████     | 72/144 [00:00<00:00, 118.56it/s] 58%|█████▊    | 84/144 [00:00<00:00, 118.04it/s] 67%|██████▋   | 96/144 [00:00<00:00, 118.11it/s] 75%|███████▌  | 108/144 [00:00<00:00, 118.29it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.86it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.98it/s]100%|██████████| 144/144 [00:01<00:00, 117.08it/s]100%|██████████| 144/144 [00:01<00:00, 117.31it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 116.20it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.62it/s] 25%|██▌       | 36/144 [00:00<00:00, 115.91it/s] 33%|███▎      | 48/144 [00:00<00:00, 115.21it/s] 42%|████▏     | 60/144 [00:00<00:00, 115.82it/s] 50%|█████     | 72/144 [00:00<00:00, 116.46it/s] 58%|█████▊    | 84/144 [00:00<00:00, 116.57it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.34it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.58it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.30it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.19it/s]100%|██████████| 144/144 [00:01<00:00, 115.77it/s]100%|██████████| 144/144 [00:01<00:00, 116.03it/s]
+-------- NUMBER OF CASES DONE ----------
+24
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c026/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-HeFarf.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 219.15 mean signal is 214.079 mean noise is 0.976853
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+25
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c026/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:21,  1.75it/s]  8%|▊         | 11/144 [00:00<00:06, 21.14it/s] 15%|█▌        | 22/144 [00:00<00:03, 40.37it/s] 24%|██▎       | 34/144 [00:00<00:01, 59.09it/s] 32%|███▏      | 46/144 [00:00<00:01, 74.27it/s] 40%|████      | 58/144 [00:01<00:01, 85.99it/s] 49%|████▊     | 70/144 [00:01<00:00, 94.42it/s] 57%|█████▋    | 82/144 [00:01<00:00, 101.10it/s] 65%|██████▌   | 94/144 [00:01<00:00, 106.01it/s] 74%|███████▎  | 106/144 [00:01<00:00, 108.58it/s] 82%|████████▏ | 118/144 [00:01<00:00, 110.75it/s] 90%|█████████ | 130/144 [00:01<00:00, 112.79it/s] 99%|█████████▊| 142/144 [00:01<00:00, 113.68it/s]100%|██████████| 144/144 [00:01<00:00, 78.96it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 105.15it/s] 15%|█▌        | 22/144 [00:00<00:01, 107.53it/s] 24%|██▎       | 34/144 [00:00<00:01, 109.10it/s] 32%|███▏      | 46/144 [00:00<00:00, 112.19it/s] 40%|████      | 58/144 [00:00<00:00, 114.32it/s] 49%|████▊     | 70/144 [00:00<00:00, 115.34it/s] 57%|█████▋    | 82/144 [00:00<00:00, 116.23it/s] 65%|██████▌   | 94/144 [00:00<00:00, 116.80it/s] 74%|███████▎  | 106/144 [00:00<00:00, 116.99it/s] 82%|████████▏ | 118/144 [00:01<00:00, 115.93it/s] 90%|█████████ | 130/144 [00:01<00:00, 115.79it/s] 99%|█████████▊| 142/144 [00:01<00:00, 116.03it/s]100%|██████████| 144/144 [00:01<00:00, 114.69it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 103.07it/s] 15%|█▌        | 22/144 [00:00<00:01, 103.49it/s] 23%|██▎       | 33/144 [00:00<00:01, 104.07it/s] 31%|███▏      | 45/144 [00:00<00:00, 109.24it/s] 40%|███▉      | 57/144 [00:00<00:00, 111.95it/s] 48%|████▊     | 69/144 [00:00<00:00, 112.75it/s] 56%|█████▋    | 81/144 [00:00<00:00, 113.61it/s] 65%|██████▍   | 93/144 [00:00<00:00, 114.54it/s] 73%|███████▎  | 105/144 [00:00<00:00, 115.29it/s] 81%|████████▏ | 117/144 [00:01<00:00, 115.82it/s] 90%|████████▉ | 129/144 [00:01<00:00, 116.21it/s] 98%|█████████▊| 141/144 [00:01<00:00, 116.77it/s]100%|██████████| 144/144 [00:01<00:00, 113.42it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+25
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c027/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-HtHYZU.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 247.60 mean signal is 248.983 mean noise is 1.00558
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+26
+----------------------------------------
+dwi2response: Optimising... [===]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c027/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:28,  1.62it/s]  8%|▊         | 11/144 [00:00<00:06, 19.85it/s] 15%|█▌        | 22/144 [00:00<00:03, 38.25it/s] 23%|██▎       | 33/144 [00:00<00:02, 54.34it/s] 31%|███▏      | 45/144 [00:01<00:01, 70.28it/s] 40%|███▉      | 57/144 [00:01<00:01, 82.95it/s] 48%|████▊     | 69/144 [00:01<00:00, 92.67it/s] 56%|█████▋    | 81/144 [00:01<00:00, 100.16it/s] 65%|██████▍   | 93/144 [00:01<00:00, 103.73it/s] 73%|███████▎  | 105/144 [00:01<00:00, 107.39it/s] 81%|████████▏ | 117/144 [00:01<00:00, 110.28it/s] 90%|████████▉ | 129/144 [00:01<00:00, 112.45it/s] 98%|█████████▊| 141/144 [00:01<00:00, 113.99it/s]100%|██████████| 144/144 [00:01<00:00, 76.70it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 11/144 [00:00<00:01, 101.96it/s] 16%|█▌        | 23/144 [00:00<00:01, 111.08it/s] 24%|██▍       | 35/144 [00:00<00:00, 113.59it/s] 33%|███▎      | 47/144 [00:00<00:00, 115.25it/s] 41%|████      | 59/144 [00:00<00:00, 116.31it/s] 49%|████▉     | 71/144 [00:00<00:00, 116.88it/s] 58%|█████▊    | 83/144 [00:00<00:00, 117.44it/s] 66%|██████▌   | 95/144 [00:00<00:00, 117.58it/s] 74%|███████▍  | 107/144 [00:00<00:00, 117.83it/s] 83%|████████▎ | 119/144 [00:01<00:00, 116.23it/s] 91%|█████████ | 131/144 [00:01<00:00, 116.24it/s] 99%|█████████▉| 143/144 [00:01<00:00, 116.58it/s]100%|██████████| 144/144 [00:01<00:00, 115.89it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  7%|▋         | 10/144 [00:00<00:01, 99.75it/s] 15%|█▍        | 21/144 [00:00<00:01, 104.42it/s] 23%|██▎       | 33/144 [00:00<00:01, 107.39it/s] 31%|███▏      | 45/144 [00:00<00:00, 110.97it/s] 40%|███▉      | 57/144 [00:00<00:00, 113.78it/s] 48%|████▊     | 69/144 [00:00<00:00, 115.46it/s] 56%|█████▋    | 81/144 [00:00<00:00, 116.16it/s] 65%|██████▍   | 93/144 [00:00<00:00, 116.57it/s] 73%|███████▎  | 105/144 [00:00<00:00, 116.91it/s] 81%|████████▏ | 117/144 [00:01<00:00, 117.47it/s] 90%|████████▉ | 129/144 [00:01<00:00, 117.83it/s] 98%|█████████▊| 141/144 [00:01<00:00, 117.87it/s]100%|██████████| 144/144 [00:01<00:00, 115.06it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+INFO: Using bundle specific postprocessing for FX_left because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+26
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c028/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-h8TM3A.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 197.36 mean signal is 197.456 mean noise is 1.00046
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+27
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c028/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:20,  1.77it/s]  8%|▊         | 11/144 [00:00<00:06, 21.51it/s] 15%|█▌        | 22/144 [00:00<00:02, 40.83it/s] 23%|██▎       | 33/144 [00:00<00:01, 56.47it/s] 31%|███▏      | 45/144 [00:00<00:01, 72.25it/s] 40%|███▉      | 57/144 [00:01<00:01, 84.70it/s] 48%|████▊     | 69/144 [00:01<00:00, 93.79it/s] 56%|█████▋    | 81/144 [00:01<00:00, 100.31it/s] 65%|██████▍   | 93/144 [00:01<00:00, 105.46it/s] 73%|███████▎  | 105/144 [00:01<00:00, 109.27it/s] 81%|████████▏ | 117/144 [00:01<00:00, 112.00it/s] 90%|████████▉ | 129/144 [00:01<00:00, 113.53it/s] 98%|█████████▊| 141/144 [00:01<00:00, 114.77it/s]100%|██████████| 144/144 [00:01<00:00, 79.12it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 113.15it/s] 17%|█▋        | 24/144 [00:00<00:01, 116.59it/s] 25%|██▌       | 36/144 [00:00<00:00, 117.21it/s] 33%|███▎      | 48/144 [00:00<00:00, 117.62it/s] 42%|████▏     | 60/144 [00:00<00:00, 118.00it/s] 50%|█████     | 72/144 [00:00<00:00, 118.01it/s] 58%|█████▊    | 84/144 [00:00<00:00, 118.16it/s] 67%|██████▋   | 96/144 [00:00<00:00, 117.41it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.75it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.76it/s] 92%|█████████▏| 132/144 [00:01<00:00, 118.00it/s]100%|██████████| 144/144 [00:01<00:00, 118.10it/s]100%|██████████| 144/144 [00:01<00:00, 117.68it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 115.28it/s] 17%|█▋        | 24/144 [00:00<00:01, 115.48it/s] 25%|██▌       | 36/144 [00:00<00:00, 115.21it/s] 33%|███▎      | 48/144 [00:00<00:00, 114.42it/s] 42%|████▏     | 60/144 [00:00<00:00, 115.03it/s] 50%|█████     | 72/144 [00:00<00:00, 115.97it/s] 58%|█████▊    | 84/144 [00:00<00:00, 116.26it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.83it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.29it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.87it/s] 92%|█████████▏| 132/144 [00:01<00:00, 116.94it/s]100%|██████████| 144/144 [00:01<00:00, 117.35it/s]100%|██████████| 144/144 [00:01<00:00, 116.42it/s]
+-------- NUMBER OF CASES DONE ----------
+27
+----------------------------------------
+basepath provided is: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029
+starting mrtrix denoising
+dwi2mask: [WARNING] existing output files will be overwritten
+dwi2mask: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz"... [==================================================]
+dwi2mask: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz"... [==================================================]
+dwi2mask: computing dwi brain mask... ..done
+dwi2mask: [WARNING] requested datatype (Bit) not supported - substituting with UInt8
+dwi2mask: applying mask cleaning filter... done
+dwi2mask: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrconvert: [WARNING] existing output files will be overwritten
+mrconvert: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz"... [==================================================]
+mrconvert: copying from "/autofs/sp...sub-R2c029/dmri/data.nii.gz" to "/autofs/sp...tputs_attention/dwi_raw.mif"... [==================================================]
+mrmath: [WARNING] existing output files will be overwritten
+dwiextract: extracting volumes... [==================================================]
+mrmath: preloading data for "/home/scratch/mrtrix-tmp-VShMv2.mif"... [==================================================]
+mrmath: computing mean along axis 3...... [==================================================]
+mrmath: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+dwidenoise: [WARNING] existing output files will be overwritten
+dwidenoise: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz"... [==================================================]
+dwidenoise: preloading data for "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz"... [==================================================]
+dwidenoise: running MP-PCA denoising... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/data_raw_denoised.nii.gz"... [==================================================]
+dwidenoise: compressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_noise_map.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/lowb_raw.nii.gz"... [==================================================]
+mrstats: uncompressing image "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/bsb_outputs_attention/raw_brain_mask.nii.gz"... []
+SNR is 244.67 mean signal is 272.057 mean noise is 1.1119
+data path /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/data.nii.gz found
+Trackgen outputs already exist...skipping
+Unet segmentation outputs already exist...skipping
+-------- NUMBER OF CASES DONE ----------
+28
+----------------------------------------
+dwi2response: Optimising... [=]
+Loading brain mask from: /autofs/space/nicc_003/users/olchanyi/data/RESPONSE2/sub-R2c029/dmri/nodif_brain_mask.nii.gz
+Creating peaks (1 of 3)...
+Creating peaks (2 of 3)...
+Creating peaks (3 of 3)...
+Loading weights from: /homes/3/mdo18/.tractseg/pretrained_weights_tract_segmentation_v3.npz
+Processing direction (1 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  1%|          | 1/144 [00:00<01:20,  1.77it/s]  8%|▊         | 11/144 [00:00<00:06, 21.46it/s] 15%|█▌        | 22/144 [00:00<00:02, 40.75it/s] 24%|██▎       | 34/144 [00:00<00:01, 58.91it/s] 32%|███▏      | 46/144 [00:00<00:01, 74.11it/s] 40%|████      | 58/144 [00:01<00:00, 86.11it/s] 49%|████▊     | 70/144 [00:01<00:00, 95.13it/s] 57%|█████▋    | 82/144 [00:01<00:00, 100.20it/s] 65%|██████▌   | 94/144 [00:01<00:00, 104.26it/s] 74%|███████▎  | 106/144 [00:01<00:00, 107.88it/s] 82%|████████▏ | 118/144 [00:01<00:00, 110.48it/s] 90%|█████████ | 130/144 [00:01<00:00, 112.54it/s] 99%|█████████▊| 142/144 [00:01<00:00, 114.21it/s]100%|██████████| 144/144 [00:01<00:00, 79.15it/s] 
+Processing direction (2 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 110.84it/s] 17%|█▋        | 24/144 [00:00<00:01, 114.96it/s] 25%|██▌       | 36/144 [00:00<00:00, 116.02it/s] 33%|███▎      | 48/144 [00:00<00:00, 115.47it/s] 42%|████▏     | 60/144 [00:00<00:00, 115.97it/s] 50%|█████     | 72/144 [00:00<00:00, 115.85it/s] 58%|█████▊    | 84/144 [00:00<00:00, 116.64it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.63it/s] 75%|███████▌  | 108/144 [00:00<00:00, 116.59it/s] 83%|████████▎ | 120/144 [00:01<00:00, 116.52it/s] 92%|█████████▏| 132/144 [00:01<00:00, 114.42it/s]100%|██████████| 144/144 [00:01<00:00, 115.35it/s]100%|██████████| 144/144 [00:01<00:00, 115.64it/s]
+Processing direction (3 of 3)
+  0%|          | 0/144 [00:00<?, ?it/s]  8%|▊         | 12/144 [00:00<00:01, 110.88it/s] 17%|█▋        | 24/144 [00:00<00:01, 112.63it/s] 25%|██▌       | 36/144 [00:00<00:00, 114.90it/s] 33%|███▎      | 48/144 [00:00<00:00, 116.10it/s] 42%|████▏     | 60/144 [00:00<00:00, 114.18it/s] 50%|█████     | 72/144 [00:00<00:00, 115.34it/s] 58%|█████▊    | 84/144 [00:00<00:00, 115.88it/s] 67%|██████▋   | 96/144 [00:00<00:00, 116.29it/s] 75%|███████▌  | 108/144 [00:00<00:00, 117.01it/s] 83%|████████▎ | 120/144 [00:01<00:00, 117.49it/s] 92%|█████████▏| 132/144 [00:01<00:00, 117.71it/s]100%|██████████| 144/144 [00:01<00:00, 117.80it/s]100%|██████████| 144/144 [00:01<00:00, 116.31it/s]
+INFO: Using bundle specific postprocessing for CA because bundle incomplete.
+-------- NUMBER OF CASES DONE ----------
+28
+----------------------------------------
+DONE WITH EVERYTHING...
+NUMBER OF ERRORS...

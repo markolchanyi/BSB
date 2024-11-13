@@ -1,0 +1,4 @@
+mrconvert /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c018/bsb_outputs_attention_new/temp_gdoixefzpk/dwi.mif /autofs/space/nicc_003/users/olchanyi/BSB/shell/dwibiascorrect-tmp-XZZ4D4/in.mif -fslgrad /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c018/bsb_outputs_attention_new/temp_gdoixefzpk/dwi.bvec /autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c018/bsb_outputs_attention_new/temp_gdoixefzpk/dwi.bval
+
+mrconvert: [ERROR] input file "/autofs/space/nicc_003/users/olchanyi/data/RESPONSE_PILOT_FULL/sub-R2c018/bsb_outputs_attention_new/temp_gdoixefzpk/dwi.bvec" for option "-fslgrad" not found
+

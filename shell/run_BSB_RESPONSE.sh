@@ -79,13 +79,13 @@ for val in ${StringArray[@]}; do
         bvalpath=$BASEPATH/bvals
         bvecpath=$BASEPATH/bvecs
         PROCESSPATH=$BASEPATH
-        OUTPUTPATH=$BASEPATH/bsb_outputs_attention
+        OUTPUTPATH=$BASEPATH/bsb_outputs_attention_new
 
 
 
 
         # apply denoising for noise map??
-        denoise=True
+        denoise=False
 
         if [ "$denoise" = True ]; then
             echo "starting mrtrix denoising"
@@ -149,10 +149,17 @@ for val in ${StringArray[@]}; do
         fi
         let CASE_COUNTER=CASE_COUNTER+1
 
-        echo -------- NUMBER OF CASES DONE ----------
+
+        OUTPUTPATH=$BASEPATH/tractseg_outputs_new
+        if [ -e $OUTPUTPATH/bundle_segmentations/CC.nii.gz ]
+        then
+            	echo "Tractseg outputs already exist...skipping"
+        else
+            	TractSeg -i $datapath -o $OUTPUTPATH --bvals $bvalpath --bvecs $bvecpath --raw_diffusion_input
+        fi
+	echo -------- NUMBER OF CASES DONE ----------
         echo            $CASE_COUNTER
         echo ----------------------------------------
-
 
 done
 echo DONE WITH EVERYTHING...
